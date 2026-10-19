@@ -25,9 +25,10 @@
   .brand small{display:block;color:var(--mut);font-size:11.5px;font-weight:400;letter-spacing:.4px}
   .streak{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:7px 14px;
     font-size:13.5px;font-weight:700;white-space:nowrap}
-  .chips{display:flex;gap:8px;margin-bottom:12px}
-  .chip{flex:1;text-align:center;padding:10px 6px;border-radius:12px;background:var(--chip);
-    border:1px solid var(--line);color:var(--mut);font-size:13.5px;font-weight:600;cursor:pointer;transition:.18s}
+  .chips{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .chip{flex:1 1 0;text-align:center;padding:10px 6px;border-radius:12px;background:var(--chip);
+    border:1px solid var(--line);color:var(--mut);font-size:13.5px;font-weight:600;cursor:pointer;transition:.18s;white-space:nowrap}
+  @media(max-width:520px){.chip{flex:1 1 44%;font-size:13px}}
   .chip.on{background:linear-gradient(135deg,rgba(245,166,35,.22),rgba(245,166,35,.08));
     border-color:var(--acc);color:var(--acc2)}
   .stats{display:flex;gap:8px;margin-bottom:14px}
@@ -94,6 +95,7 @@
     <div class="chip on" data-f="all">All Subjects</div>
     <div class="chip" data-f="e">English</div>
     <div class="chip" data-f="g">General Awareness</div>
+    <div class="chip" data-f="ca">Current Affairs</div>
   </div>
 
   <div class="stats">
@@ -535,12 +537,265 @@ const QUESTIONS = [
 {s:"g",t:"gk",q:"The largest desert of the world is:",o:["Sahara","Gobi","Kalahari","Thar"],a:0,x:"<b>Sahara</b> — largest hot desert."},
 {s:"g",t:"gk",q:"The deepest ocean trench is:",o:["Tonga Trench","Mariana Trench","Java Trench","Puerto Rico Trench"],a:1,x:"<b>Mariana Trench</b> (~11,000 m)."},
 {s:"g",t:"gk",q:"The longest river of the world is:",o:["Amazon","Nile","Yangtze","Mississippi"],a:1,x:"The <b>Nile</b> (~6,650 km) — longest; Amazon largest by volume."},
+{s:"g",t:"ca",q:"Bimal N. Patel was sworn in as a judge of ITLOS on 1 Oct 2026 for a term of:",o:["Nine years","Six years","Five years","Three years"],a:0,x:"Sworn in at <b>Hamburg, Germany</b>; succeeds Neeru Chadha."},
+{s:"g",t:"ca",q:"The International Tribunal for the Law of the Sea (ITLOS) is headquartered at:",o:["Hamburg","The Hague","Geneva","Paris"],a:0,x:"ITLOS, Hamburg — 21 judges; set up under UNCLOS 1982."},
+{s:"g",t:"ca",q:"Anup Bagchi was appointed MD & CEO of HDFC Bank effective 27 Oct 2026, succeeding:",o:["Sashidhar Jagdishan","Aditya Puri","Amitabh Chaudhry","Sandeep Bakhshi"],a:0,x:"RBI approved the 3-year term; ex-ICICI Prudential Life chief."},
+{s:"g",t:"ca",q:"Anup Kumar Saha was appointed MD & CEO of:",o:["Kotak Mahindra Bank","HDFC Bank","ICICI Bank","Axis Bank"],a:0,x:"Appointment announced in Oct 2026."},
+{s:"g",t:"ca",q:"Mahesh Muralidhar Pai was appointed MD & CEO of:",o:["South Indian Bank","Federal Bank","Karnataka Bank","Karur Vysya Bank"],a:0,x:"Appointment announced in Oct 2026."},
+{s:"g",t:"ca",q:"Lavanya R. Mundayur was appointed CMD of:",o:["NIACL","LIC","GIC Re","Oriental Insurance"],a:0,x:"NIACL = New India Assurance Company Ltd."},
+{s:"g",t:"ca",q:"Who was appointed the 29th Chief of the Air Staff (effective 31 Oct 2026)?",o:["Air Marshal Ashutosh Dixit","ACM Amar Preet Singh","ACM RKS Bhadauria","ACM Vivek Ram Chaudhari"],a:0,x:"Succeeds <b>ACM Amar Preet Singh</b>; was Vice Chief of Air Staff."},
+{s:"g",t:"ca",q:"In the Oct 12, 2026 gubernatorial reshuffle, who was appointed Governor of Karnataka?",o:["Dr. Sudha Yadav","Om Prakash Mathur","Braj Mohan Ram","Dushyant Gautam"],a:0,x:"Former Lok Sabha MP and OBC leader; appointed by President Murmu."},
+{s:"g",t:"ca",q:"Rajendra Vishwanath Arlekar was transferred from Kerala to:",o:["Tamil Nadu","Karnataka","Odisha","Sikkim"],a:0,x:"Part of the six-state gubernatorial reshuffle of 12 Oct 2026."},
+{s:"g",t:"ca",q:"Om Prakash Mathur was transferred from Sikkim to:",o:["Kerala","Tamil Nadu","Uttarakhand","Odisha"],a:0,x:"Part of the six-state gubernatorial reshuffle of 12 Oct 2026."},
+{s:"g",t:"ca",q:"Dushyant Gautam was appointed Governor of:",o:["Sikkim","Odisha","Uttarakhand","Karnataka"],a:0,x:"New appointment in the Oct 2026 reshuffle."},
+{s:"g",t:"ca",q:"Rajat Sharma was re-elected President (2026–27) of:",o:["NBDA","PCI","NBA","IAA"],a:0,x:"NBDA = News Broadcasters & Digital Association."},
+{s:"g",t:"ca",q:"Who won the 2026 Nobel Peace Prize?",o:["Navi Pillay","Narges Mohammadi","Maria Ressa","Malala Yousafzai"],a:0,x:"South African jurist of <b>Indian Tamil descent</b>; for international law and peace."},
+{s:"g",t:"ca",q:"The 2026 Nobel Prize in Physics was awarded for work on:",o:["Neutrinos and the IceCube Observatory","Black holes","Gravitational waves","Quantum dots"],a:0,x:"As per the Oct 2026 prize announcements."},
+{s:"g",t:"ca",q:"Oscar Whitfield won the 2026 Young Wildlife Photographer of the Year for a photo titled:",o:["Labour of Love","Frozen Moment","Wild Hunt","Silent Killer"],a:0,x:"A dung beetle in <b>Zambezi National Park, Zimbabwe</b>; he was 14."},
+{s:"g",t:"ca",q:"Flydubai Captain Smit Machchhar received the Vishisht Gujarat Garima Award for:",o:["Handling the FZ1073 flight emergency","A space mission","A rescue operation at sea","Mountaineering"],a:0,x:"Announced by Gujarat CM; landed the aircraft safely in Saudi Arabia."},
+{s:"g",t:"ca",q:"How many medals did India win at the Asian Games 2026?",o:["85","72","107","68"],a:0,x:"India's tally at the 2026 Asian Games."},
+{s:"g",t:"ca",q:"India defended its Asian Games men's hockey gold in 2026 beating:",o:["Malaysia 5-1","Pakistan 3-2","South Korea 4-0","Japan 2-1"],a:0,x:"A 5-1 win over Malaysia in the final."},
+{s:"g",t:"ca",q:"India won the Asian Games women's hockey gold in 2026 after:",o:["44 years","40 years","32 years","28 years"],a:0,x:"A historic gap ended at the 2026 Games."},
+{s:"g",t:"ca",q:"India beat whom to win the Asian Games 2026 men's cricket gold?",o:["Pakistan","Bangladesh","Sri Lanka","Afghanistan"],a:0,x:"Men's cricket gold at the 2026 Asian Games."},
+{s:"g",t:"ca",q:"Aman Sehrawat won the Asian Games 2026 wrestling gold in:",o:["Men's 57kg","Men's 65kg","Men's 74kg","Men's 86kg"],a:0,x:"Men's 57kg wrestling gold."},
+{s:"g",t:"ca",q:"Sujeet Kalkal won the Asian Games 2026 gold in:",o:["Men's freestyle 65kg wrestling","Men's 57kg wrestling","Men's 74kg wrestling","Greco-Roman 67kg"],a:0,x:"Men's freestyle 65kg."},
+{s:"g",t:"ca",q:"Parveen Hooda won the Asian Games 2026 gold in:",o:["Women's 65kg boxing","Women's 60kg boxing","Women's 75kg boxing","Women's 54kg boxing"],a:0,x:"Women's 65kg boxing gold."},
+{s:"g",t:"ca",q:"Lovlina Borgohain won her Asian Games 2026 boxing gold on:",o:["Her 29th birthday","Her 25th birthday","National Sports Day","Her Olympic debut anniversary"],a:0,x:"Gold on her 29th birthday."},
+{s:"g",t:"ca",q:"Pranavi Urs became the first Indian woman golfer to win:",o:["Asian Games gold","Olympic medal","World Championship","Asia-Pacific title"],a:0,x:"Historic first at the 2026 Asian Games."},
+{s:"g",t:"ca",q:"17-year-old Kumkum Mohod won the Asian Games 2026 gold in:",o:["Recurve archery","Compound archery","Shooting","Fencing"],a:0,x:"Historic recurve gold with a perfect 10."},
+{s:"g",t:"ca",q:"India's women's recurve archery team won its _____ Asian Games gold in 2026:",o:["Maiden (first)","Second","Third","Fifth"],a:0,x:"Maiden women's recurve team gold."},
+{s:"g",t:"ca",q:"Neeru Dhanda won the women's trap gold and the trap mixed team gold with:",o:["Kynan Chenai","Manavjit Sandhu","Zoravar Sandhu","Prithviraj Tondaiman"],a:0,x:"Shooting golds at the 2026 Asian Games."},
+{s:"g",t:"ca",q:"India won the women's 4x400m relay gold at the:",o:["Asian Games 2026","Commonwealth Games 2026","Asian Championships 2026","Olympics 2024"],a:0,x:"Athletics gold at the 2026 Asian Games."},
+{s:"g",t:"ca",q:"Yashvir Singh and Rohit Yadav won Asian Games 2026 medals in:",o:["Javelin","Shot put","Discus","Hammer throw"],a:0,x:"Javelin medals at the 2026 Games."},
+{s:"g",t:"ca",q:"Who were India's flagbearers for the Asian Para Games 2026?",o:["Pramod Bhagat and Bhavina Patel","Devendra Jhajharia and Avani Lekhara","Mariyappan Thangavelu and Deepa Malik","Suhas Yathiraj and Manish Narwal"],a:0,x:"Named on 9 Oct 2026."},
+{s:"g",t:"ca",q:"Who was appointed captain of the Indian women's cricket team in Oct 2026?",o:["Smriti Mandhana","Harmanpreet Kaur","Jemimah Rodrigues","Deepti Sharma"],a:0,x:"Harmanpreet Kaur stepped down; Mandhana took over."},
+{s:"g",t:"ca",q:"Shubman Gill's 223 against West Indies (Oct 2026) was:",o:["The fastest ODI double century","The slowest ODI double century","The first ODI double century","The highest ODI score"],a:0,x:"Fastest ODI double hundred."},
+{s:"g",t:"ca",q:"Rohit Sharma crossed _____ ODI runs in Oct 2026:",o:["12,000","10,000","11,000","15,000"],a:0,x:"12,000 ODI runs and 200 sixes in one country."},
+{s:"g",t:"ca",q:"Bodhana Sivanandan became the youngest woman Grandmaster at age:",o:["11","12","13","14"],a:0,x:"Chess milestone in Sept 2026."},
+{s:"g",t:"ca",q:"Novak Djokovic's China Open 2026 win was his:",o:["Seventh China Open title","Fifth China Open title","Tenth China Open title","First China Open title"],a:0,x:"Also his <b>102nd</b> tour-level trophy."},
+{s:"g",t:"ca",q:"Who won the Japan Open 2026 for a second straight title?",o:["Carlos Alcaraz","Novak Djokovic","Jannik Sinner","Daniil Medvedev"],a:0,x:"Oct 2026."},
+{s:"g",t:"ca",q:"India topped the Commonwealth Cue Sports Championships 2026 held in:",o:["Ahmedabad","Mumbai","Chennai","Kolkata"],a:0,x:"13 medals including 3 gold."},
+{s:"g",t:"ca",q:"Aditya Mehta won gold in men's snooker at the Commonwealth Cue Sports Championships 2026, beating:",o:["Dhvaj Haria","Laxman Singh Rawat","Paras Gupta","Uzair Khan"],a:0,x:"All-Indian final, 3-0."},
+{s:"g",t:"ca",q:"Anupama Ramachandran won gold in women's English billiards at the 2026 Commonwealth Cue Sports Championships, beating:",o:["Revanna Umadevi","Keerthana Pandian","Ishika Shah","Shruthi Lakshminarayanan"],a:0,x:"1-0 in the final."},
+{s:"g",t:"ca",q:"Eugenio Chacarra won the DP World India Championship 2026 and now leads the:",o:["Race to Dubai rankings","FedEx Cup","OWGR","Race to Mallorca"],a:0,x:"Won at Delhi Golf Club on 18 Oct 2026."},
+{s:"g",t:"ca",q:"Which city received the OCA flag as host of the 2030 Asian Games?",o:["Doha","Aichi-Nagoya","Riyadh","Bangkok"],a:0,x:"Host responsibility passed from Aichi-Nagoya to Doha."},
+{s:"g",t:"ca",q:"The World Bank raised India's FY27 GDP growth forecast to:",o:["7.1%","6.7%","7.5%","6.5%"],a:0,x:"Raised in Oct 2026."},
+{s:"g",t:"ca",q:"The RBI's FY27 GDP growth projection for India is:",o:["6.7%","7.1%","7%","6.8%"],a:0,x:"As per Oct 2026 projections."},
+{s:"g",t:"ca",q:"The IMF's FY27 GDP growth projection for India is:",o:["7%","6.7%","7.1%","6.5%"],a:0,x:"As per Oct 2026 projections."},
+{s:"g",t:"ca",q:"National Coastal Mission 2.0, in news in Oct 2026, relates to:",o:["Protection and development of coastal regions","Deep-sea mining","Port privatisation","Fisheries exports"],a:0,x:"Coastal protection and development."},
+{s:"g",t:"ca",q:"PMGSY-IV, in news in Oct 2026, relates to:",o:["Rural roads","Urban metro","National highways","Village electrification"],a:0,x:"PM Gram Sadak Yojana Phase IV — rural roads."},
+{s:"g",t:"ca",q:"The PM E-DRIVE scheme completed _____ in Oct 2026:",o:["Two years","One year","Three years","Five years"],a:0,x:"Electric-vehicle incentive scheme."},
+{s:"g",t:"ca",q:"The GOBARdhan scheme promotes:",o:["Biogas/CBG from cattle dung and agri waste","Solar pumps","Crop insurance","Soil health cards"],a:0,x:"Galvanizing Organic Bio-Agro Resources Dhan."},
+{s:"g",t:"ca",q:"The Bhagini Nivedita Scheme (West Bengal, Oct 2026) gives ₹50,000 to:",o:["Single women pursuing higher studies","Widows below poverty line","Girl child at birth","Women farmers"],a:0,x:"₹50,000 over three years; launched by the state cabinet."},
+{s:"g",t:"ca",q:"The World Development Report 2026 on Artificial Intelligence was launched in India by:",o:["Ashwini Vaishnaw","Piyush Goyal","Dharmendra Pradhan","Jitin Prasada"],a:0,x:"Union Minister for Electronics & IT."},
+{s:"g",t:"ca",q:"In Oct 2026, India exported the Akash air defence system to:",o:["Tajikistan and Turkmenistan","Armenia and Azerbaijan","Vietnam and Philippines","UAE and Saudi Arabia"],a:0,x:"Armenia was the first foreign customer."},
+{s:"g",t:"ca",q:"The Akash missile system was developed by:",o:["DRDO","ISRO","HAL","BEL"],a:0,x:"Surface-to-air missile; BDL makes the missile, BEL the electronics."},
+{s:"g",t:"ca",q:"INS Mangrol, commissioned on 12 Oct 2026, is:",o:["An anti-submarine warfare shallow water craft","A stealth frigate","A nuclear submarine","An aircraft carrier"],a:0,x:"Third ASW-SWC; built by Cochin Shipyard."},
+{s:"g",t:"ca",q:"In Oct 2026, CCI approved the acquisition deal between:",o:["BNP Paribas Cardif and IndiaFirst Life","HDFC and Max Life","ICICI and Tata AIA","SBI Life and Kotak"],a:0,x:"Competition Commission of India nod."},
+{s:"g",t:"ca",q:"The Annual Survey of Industries is conducted by:",o:["National Statistics Office","NITI Aayog","RBI","Labour Bureau"],a:0,x:"ASI 2024–25 released in Oct 2026."},
+{s:"g",t:"ca",q:"Desert National Park, in news in Oct 2026, is located in:",o:["Rajasthan","Gujarat","Haryana","Madhya Pradesh"],a:0,x:"Famous for the Great Indian Bustard."},
+{s:"g",t:"ca",q:"As per a World Bank report of Oct 2026, India is among the top-10 emerging economies ready for:",o:["Artificial Intelligence","Electric vehicles","Green hydrogen","Semiconductors"],a:0,x:"Citing its vast technical workforce."},
+{s:"g",t:"ca",q:"World Rabies Day is observed on:",o:["28 September","27 September","29 September","30 September"],a:0,x:"2026 current-affairs staple."},
+{s:"g",t:"ca",q:"World Heart Day is observed on:",o:["29 September","28 September","27 September","1 October"],a:0,x:"2026 current-affairs staple."},
+{s:"g",t:"ca",q:"The International Day of the Girl Child is observed on:",o:["11 October","10 October","12 October","15 October"],a:0,x:"2026 current-affairs staple."},
+{s:"g",t:"ca",q:"World Space Week is observed every year from:",o:["4 to 10 October","1 to 7 October","10 to 16 October","14 to 20 October"],a:0,x:"2026 current-affairs staple."},
+{s:"g",t:"ca",q:"Maharashtra's MahaCyber initiative, in news in Oct 2026, aims at:",o:["Fighting cybercrime and online fraud","Cyber parks","Free Wi-Fi cities","Digital literacy"],a:0,x:"Strengthening response to cybercrime."},
+{s:"g",t:"ca",q:"The Second Regional Review Conference on the Forest Rights Act (9 Oct 2026) was held in:",o:["Kolkata","Ranchi","Bhopal","Bhubaneswar"],a:0,x:"Organised by the Ministry of Tribal Affairs."},
+{s:"g",t:"ca",q:"Fatima Ezzahra El Mansouri was appointed Prime Minister of:",o:["Morocco","Tunisia","Algeria","Egypt"],a:0,x:"Oct 2026 appointment."},
 ];
+
+/* ============ AUTO QUESTION GENERATOR (infinite, CGL-patterned) ============
+   When the unseen bank drops below 50, fresh questions are generated on the fly. */
+function gpick(a){return a[(Math.random()*a.length)|0];}
+function gsample(a,n,excl){const c=a.filter(x=>!excl.has(x));const r=[];while(r.length<n&&c.length){r.push(c.splice((Math.random()*c.length)|0,1)[0]);}return r;}
+
+const WORDS=[["Abandon","To give up"],["Abate","To lessen"],["Abdicate","To renounce a throne"],["Aberration","A deviation"],["Abhor","To hate"],["Abjure","To renounce"],["Abrogate","To abolish"],["Abscond","To flee"],["Abstemious","Moderate in eating"],["Accolade","Praise"],["Acrimony","Bitterness"],["Acumen","Shrewdness"],["Adamant","Stubborn"],["Admonish","To scold"],["Adroit","Skilful"],["Adulation","Flattery"],["Adversity","Hardship"],["Aesthetic","Beautiful"],["Affable","Friendly"],["Alacrity","Eagerness"],["Alleviate","To relieve"],["Ameliorate","To improve"],["Amiable","Friendly"],["Amicable","Cordial"],["Animosity","Hatred"],["Anomaly","Irregularity"],["Apathy","Indifference"],["Appease","To pacify"],["Arduous","Difficult"],["Ascetic","Austere"],["Assiduous","Diligent"],["Assuage","To soothe"],["Audacious","Bold"],["Austere","Severe"],["Avarice","Greed"],["Bellicose","Warlike"],["Benevolent","Kind"],["Blasphemy","Irreverence"],["Brevity","Shortness"],["Candid","Frank"],["Capricious","Whimsical"],["Castigate","To punish"],["Censure","To criticize"],["Chicanery","Trickery"],["Circumspect","Cautious"],["Clemency","Mercy"],["Coerce","To force"],["Cogent","Convincing"],["Commensurate","Proportionate"],["Complacent","Self-satisfied"],["Connoisseur","Expert judge"],["Contempt","Scorn"],["Contrite","Remorseful"],["Conundrum","Puzzle"],["Corpulent","Fat"],["Credulous","Gullible"],["Cryptic","Mysterious"],["Cursory","Hasty"],["Deference","Respect"],["Delineate","To describe"],["Demure","Modest"],["Denigrate","To defame"],["Deplete","To exhaust"],["Deprecate","To disapprove"],["Deride","To mock"],["Desiccate","To dry up"],["Despondent","Dejected"],["Destitute","Extremely poor"],["Diatribe","Bitter criticism"],["Diffident","Shy"],["Diligent","Hardworking"],["Discord","Disagreement"],["Discreet","Prudent"],["Disdain","Contempt"],["Disparage","To belittle"],["Dissemble","To conceal"],["Dogmatic","Rigid"],["Dubious","Doubtful"],["Eclectic","Selective"],["Efficacy","Effectiveness"],["Effigy","Dummy"],["Egregious","Shocking"],["Elated","Joyful"],["Eloquent","Fluent"],["Elucidate","To explain"],["Emaciated","Thin"],["Embellish","To decorate"],["Enervate","To weaken"],["Enigma","Mystery"],["Ephemeral","Short-lived"],["Equanimity","Calmness"],["Equivocal","Vague"],["Erudite","Learned"],["Esoteric","Obscure"],["Eulogy","Praise"],["Exacerbate","To worsen"],["Exonerate","To acquit"],["Exorbitant","Excessive"],["Extol","To praise"],["Extravagant","Wasteful"],["Facetious","Humorous"],["Fallacious","False"],["Fastidious","Fussy"],["Fathom","To understand"],["Fecund","Fertile"],["Felicity","Happiness"],["Fervid","Passionate"],["Fetter","Shackle"],["Fiasco","Failure"],["Florid","Flowery"],["Fortuitous","Lucky"],["Frugal","Thrifty"],["Garrulous","Talkative"],["Grandiloquent","Pompous"],["Gregarious","Sociable"],["Hapless","Unlucky"],["Harbinger","Forerunner"],["Hedonist","Pleasure-seeker"],["Heresy","Dissent"],["Hiatus","Gap"],["Iconoclast","Rebel"],["Idiosyncrasy","Peculiarity"],["Ignominy","Disgrace"],["Immutable","Unchangeable"],["Impetuous","Rash"],["Implacable","Unappeasable"],["Importune","To beg"],["Inane","Silly"],["Incorrigible","Unreformable"],["Indigent","Poor"],["Ineffable","Inexpressible"],["Ingenuous","Naive"],["Inimical","Hostile"],["Intrepid","Fearless"],["Invective","Abuse"],["Irascible","Irritable"],["Itinerant","Travelling"],["Jubilant","Joyful"],["Laconic","Brief"],["Laud","To praise"],["Lethargy","Laziness"],["Loquacious","Talkative"],["Lucid","Clear"],["Lugubrious","Mournful"],["Magnanimous","Generous"],["Maladroit","Clumsy"],["Malleable","Pliable"],["Maverick","Rebel"],["Mendacious","False"],["Mercurial","Changeable"],["Meticulous","Careful"],["Mitigate","To lessen"],["Mollify","To appease"],["Morose","Gloomy"],["Mundane","Ordinary"],["Nebulous","Vague"],["Nefarious","Wicked"],["Nonchalant","Casual"],["Noxious","Harmful"],["Obdurate","Stubborn"],["Obfuscate","To confuse"],["Obsequious","Flattering"],["Obtuse","Dull"],["Odious","Hateful"],["Officious","Meddlesome"],["Onerous","Burdensome"],["Opprobrium","Disgrace"],["Ostentatious","Showy"],["Parsimonious","Stingy"],["Penury","Poverty"],["Perfidious","Treacherous"],["Perfunctory","Cursory"],["Perspicacious","Shrewd"],["Pertinacious","Persistent"],["Petulant","Irritable"],["Philanthropy","Charity"],["Placate","To pacify"],["Pragmatic","Practical"],["Precarious","Risky"],["Prodigal","Wasteful"],["Prolific","Productive"],["Provident","Thrifty"],["Puerile","Childish"],["Pugnacious","Quarrelsome"],["Pusillanimous","Cowardly"],["Quiescent","Inactive"],["Rancour","Bitterness"],["Recalcitrant","Defiant"],["Recondite","Obscure"],["Redundant","Superfluous"],["Relentless","Unyielding"],["Reticent","Reserved"],["Sagacious","Wise"],["Salubrious","Healthy"],["Sanguine","Optimistic"],["Soporific","Sleep-inducing"],["Spurious","False"],["Stoic","Unflappable"],["Strident","Harsh"],["Subjugate","To conquer"],["Superfluous","Extra"],["Surreptitious","Secret"],["Sycophant","Flatterer"],["Taciturn","Silent"],["Temerity","Rashness"],["Tenacious","Persistent"],["Torpid","Sluggish"],["Truculent","Aggressive"],["Ubiquitous","Present everywhere"],["Umbrage","Offence"],["Vacuous","Empty-minded"],["Venerate","To respect"],["Veracity","Truthfulness"],["Verbose","Wordy"],["Vilify","To defame"],["Virtuoso","Skilled artist"],["Vitriolic","Bitter"],["Vociferous","Loud"],["Voracious","Greedy"],["Whimsical","Fanciful"],["Zeal","Enthusiasm"],["Zenith","Highest point"]];
+
+const PAIRS=[["Transparent","Opaque"],["Expand","Contract"],["Benevolent","Malevolent"],["Amiable","Hostile"],["Frugal","Extravagant"],["Cogent","Unconvincing"],["Diverge","Converge"],["Explicit","Implicit"],["Vigilant","Negligent"],["Obstinate","Compliant"],["Prosaic","Poetic"],["Mitigate","Aggravate"],["Candour","Deceit"],["Indigenous","Alien"],["Altruistic","Selfish"],["Eloquent","Inarticulate"],["Mundane","Extraordinary"],["Scrupulous","Careless"],["Tenacious","Irresolute"],["Veneration","Contempt"],["Placid","Turbulent"],["Deference","Disrespect"],["Assiduous","Negligent"],["Lethargic","Energetic"],["Mellifluous","Harsh"],["Parsimonious","Generous"],["Redundant","Essential"],["Spurious","Genuine"],["Timorous","Bold"],["Verbose","Concise"],["Abridge","Expand"],["Acumen","Dullness"],["Adversity","Prosperity"],["Affirm","Deny"],["Apathy","Interest"],["Arid","Fertile"],["Ascetic","Luxurious"],["Austere","Mild"],["Authentic","Fake"],["Banal","Original"],["Belittle","Praise"],["Callous","Tender"],["Candid","Cunning"],["Chaos","Order"],["Clemency","Cruelty"],["Coarse","Refined"],["Compress","Expand"],["Conciliate","Provoke"],["Condone","Condemn"],["Credulous","Sceptical"],["Cryptic","Clear"],["Curtail","Extend"],["Dearth","Abundance"],["Debacle","Success"],["Deplete","Replenish"],["Deride","Praise"],["Despondent","Hopeful"],["Dexterous","Clumsy"],["Diligent","Lazy"],["Discord","Harmony"],["Disparate","Similar"],["Disperse","Gather"],["Docile","Stubborn"],["Eclectic","Narrow"],["Ephemeral","Eternal"],["Equanimity","Agitation"],["Equivocal","Unambiguous"],["Erratic","Steady"],["Esoteric","Familiar"],["Eulogy","Criticism"],["Exonerate","Accuse"],["Expedite","Delay"],["Extant","Extinct"],["Extol","Criticize"],["Extraneous","Relevant"],["Facetious","Serious"],["Feckless","Responsible"],["Felicity","Misery"],["Fervent","Apathetic"],["Frivolous","Serious"],["Furtive","Open"],["Germane","Irrelevant"],["Hackneyed","Original"],["Heretical","Orthodox"],["Ignoble","Noble"],["Ignominy","Honour"],["Impetuous","Cautious"],["Inane","Sensible"],["Incongruous","Harmonious"],["Indolent","Industrious"],["Insipid","Tasty"],["Intrepid","Timid"],["Irascible","Calm"],["Jocular","Solemn"],["Jubilant","Gloomy"],["Laudable","Blameworthy"],["Lucid","Obscure"],["Lugubrious","Cheerful"],["Magnanimous","Petty"],["Malleable","Rigid"],["Maverick","Conformist"],["Mendacious","Truthful"],["Meticulous","Careless"],["Morose","Cheerful"],["Nadir","Zenith"],["Nefarious","Virtuous"],["Noxious","Wholesome"],["Obdurate","Amenable"],["Ostentatious","Modest"],["Pertinacious","Irresolute"],["Pragmatic","Idealistic"],["Precarious","Safe"],["Prodigal","Thrifty"],["Prolific","Barren"],["Quiescent","Active"],["Rancour","Goodwill"],["Recalcitrant","Obedient"],["Recondite","Familiar"],["Relentless","Lenient"],["Reticent","Communicative"],["Sagacious","Foolish"],["Sanguine","Pessimistic"],["Soporific","Stimulating"],["Stoic","Emotional"],["Strident","Soft"],["Subjugate","Liberate"],["Surreptitious","Open"],["Taciturn","Talkative"],["Temerity","Caution"],["Torpid","Active"],["Truculent","Gentle"],["Ubiquitous","Rare"],["Venerate","Despise"],["Veracity","Falsehood"],["Vilify","Praise"],["Voracious","Apathetic"],["Zeal","Apathy"]];
+
+function genSyn(){const w=gpick(WORDS);const d=gsample(UMEAN,3,new Set([w[1]]));
+  return {s:"e",t:"syn",q:"Choose the synonym of "+w[0].toUpperCase()+".",o:[w[1],d[0],d[1],d[2]],a:0,x:"<b>"+w[0]+"</b> = "+w[1].toLowerCase()+"."};}
+function genAnt(){const w=gpick(PAIRS);const d=gsample(UANT,3,new Set([w[1]]));
+  return {s:"e",t:"ant",q:"Choose the antonym of "+w[0].toUpperCase()+".",o:[w[1],d[0],d[1],d[2]],a:0,x:"<b>"+w[0]+"</b> ↔ <b>"+w[1]+"</b>."};}
+const UMEAN=[...new Set(WORDS.map(w=>w[1]))];
+const UANT=[...new Set(PAIRS.map(w=>w[1]))];
+
+const IDIOMS=[["To bite the dust","To suffer defeat"],["At sixes and sevens","In confusion"],["To bell the cat","To lead in a risky task"],["A blessing in disguise","A hidden benefit"],["Once in a blue moon","Very rarely"],["Spick and span","Neat and clean"],["To burn the midnight oil","To work late at night"],["In cold blood","Deliberately and cruelly"],["To cry over spilt milk","To regret the past vainly"],["To beat around the bush","To avoid the main point"],["A feather in one's cap","An achievement to be proud of"],["To face the music","To accept the consequences"],["In the nick of time","Just in time"],["To let the cat out of the bag","To reveal a secret"],["A wild goose chase","A futile pursuit"],["To add fuel to the fire","To worsen matters"],["Through thick and thin","Through good and bad times"],["To bite off more than one can chew","To overcommit oneself"],["To cut to the chase","To come to the point"],["To hit the nail on the head","To say exactly the right thing"],["Under the weather","Slightly ill"],["The ball is in your court","It is your turn to act"],["To steal one's thunder","To take another's credit"],["To bark up the wrong tree","To follow a false lead"],["A dime a dozen","Very common"],["The apple of one's eye","Very dear"],["A bone of contention","A cause of quarrel"],["A cock and bull story","An absurd story"],["To cry wolf","To raise a false alarm"],["A dark horse","An unexpected winner"],["To eat humble pie","To admit one's fault"],["A fair-weather friend","An unreliable friend"],["The gift of the gab","Talent for speaking"],["Greek to me","Incomprehensible"],["A hard nut to crack","A difficult person"],["High and dry","Abandoned"],["In hot water","In trouble"],["An ivory tower","Detached from reality"],["To keep at bay","To keep away"],["Kith and kin","Relatives"],["The lion's share","The largest part"],["A man of straw","A weak person"],["To nip in the bud","To stop at the outset"],["On cloud nine","Very happy"],["A Pandora's box","A source of troubles"],["The pros and cons","Advantages and disadvantages"],["A red herring","A misleading clue"],["A red-letter day","A memorable day"],["To run in the family","A hereditary trait"],["A snake in the grass","A hidden enemy"],["A square peg in a round hole","A misfit"],["A storm in a teacup","A big fuss over a trifle"],["To take the bull by the horns","To face boldly"],["To take to one's heels","To flee"],["Tooth and nail","Fiercely"],["To turn over a new leaf","To reform oneself"],["An uphill task","A difficult task"],["A wet blanket","A spoilsport"],["A white elephant","A costly useless thing"],["Yeoman's service","Excellent service"],["At loggerheads","In conflict"],["At one's wit's end","Perplexed"],["Bad blood","Ill feeling"],["To break the ice","To initiate conversation"],["To burn one's bridges","To make retreat impossible"],["By hook or by crook","By any means"],["To call it a day","To stop working"],["Chicken-hearted","Cowardly"],["A close shave","A narrow escape"],["To die in harness","To die while working"],["Elbow grease","Hard work"],["To feather one's nest","To enrich oneself"],["To get cold feet","To become afraid"],["Hand in glove","In close association"],["To hang by a thread","To be in a precarious state"],["To have an axe to grind","To have a selfish motive"],["To hit below the belt","To act unfairly"],["In black and white","In writing"],["In the limelight","At the centre of attention"],["To iron out","To remove difficulties"],["To keep one's word","To fulfil a promise"],["To leave no stone unturned","To try everything"],["Like a fish out of water","Uncomfortable"],["To make ends meet","To manage expenses"],["To move heaven and earth","To do one's utmost"],["Null and void","Invalid"],["On the spur of the moment","Suddenly"],["Out of the woods","Out of danger"],["Palmy days","Prosperous days"],["To pass the buck","To shift blame"],["To pay lip service","Insincere praise"],["To pick holes","To find faults"],["To play ducks and drakes","To squander"],["To pull strings","To use influence"],["To put the cart before the horse","To reverse the order"],["To read between the lines","To grasp the hidden meaning"],["Red tape","Official delay"],["To rule the roost","To dominate"],["To run riot","To behave wildly"],["The salt of the earth","A very good person"],["To see eye to eye","To agree"],["A silver lining","Hope in despair"],["To smell a rat","To suspect foul play"]];
+
+const OWST=[["One who loves mankind","Philanthropist"],["One who hates mankind","Misanthrope"],["One who can use both hands","Ambidextrous"],["One who abstains from alcohol","Teetotaller"],["A lover of books","Bibliophile"],["One who speaks many languages","Polyglot"],["Incapable of being corrected","Incorrigible"],["One who believes in fate","Fatalist"],["One indifferent to pleasure and pain","Stoic"],["Government by a small group","Oligarchy"],["A place where birds are kept","Aviary"],["One who eats everything","Omnivore"],["Fear of heights","Acrophobia"],["A speech without preparation","Extempore"],["One who hates women","Misogynist"],["One who lives a solitary life","Recluse"],["Murder of one's brother","Fratricide"],["A remedy for all ills","Panacea"],["One new to a profession","Novice"],["Study of word origins","Etymology"],["Words inscribed on a tomb","Epitaph"],["Murder of a king","Regicide"],["Murder of one's father","Patricide"],["Murder of one's mother","Matricide"],["Murder of an infant","Infanticide"],["Government by one person","Autocracy"],["Government by the rich","Plutocracy"],["Government by officials","Bureaucracy"],["Fear of water","Hydrophobia"],["Fear of closed spaces","Claustrophobia"],["Fear of crowds","Agoraphobia"],["One who walks in sleep","Somnambulist"],["One who talks in sleep","Somniloquist"],["One who eats human flesh","Cannibal"],["That which cannot be heard","Inaudible"],["That which cannot be seen","Invisible"],["That which cannot be conquered","Invincible"],["That which cannot be believed","Incredible"],["That which cannot be avoided","Inevitable"],["That which cannot be read","Illegible"],["One who is easily deceived","Credulous"],["One who flatters","Sycophant"],["Centre of attraction","Cynosure"],["A place for burial of the dead","Cemetery"],["Study of birds","Ornithology"],["Study of coins","Numismatics"],["Study of stamps","Philately"],["Worship of idols","Idolatry"],["A man whose wife is dead","Widower"],["A woman whose husband is dead","Widow"],["A child born after the father's death","Posthumous child"],["One who believes in God","Theist"],["One who does not believe in God","Atheist"],["One who knows everything","Omniscient"],["One who is present everywhere","Omnipresent"],["One who can do anything","Omnipotent"],["A hater of marriage","Misogamist"],["Lover of oneself","Egoist"],["One against all change","Conservative"],["A person who leaves his country","Emigrant"],["A person who settles in another country","Immigrant"],["Killing of oneself","Suicide"],["Fear of fire","Pyrophobia"],["Study of the stars","Astronomy"],["Study of the earth","Geology"],["Speaking aloud one's thoughts","Soliloquy"],["A short pithy saying","Maxim"],["A list of books","Bibliography"],["A life history by oneself","Autobiography"],["A life history by another","Biography"],["One who compiles a dictionary","Lexicographer"],["Fear of darkness","Nyctophobia"],["Love of one's country","Patriotism"]];
+
+const COLLOC=[["She is addicted __ smoking.","to"],["He was accused __ theft.","of"],["She abstained __ voting.","from"],["The meeting was presided __ the chairman.","over"],["I am grateful __ you.","to"],["He deals __ electronics.","in"],["She deals __ her clients politely.","with"],["He was cured __ malaria.","of"],["He repented __ his folly.","of"],["There is no exception __ this rule.","to"],["She takes pride __ her work.","in"],["He is eligible __ the post.","for"],["She is bent __ mischief.","on"],["He is blind __ one eye.","of"],["He is capable __ hard work.","of"],["They congratulated him __ his success.","on"],["She is junior __ me.","to"],["He prefers tea __ coffee.","to"],["Nothing prevented him __ going.","from"],["He refrained __ smoking.","from"],["She relies __ her parents.","on"],["Hard work resulted __ success.","in"],["He sided __ his friend.","with"],["She stared __ the stranger.","at"],["He submitted __ the decision.","to"],["I sympathize __ you.","with"],["He has a taste __ music.","for"],["I am tired __ this routine.","of"],["She confided __ her friend.","in"],["The committee consists __ ten members.","of"],["He complied __ the rules.","with"],["His actions conform __ the law.","to"],["He corresponded __ his brother.","with"],["She craved __ affection.","for"],["He died __ cholera.","of"],["His views differ __ mine.","from"],["I disagree __ you.","with"],["He dispensed __ his old car.","with"],["He disposed __ his property.","of"],["She dreams __ fame.","of"],["He dwelt __ the incident.","on"],["They embarked __ a new venture.","on"],["The police enquired __ the case.","into"],["He entered __ an agreement.","into"],["He excels __ mathematics.","in"],["She is faithful __ her principles.","to"],["He is familiar __ the route.","with"],["She glanced __ the letter.","at"],["He grieved __ the loss.","over"],["Guard __ bad habits.","against"],["He hankered __ wealth.","after"],["He hinted __ a promotion.","at"],["They hope __ success.","for"],["He is ignorant __ the rules.","of"],["They imposed a fine __ him.","on"],["She is indifferent __ praise.","to"],["He insisted __ going alone.","on"],["He is intent __ winning.","on"],["She is jealous __ her sister.","of"],["They jeered __ the player.","at"],["He jumped __ the offer.","at"],["She knocked __ the door.","at"],["They laughed __ his joke.","at"],["Listen __ the teacher.","to"],["She longs __ home.","for"],["He looks __ his parents.","after"],["The police looked __ the matter.","into"],["She is married __ a doctor.","to"],["Don't meddle __ my affairs.","with"],["He met __ an accident.","with"],["He is oblivious __ the danger.","of"],["It never occurred __ me.","to"],["He parted __ his books.","with"],["She pined __ her homeland.","for"]];
+const PREPS=["to","of","in","on","at","for","with","from","by","over","against","into"];
+
+function genIdiom(){const w=gpick(IDIOMS);const d=gsample(IDIOMS.map(x=>x[1]),3,new Set([w[1]]));
+  return {s:"e",t:"idm",q:"“"+w[0]+"” means:",o:[w[1],d[0],d[1],d[2]],a:0,x:"<b>"+w[0]+"</b> = "+w[1].toLowerCase()+"."};}
+function genOWS(){const w=gpick(OWST);const d=gsample(OWST.map(x=>x[1]),3,new Set([w[1]]));
+  return {s:"e",t:"ows",q:w[0]+":",o:[w[1],d[0],d[1],d[2]],a:0,x:"<b>"+w[0]+"</b> → "+w[1]+"."};}
+function genFIB(){const w=gpick(COLLOC);const d=gsample(PREPS,3,new Set([w[1]]));
+  return {s:"e",t:"fib",q:w[0],o:[w[1],d[0],d[1],d[2]],a:0,x:"Fixed preposition — <b>"+w[1]+"</b>: “"+w[0].replace("__",w[1])+"”"};}
+
+const GPN=["boys","girls","students","players","teachers","workers","brothers","sisters"];
+function genErr(){
+  const pn=gpick(GPN), t=(Math.random()*10)|0, err=Math.random()<0.72;
+  const O=["Part (a)","Part (b)","Part (c)","No error"];
+  function mk(q,ea,eb,ec,x){return {s:"e",t:"err",q:q,o:O,a:err?(ea===0?0:eb===1?1:2):3,x:err?x:"No error — the sentence is correct."};}
+  switch(t){
+    case 0: return mk("Find the error: “Neither of the "+pn+" (a)/ "+(err?"have":"has")+" completed (b)/ the task (c)/ No error (d)”",0,1,2,"“Neither of” takes a singular verb — <b>has completed</b>.");
+    case 1: return mk("Find the error: “Each of the "+pn+" (a)/ "+(err?"were":"was")+" present (b)/ in the hall (c)/ No error (d)”",0,1,2,"“Each of” is singular — <b>was present</b>.");
+    case 2: return mk("Find the error: “They have been waiting (a)/ "+(err?"since":"for")+" two hours (b)/ for the bus (c)/ No error (d)”",0,1,2,"Duration needs <b>for</b>; “since” is for a point of time.");
+    case 3: return mk("Find the error: “She is one of the players (a)/ who "+(err?"has":"have")+" scored (b)/ a century (c)/ No error (d)”",0,1,2,"“Who” refers to “players” — <b>who have scored</b>.");
+    case 4: return mk("Find the error: “No sooner did he arrive (a)/ "+(err?"when":"than")+" the match started (b)/ in the stadium (c)/ No error (d)”",0,1,2,"“No sooner…<b>than</b>” is the correct pair.");
+    case 5: return mk("Find the error: “Scarcely had she finished (a)/ her homework "+(err?"than":"when")+" (b)/ her friend arrived (c)/ No error (d)”",0,1,2,"“Scarcely…<b>when</b>” is the correct pair.");
+    case 6: return mk("Find the error: “I prefer tea (a)/ "+(err?"than":"to")+" coffee (b)/ in the morning (c)/ No error (d)”",0,1,2,"“Prefer” takes <b>to</b>, not “than”.");
+    case 7: return mk("Find the error: “We are looking forward (a)/ "+(err?"to see":"to seeing")+" you (b)/ next week (c)/ No error (d)”",0,1,2,"“Look forward to” takes a gerund — <b>to seeing</b>.");
+    case 8: return mk("Find the error: “Between you and "+(err?"I":"me")+" (a)/ this must remain (b)/ a secret (c)/ No error (d)”",0,1,2,"After a preposition use the objective case — <b>between you and me</b>.");
+    default: return mk("Find the error: “Many a leader (a)/ "+(err?"have":"has")+" promised (b)/ reforms (c)/ No error (d)”",0,1,2,"“Many a” takes a singular verb — <b>has promised</b>.");
+  }
+}
+
+const VSUBJ=[["She","her","writes"],["He","him","writes"],["The boy","him","writes"],["Ravi","him","writes"]];
+const VSUBJ2=[["He","him","has"],["She","her","has"],["The boy","him","has"],["They","them","have"]];
+const VOBJ=["a letter","a novel","a song","the homework","an essay","a poem"];
+const VVERBS=[["write","wrote","written","writing"],["sing","sang","sung","singing"],["build","built","built","building"],["eat","ate","eaten","eating"],["drive","drove","driven","driving"]];
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function genVoice(){
+  const t=(Math.random()*8)|0, v=gpick(VVERBS), o=gpick(VOBJ), O=cap(o);
+  let act,cor,wr,rule;
+  if(t===0){const s=gpick(VSUBJ);act=s[0]+" "+s[2]+" "+o+".";cor=O+" is "+v[2]+" by "+s[1]+".";wr=[O+" was "+v[2]+" by "+s[1]+".",O+" has been "+v[2]+" by "+s[1]+".",O+" is being "+v[2]+" by "+s[1]+"."];rule="Simple present → is/am/are + V3.";}
+  else if(t===1){const s=gpick(VSUBJ2);act=s[0]+" "+v[1]+" "+o+".";cor=O+" was "+v[2]+" by "+s[1]+".";wr=[O+" is "+v[2]+" by "+s[1]+".",O+" has been "+v[2]+" by "+s[1]+".",O+" had been "+v[2]+" by "+s[1]+"."];rule="Simple past → was/were + V3.";}
+  else if(t===2){act="They are "+v[3]+" "+o+".";cor=O+" is being "+v[2]+" by them.";wr=[O+" is "+v[2]+" by them.",O+" was being "+v[2]+" by them.",O+" has been "+v[2]+" by them."];rule="Present continuous → is/am/are being + V3.";}
+  else if(t===3){const s=gpick(VSUBJ2);act=s[0]+" "+s[2]+" "+v[2]+" "+o+".";cor=O+" has been "+v[2]+" by "+s[1]+".";wr=[O+" was "+v[2]+" by "+s[1]+".",O+" is "+v[2]+" by "+s[1]+".",O+" had been "+v[2]+" by "+s[1]+"."];rule="Present perfect → has/have been + V3.";}
+  else if(t===4){const s=gpick(VSUBJ2);act=s[0]+" will "+v[0]+" "+o+".";cor=O+" will be "+v[2]+" by "+s[1]+".";wr=[O+" would be "+v[2]+" by "+s[1]+".",O+" is "+v[2]+" by "+s[1]+".",O+" is being "+v[2]+" by "+s[1]+"."];rule="“Will” → will be + V3.";}
+  else if(t===5){act="You must obey the rules.";cor="The rules must be obeyed.";wr=["The rules must obeyed.","The rules should be obeyed.","The rules will be obeyed."];rule="Modal → modal + be + V3.";}
+  else if(t===6){act="Open the door.";cor="Let the door be opened.";wr=["Let the door opened.","The door is opened.","Let the door opens."];rule="Imperative → Let + object + be + V3.";}
+  else{act="Who "+v[1]+" this novel?";cor="By whom was this novel "+v[2]+"?";wr=["Who was this novel "+v[2]+" by?","By whom this novel was "+v[2]+"?","By whom has this novel been "+v[2]+"?"];rule="“Who” → “By whom” + was/were + V3.";}
+  return {s:"e",t:"voi",q:"Choose the correct passive voice: “"+act+"”",o:[cor,wr[0],wr[1],wr[2]],a:0,x:rule};
+}
+
+function genNar(){
+  const t=(Math.random()*8)|0;let dir,cor,wr;
+  if(t===0){dir='He said, “I am tired.”';cor="He said that he was tired.";wr=["He said that he is tired.","He said that I was tired.","He said that he had been tired."];}
+  else if(t===1){dir='She said, “I will help you tomorrow.”';cor="She said that she would help me the next day.";wr=["She said that she will help me tomorrow.","She said that she would help me tomorrow.","She said that she will help me the next day."];}
+  else if(t===2){dir='He said to me, “Are you ready?”';cor="He asked me if I was ready.";wr=["He asked me that I was ready.","He asked me if I am ready.","He asked me that was I ready."];}
+  else if(t===3){dir='She said to him, “Where do you live?”';cor="She asked him where he lived.";wr=["She asked him that where he lived.","She asked him where does he live.","She asked him where he lives."];}
+  else if(t===4){dir='The teacher said, “Sit down, boys.”';cor="The teacher ordered the boys to sit down.";wr=["The teacher said the boys to sit down.","The teacher ordered that the boys sit down.","The teacher told that the boys should sit down."];}
+  else if(t===5){dir='He said, “What a beautiful garden!”';cor="He exclaimed with joy that it was a beautiful garden.";wr=["He said that what a beautiful garden it was.","He exclaimed with joy that it is a beautiful garden.","He told with joy that it was a beautiful garden."];}
+  else if(t===6){dir='They said, “Let us go out.”';cor="They proposed that they should go out.";wr=["They said that let us go out.","They proposed to go out.","They suggested that we should go out."];}
+  else{dir='She said, “I was cooking dinner.”';cor="She said that she had been cooking dinner.";wr=["She said that she was cooking dinner.","She said that she is cooking dinner.","She said that she has been cooking dinner."];}
+  return {s:"e",t:"nar",q:"Choose the correct indirect speech: "+dir,o:[cor,wr[0],wr[1],wr[2]],a:0,x:"Tense shifts back and time-words change in indirect speech."};
+}
+
+const QUADS=[["The alarm rang at five.","He got up and freshened up.","He revised his notes for an hour.","He left for the exam centre."],["The sky turned dark suddenly.","Heavy rain lashed the city.","Streets were flooded within an hour.","Traffic came to a standstill."],["She planted a sapling in her garden.","She watered it every morning.","In two years it grew tall.","Birds now nest in its branches."],["The old man saved every rupee.","He opened a small shop.","His business slowly prospered.","He now employs ten workers."],["A spark fell on the dry grass.","The fire spread quickly.","Villagers rushed with buckets of water.","The blaze was controlled by evening."],["The team lost the first match.","The coach changed the strategy.","They won the next three games.","They lifted the trophy."],["He borrowed books from the library.","He read for two hours daily.","His vocabulary improved greatly.","He topped the English section."],["The river breached its banks.","Crops were submerged.","Relief camps were set up.","Normal life resumed in a week."],["She learnt stitching at a centre.","She bought a sewing machine.","She started taking orders.","Her income doubled in a year."],["The seed lay dormant in winter.","Spring rain woke it up.","A green shoot appeared.","By summer it bore flowers."]];
+function genPQRS(){
+  const quad=gpick(QUADS);
+  const labels=["P","Q","R","S"];
+  const order=gsample([0,1,2,3],4,new Set());
+  const shown=order.map((si,i)=>labels[i]+": "+quad[si]);
+  const correct=order.map((si)=>labels[order.indexOf(si)]).join("");
+  const opts=new Set([correct]);
+  while(opts.size<4){const p=gsample([0,1,2,3],4,new Set());const s=p.map(si=>labels[order.indexOf(si)]).join("");opts.add(s);}
+  const arr=[...opts];
+  return {s:"e",t:"pqrs",q:shown.join(" ")+" Correct order:",o:arr,a:arr.indexOf(correct),x:"Follow the sequence of events — the correct order is <b>"+correct+"</b>."};
+}
+
+const ARTICLES=[["14","Equality before law"],["15","Prohibition of discrimination"],["16","Equality of opportunity in public employment"],["17","Abolition of untouchability"],["18","Abolition of titles"],["19","Six freedoms — speech, assembly, movement"],["21","Protection of life and personal liberty"],["21A","Right to education"],["23","Prohibition of forced labour"],["24","Prohibition of child labour"],["25–28","Freedom of religion"],["29–30","Cultural and educational rights"],["32","Right to constitutional remedies"],["40","Organisation of village panchayats"],["44","Uniform civil code"],["48","Organisation of agriculture"],["50","Separation of judiciary from executive"],["51A","Fundamental duties"],["72","Pardoning power of the President"],["110","Definition of Money Bills"],["112","Annual Financial Statement (Budget)"],["148","Comptroller and Auditor General"],["280","Finance Commission"],["324","Election Commission"],["343","Official language of the Union"],["352","National Emergency"],["356","President's Rule in a state"],["360","Financial Emergency"],["368","Amendment of the Constitution"]];
+function genArt(){const w=gpick(ARTICLES);const d=gsample(ARTICLES.map(x=>x[0]),3,new Set([w[0]])).map(n=>"Article "+n);
+  return {s:"g",t:"pol",q:"Identify the Article: “"+w[1]+"”",o:["Article "+w[0],d[0],d[1],d[2]],a:0,x:"<b>Article "+w[0]+"</b> — "+w[1].toLowerCase()+"."};}
+
+const FACTS=[
+["The Tehri dam is built on which river?","Bhagirathi","Yamuna","Ganga","Alaknanda"],
+["Sardar Sarovar dam is on which river?","Narmada","Tapi","Mahi","Sabarmati"],
+["Nagarjuna Sagar dam is on which river?","Krishna","Godavari","Kaveri","Tungabhadra"],
+["Which river flows through the Kashmir valley?","Jhelum","Chenab","Ravi","Beas"],
+["The Kaveri river empties into the:","Bay of Bengal","Arabian Sea","Indian Ocean","Gulf of Kutch"],
+["Jim Corbett National Park, India's first national park, is in:","Uttarakhand","Madhya Pradesh","Assam","Rajasthan"],
+["Periyar National Park is located in:","Kerala","Karnataka","Tamil Nadu","Odisha"],
+["Ranthambore National Park is famous for:","Tigers","Lions","Rhinos","Elephants"],
+["The Silent Valley National Park is in:","Kerala","Assam","Odisha","Chhattisgarh"],
+["“Malgudi Days” was written by:","R. K. Narayan","R. K. Laxman","Mulk Raj Anand","Khushwant Singh"],
+["“The White Tiger” was written by:","Aravind Adiga","Arundhati Roy","Kiran Desai","Jhumpa Lahiri"],
+["“Interpreter of Maladies” was written by:","Jhumpa Lahiri","Bharati Mukherjee","Chitra Divakaruni","Kiran Desai"],
+["“Arthashastra” was written by:","Kautilya","Kalhana","Banabhatta","Patanjali"],
+["“Indica” was written by:","Megasthenes","Fa-Hien","Hiuen Tsang","Ptolemy"],
+["“Rajatarangini” was written by:","Kalhana","Kalidasa","Bhavabhuti","Banabhatta"],
+["“Glimpses of World History” was written by:","Jawaharlal Nehru","M. K. Gandhi","B. R. Ambedkar","Sardar Patel"],
+["“Savitri” was written by:","Sri Aurobindo","Rabindranath Tagore","Sarojini Naidu","Subramania Bharati"],
+["The Santosh Trophy is associated with:","Football","Hockey","Cricket","Kabaddi"],
+["The Durand Cup is played for:","Football","Hockey","Polo","Rugby"],
+["Wimbledon is associated with:","Tennis","Golf","Badminton","Squash"],
+["The Agha Khan Cup is associated with:","Hockey","Football","Cricket","Polo"],
+["The term “bogey” is used in:","Golf","Tennis","Cricket","Hockey"],
+["“Silly point” is a fielding position in:","Cricket","Football","Hockey","Baseball"],
+["The headquarters of the United Nations is in:","New York","Washington D.C.","Geneva","Paris"],
+["The headquarters of ASEAN is in:","Jakarta","Bangkok","Singapore","Kuala Lumpur"],
+["The headquarters of OPEC is in:","Vienna","Riyadh","Doha","Abu Dhabi"],
+["The headquarters of NATO is in:","Brussels","London","Paris","Berlin"],
+["The headquarters of the Red Cross is in:","Geneva","Paris","Rome","Oslo"],
+["The headquarters of the Asian Development Bank is in:","Manila","Tokyo","Singapore","Bangkok"],
+["The first President of India was:","Dr. Rajendra Prasad","Dr. S. Radhakrishnan","Jawaharlal Nehru","Sardar Patel"],
+["The first Indian Nobel laureate was:","Rabindranath Tagore","C. V. Raman","Amartya Sen","Mother Teresa"],
+["The first Indian in space was:","Rakesh Sharma","Kalpana Chawla","Sunita Williams","Ravish Malhotra"],
+["The first man in space was:","Yuri Gagarin","Neil Armstrong","Alan Shepard","Edwin Aldrin"],
+["The first woman in space was:","Valentina Tereshkova","Sally Ride","Kalpana Chawla","Peggy Whitson"],
+["The first Indian woman to climb Mount Everest was:","Bachendri Pal","Santosh Yadav","Premlata Agarwal","Arunima Sinha"],
+["The first Deputy Prime Minister of India was:","Sardar Vallabhbhai Patel","Morarji Desai","Charan Singh","Devi Lal"],
+["The first Speaker of the Lok Sabha was:","G. V. Mavalankar","Sardar Hukam Singh","Neelam Sanjiva Reddy","Balram Jakhar"],
+["The first Law Minister of independent India was:","B. R. Ambedkar","Jawaharlal Nehru","Rajendra Prasad","C. Rajagopalachari"],
+["The Jallianwala Bagh massacre took place in:","1919","1917","1921","1922"],
+["The Non-Cooperation Movement was launched in:","1920","1919","1921","1922"],
+["The Simon Commission came to India in:","1928","1925","1927","1930"],
+["The Poona Pact was signed in:","1932","1930","1931","1934"],
+["India's first general elections were held in:","1951–52","1947–48","1950–51","1952–53"],
+["The States Reorganisation Act was passed in:","1956","1952","1954","1960"],
+["The Green Revolution began in India in:","1966","1960","1962","1971"],
+["The National Emergency of 1975 was imposed under Article:","352","356","360","368"],
+["The SI unit of power is:","Watt","Joule","Volt","Ohm"],
+["Night blindness is caused by deficiency of:","Vitamin A","Vitamin C","Vitamin D","Vitamin K"],
+["Blood clotting needs:","Vitamin K","Vitamin A","Vitamin C","Vitamin E"],
+["Penicillin was discovered by:","Alexander Fleming","Louis Pasteur","Robert Koch","Edward Jenner"],
+["X-rays were discovered by:","W. C. Roentgen","J. J. Thomson","Marie Curie","Becquerel"],
+["The telephone was invented by:","Alexander Graham Bell","Thomas Edison","Nikola Tesla","Marconi"],
+["The theory of relativity was given by:","Albert Einstein","Isaac Newton","Galileo","Niels Bohr"],
+["The laws of motion were given by:","Isaac Newton","Galileo","Kepler","Einstein"],
+["Blood groups were discovered by:","Karl Landsteiner","William Harvey","Paul Ehrlich","Robert Koch"],
+["The Chairman of the Drafting Committee was:","B. R. Ambedkar","Jawaharlal Nehru","Rajendra Prasad","Sardar Patel"],
+["The Objective Resolution was moved by:","Jawaharlal Nehru","B. R. Ambedkar","Rajendra Prasad","Sardar Patel"],
+["The 42nd Amendment was passed in:","1976","1975","1977","1978"],
+["The voting age was reduced to 18 by the:","61st Amendment","42nd Amendment","44th Amendment","52nd Amendment"],
+["The Governor of a state is appointed by the:","President","Prime Minister","Chief Minister","Chief Justice"],
+["The minimum age for a Rajya Sabha member is:","30 years","25 years","35 years","21 years"],
+["The quorum for a Lok Sabha meeting is:","1/10th of members","1/3rd of members","1/2 of members","2/3rd of members"],
+["Majuli, the world's largest river island, is in:","Assam","West Bengal","Bihar","Odisha"],
+["The Andaman and Nicobar Islands lie in the:","Bay of Bengal","Arabian Sea","Indian Ocean","Laccadive Sea"],
+["Lakshadweep lies in the:","Arabian Sea","Bay of Bengal","Indian Ocean","Palk Strait"],
+["The Gulf of Mannar lies between India and:","Sri Lanka","Maldives","Myanmar","Indonesia"],
+["The coldest inhabited place in India is:","Dras","Leh","Kargil","Shimla"],
+["The “Land of Five Rivers” is:","Punjab","Haryana","Uttar Pradesh","Rajasthan"],
+["Which state is the largest producer of rice?","West Bengal","Uttar Pradesh","Punjab","Andhra Pradesh"],
+["Which state is the largest producer of wheat?","Uttar Pradesh","Punjab","Madhya Pradesh","Haryana"],
+["The Deccan plateau is made mostly of:","Basaltic lava","Granite","Sandstone","Limestone"],
+["The “Father of Indian Planning” is:","M. Visvesvaraya","P. C. Mahalanobis","Dadabhai Naoroji","Jawaharlal Nehru"],
+["The Bombay Plan (1944) was prepared by:","Indian industrialists","The British government","The Planning Commission","The Nehru Committee"],
+["India's first stock exchange is the:","Bombay Stock Exchange","National Stock Exchange","Calcutta Stock Exchange","Madras Stock Exchange"],
+["The BSE Sensex tracks how many stocks?","30","50","100","500"],
+["The Nifty index tracks how many stocks?","50","30","100","500"],
+["Paper currency was first issued in India in:","1861","1858","1947","1935"],
+["The decimal coinage system started in India in:","1957","1947","1951","1961"],
+["The rupee symbol ₹ was adopted in:","2010","2008","2012","2014"]];
+function genFact(){const f=gpick(FACTS);
+  return {s:"g",t:"gk",q:f[0],o:[f[1],f[2],f[3],f[4]],a:0,x:"<b>"+f[1]+"</b>."};}
+
+const GEN_E=[genSyn,genAnt,genIdiom,genOWS,genFIB,genErr,genVoice,genNar,genPQRS];
+const GEN_G=[genArt,genFact];
+function genOne(kind){
+  const fn=kind==="e"?gpick(GEN_E):(kind==="g"||kind==="ca")?gpick(GEN_G):(Math.random()<0.5?gpick(GEN_E):gpick(GEN_G));
+  const q=fn(); q.h=q.s+"|"+q.q; return q;
+}
 
 /* ================= QUIZ ENGINE ================= */
 const TOPIC = {err:"Error Spotting",fib:"Fill in the Blank",syn:"Synonym",ant:"Antonym",idm:"Idiom & Phrase",
   ows:"One-Word Substitution",voi:"Voice",nar:"Narration",pqrs:"Para Jumble",
-  pol:"Polity",his:"History",geo:"Geography",eco:"Economy",sci:"Science",gk:"Static GK"};
+  pol:"Polity",his:"History",geo:"Geography",eco:"Economy",sci:"Science",gk:"Static GK",ca:"Current Affairs"};
 const $ = id => document.getElementById(id);
 const qText=$("qText"), optsEl=$("opts"), whyEl=$("why"), btnNext=$("btnNext"), btnSkip=$("btnSkip");
 const tSub=$("tSub"), tTop=$("tTop"), tQno=$("tQno"), toast=$("toast");
@@ -550,7 +805,33 @@ let stats={att:0, ok:0, streak:0, best:+(localStorage.getItem("cglBest")||0)};
 
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function toastMsg(m){toast.textContent=m;toast.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove("show"),2200);}
-function buildPool(){pool=shuffle(QUESTIONS.filter(q=>filter==="all"||q.s===filter));pos=0;}
+let seenStatic=new Set();try{seenStatic=new Set(JSON.parse(localStorage.getItem("cglSeen")||"[]"));}catch(e){}
+let toppedUp=false;
+function saveSeen(){try{localStorage.setItem("cglSeen",JSON.stringify([...seenStatic].slice(-3000)));}catch(e){}}
+function fmatch(q){return filter==="all"||(filter==="ca"?q.t==="ca":q.s===filter);}
+function remainingStatic(){let n=0;for(let i=0;i<QUESTIONS.length;i++){if(fmatch(QUESTIONS[i])&&!seenStatic.has(i))n++;}return n;}
+function buildPool(){
+  toppedUp=false;
+  const fresh=[];
+  for(let i=0;i<QUESTIONS.length;i++){if(fmatch(QUESTIONS[i])&&!seenStatic.has(i))fresh.push(i);}
+  pool=shuffle(fresh.map(i=>({q:QUESTIONS[i],id:"s"+i})));
+  pos=0;
+  autoTopUp();
+}
+function autoTopUp(){
+  if(toppedUp||remainingStatic()>=50)return;
+  toppedUp=true;
+  const kind=filter==="all"?"mix":filter;
+  const seenH=new Set();let added=0,guard=0;
+  while(added<80&&guard<600){
+    guard++;
+    const g=genOne(kind);
+    if(!g||seenH.has(g.h))continue;
+    seenH.add(g.h);pool.push({q:g,id:"g"+g.h});added++;
+  }
+  shuffle(pool);
+  if(added)toastMsg("⚡ Bank below 50 — auto-added "+added+" fresh questions");
+}
 
 function paintStats(){
   $("sAtt").textContent=stats.att;
@@ -562,9 +843,13 @@ function paintStats(){
 }
 
 function render(){
-  if(pos>=pool.length){buildPool();toastMsg("🔁 Bank reshuffled — fresh questions, keep going!");}
+  if(pos>=pool.length){
+    seenStatic.clear();saveSeen();
+    buildPool();
+    toastMsg("🔁 New cycle — bank refreshed, keep going!");
+  }
   answered=false;
-  const q=pool[pos]; qCount++;
+  const q=pool[pos].q; qCount++;
   const isEng=q.s==="e";
   tSub.textContent=isEng?"ENGLISH":"GENERAL AWARENESS";
   tSub.className="tag "+(isEng?"eng":"ga");
@@ -593,13 +878,15 @@ function reveal(pick){
     else if(i===pick)b.classList.add("wrong");
     else b.classList.add("dim");
   });
-  whyEl.innerHTML="<b>💡 Why:</b> "+pool[pos].x;
+  whyEl.innerHTML="<b>💡 Why:</b> "+pool[pos].q.x;
   whyEl.classList.add("show");
   btnNext.classList.add("show");
 }
 
 function answer(i){
   if(answered)return; answered=true;
+  const pid=pool[pos].id;
+  if(pid[0]==="s"){seenStatic.add(+pid.slice(1));saveSeen();}
   stats.att++;
   const good=(i===correctIdx);
   if(good){stats.ok++;stats.streak++;if(stats.streak>stats.best){stats.best=stats.streak;localStorage.setItem("cglBest",stats.best);}}
@@ -609,7 +896,7 @@ function answer(i){
 }
 
 btnNext.onclick=()=>{pos++;render();};
-btnSkip.onclick=()=>{if(answered)return;answered=true;stats.att++;stats.streak=0;reveal(-1);paintStats();};
+btnSkip.onclick=()=>{if(answered)return;answered=true;const pid=pool[pos].id;if(pid[0]==="s"){seenStatic.add(+pid.slice(1));saveSeen();}stats.att++;stats.streak=0;reveal(-1);paintStats();};
 
 document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{
   document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
