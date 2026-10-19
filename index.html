@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CGL 2026 Rapid Revision — English + GA</title>
+<style>
+  :root{
+    --bg:#0b1220; --card:#111c33; --card2:#0e1830; --line:#22304f;
+    --txt:#e8eefc; --mut:#93a3c4; --acc:#f5a623; --acc2:#ffd97a;
+    --ok:#10b981; --okbg:rgba(16,185,129,.14); --bad:#ef4444; --badbg:rgba(239,68,68,.13);
+    --chip:#16223e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{background:radial-gradient(1200px 600px at 50% -10%,#16264a 0%,var(--bg) 55%) fixed,var(--bg);
+    color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+    min-height:100vh;display:flex;justify-content:center;padding:18px 14px 60px}
+  .app{width:100%;max-width:640px}
+  header.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;
+    background:linear-gradient(135deg,var(--acc),#e2641d);box-shadow:0 6px 18px rgba(245,166,35,.35)}
+  .brand h1{font-size:17px;letter-spacing:.3px}
+  .brand h1 span{color:var(--acc2)}
+  .brand small{display:block;color:var(--mut);font-size:11.5px;font-weight:400;letter-spacing:.4px}
+  .streak{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:7px 14px;
+    font-size:13.5px;font-weight:700;white-space:nowrap}
+  .chips{display:flex;gap:8px;margin-bottom:12px}
+  .chip{flex:1;text-align:center;padding:10px 6px;border-radius:12px;background:var(--chip);
+    border:1px solid var(--line);color:var(--mut);font-size:13.5px;font-weight:600;cursor:pointer;transition:.18s}
+  .chip.on{background:linear-gradient(135deg,rgba(245,166,35,.22),rgba(245,166,35,.08));
+    border-color:var(--acc);color:var(--acc2)}
+  .stats{display:flex;gap:8px;margin-bottom:14px}
+  .stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 6px;text-align:center}
+  .stat b{display:block;font-size:17px}
+  .stat span{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+  .card{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);
+    border-radius:18px;padding:20px 18px;box-shadow:0 18px 44px rgba(0,0,0,.45);animation:rise .25s ease}
+  @keyframes rise{from{transform:translateY(10px);opacity:.4}to{transform:none;opacity:1}}
+  .meta{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .tag{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+    padding:5px 10px;border-radius:999px}
+  .tag.eng{background:rgba(96,165,250,.15);color:#93c5fd;border:1px solid rgba(96,165,250,.4)}
+  .tag.ga{background:rgba(245,166,35,.14);color:var(--acc2);border:1px solid rgba(245,166,35,.4)}
+  .tag.topic{background:rgba(148,163,184,.12);color:var(--mut);border:1px solid var(--line)}
+  .qno{margin-left:auto;color:var(--mut);font-size:12px;font-weight:600}
+  .q{font-size:17.5px;line-height:1.55;font-weight:600;margin-bottom:16px}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;cursor:pointer;
+    background:#0d1730;border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;
+    color:var(--txt);font-size:15px;line-height:1.45;transition:transform .12s,border-color .12s,background .12s}
+  .opt:not(.lock):hover{border-color:#3b517f;transform:translateY(-1px)}
+  .opt:not(.lock):active{transform:scale(.99)}
+  .opt .k{flex:0 0 28px;height:28px;border-radius:9px;display:grid;place-items:center;
+    background:#1a2748;color:var(--mut);font-weight:800;font-size:13px}
+  .opt.lock{cursor:default}
+  .opt.right{background:var(--okbg);border-color:var(--ok);box-shadow:0 0 0 1px var(--ok),0 8px 22px rgba(16,185,129,.25)}
+  .opt.right .k{background:var(--ok);color:#04120c}
+  .opt.wrong{background:var(--badbg);border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
+  .opt.wrong .k{background:var(--bad);color:#1c0505}
+  .opt.dim{opacity:.55}
+  .why{margin-top:14px;background:#0d1730;border:1px dashed #33507e;border-left:4px solid var(--acc);
+    border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.55;color:#cdd9f2;display:none}
+  .why.show{display:block;animation:rise .25s ease}
+  .why b{color:var(--acc2)}
+  .row{display:flex;gap:10px;margin-top:16px}
+  .btn{flex:1;border:none;border-radius:13px;padding:13px;font-size:15px;font-weight:800;cursor:pointer;transition:.15s}
+  .btn.next{background:linear-gradient(135deg,var(--acc),#e2641d);color:#241100;display:none}
+  .btn.next.show{display:block}
+  .btn.next:active{transform:scale(.98)}
+  .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--mut);flex:0 0 110px}
+  .btn.ghost:active{transform:scale(.97)}
+  .foot{margin-top:16px;text-align:center;color:var(--mut);font-size:12px;line-height:1.7}
+  .foot b{color:var(--acc2)}
+  kbd{background:#1a2748;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:11.5px;font-family:inherit}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);opacity:0;
+    background:#13203c;border:1px solid var(--acc);color:var(--acc2);padding:11px 20px;border-radius:999px;
+    font-size:14px;font-weight:700;transition:.3s;pointer-events:none;white-space:nowrap;z-index:9}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+  @media(max-width:420px){.q{font-size:16px}.opt{font-size:14px;padding:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">⚡</div>
+      <h1>CGL 2026 <span>Rapid Revision</span><small>ENGLISH + GENERAL AWARENESS • EXAM-LEVEL</small></h1>
+    </div>
+    <div class="streak" id="streak">🔥 0</div>
+  </header>
+
+  <div class="chips">
+    <div class="chip on" data-f="all">All Subjects</div>
+    <div class="chip" data-f="e">English</div>
+    <div class="chip" data-f="g">General Awareness</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="sAtt">0</b><span>Attempted</span></div>
+    <div class="stat"><b id="sOk" style="color:var(--ok)">0</b><span>Correct</span></div>
+    <div class="stat"><b id="sAcc">–</b><span>Accuracy</span></div>
+    <div class="stat"><b id="sBank">0</b><span>In Bank</span></div>
+  </div>
+
+  <main class="card" id="card">
+    <div class="meta">
+      <span class="tag eng" id="tSub">ENGLISH</span>
+      <span class="tag topic" id="tTop">Synonym</span>
+      <span class="qno" id="tQno">Q 1</span>
+    </div>
+    <div class="q" id="qText"></div>
+    <div class="opts" id="opts"></div>
+    <div class="why" id="why"></div>
+    <div class="row">
+      <button class="btn ghost" id="btnSkip">Skip ⏭</button>
+      <button class="btn next" id="btnNext">Next Question →</button>
+    </div>
+  </main>
+
+  <div class="foot">
+    Tap an option — the correct answer lights up <b>instantly</b>, like a feed quiz.<br>
+    Keys: <kbd>1</kbd>–<kbd>4</kbd> answer • <kbd>Enter</kbd> next • <kbd>S</kbd> skip &nbsp;•&nbsp; <b id="bankNote"></b>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ QUESTION BANK (authored for SSC CGL 2026 Tier-1 level) ============
+   s: e=English, g=General Awareness | t: topic | q: question | o: options | a: answer idx | x: explanation */
+const QUESTIONS = [
+{s:"e",t:"err",q:"Find the error: “Neither of the two brothers (a)/ have completed (b)/ their project on time (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Neither of” takes a singular verb — <b>has completed</b>, not have."},
+{s:"e",t:"err",q:"Find the error: “He has been working (a)/ in this office (b)/ since five years (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:2,x:"<b>For five years</b> — “since” is for a point of time, “for” for a duration."},
+{s:"e",t:"err",q:"Find the error: “Each of the students (a)/ were given (b)/ a separate topic (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Each of” is singular — <b>was given</b>."},
+{s:"e",t:"err",q:"Find the error: “Not only the teacher (a)/ but also the students (b)/ was surprised at the result (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:2,x:"With “not only…but also”, the verb agrees with the nearer subject — <b>were surprised</b>."},
+{s:"e",t:"err",q:"Find the error: “Scarcely had he reached (a)/ the station than (b)/ the train left (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Scarcely…<b>when</b>” is the correct pair, not “than”."},
+{s:"e",t:"err",q:"Find the error: “One of the boys (a)/ who are participating (b)/ is my brother (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:3,x:"No error — “who” refers to “boys” (plural → are), main verb “is” agrees with “one”."},
+{s:"e",t:"err",q:"Find the error: “If I was you (a)/ I would not (b)/ accept the offer (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:0,x:"Imaginary condition needs <b>were</b> — “If I were you”."},
+{s:"e",t:"err",q:"Find the error: “The committee (a)/ have submitted (b)/ its final report (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"Committee acting as one body takes a singular verb — <b>has submitted</b>."},
+{s:"e",t:"err",q:"Find the error: “She is junior (a)/ than me (b)/ in this department (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Junior” takes <b>to</b>, not “than” — junior to me."},
+{s:"e",t:"err",q:"Find the error: “He prevented me (a)/ to go (b)/ to the market (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Prevent” takes <b>from + -ing</b> — prevented me from going."},
+{s:"e",t:"err",q:"Find the error: “The sceneries of Kashmir (a)/ are (b)/ breathtaking (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:0,x:"“Scenery” is uncountable — <b>The scenery</b> of Kashmir is breathtaking."},
+{s:"e",t:"err",q:"Find the error: “I am looking forward (a)/ to meet (b)/ you soon (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Look forward to” takes a gerund — <b>to meeting</b> you."},
+{s:"e",t:"err",q:"Find the error: “Between you and I (a)/ the secret (b)/ must be kept (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:0,x:"After a preposition use the objective case — <b>between you and me</b>."},
+{s:"e",t:"err",q:"Find the error: “He is the most tallest (a)/ boy (b)/ in the class (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:0,x:"Double superlative — just <b>the tallest</b>."},
+{s:"e",t:"err",q:"Find the error: “No sooner did he enter (a)/ the room when (b)/ the lights went off (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“No sooner…<b>than</b>” is the correct pair."},
+{s:"e",t:"err",q:"Find the error: “The teacher asked (a)/ the students that (b)/ why they were late (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"Remove “that” in indirect questions — asked the students <b>why</b> they were late."},
+{s:"e",t:"err",q:"Find the error: “My friend has (a)/ many informations (b)/ about the exam (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Information” is uncountable — <b>much information</b>."},
+{s:"e",t:"err",q:"Find the error: “Hardly he had finished (a)/ his lunch (b)/ when the bell rang (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:0,x:"Inversion needed — <b>Hardly had he</b> finished."},
+{s:"e",t:"err",q:"Find the error: “She prefers coffee (a)/ than (b)/ tea (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Prefer” takes <b>to</b> — prefers coffee to tea."},
+{s:"e",t:"err",q:"Find the error: “The furnitures in the room (a)/ were (b)/ very expensive (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:0,x:"“Furniture” is uncountable — <b>The furniture</b> was very expensive."},
+{s:"e",t:"err",q:"Find the error: “Either Ram or his friends (a)/ has taken (b)/ my book (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"With “either…or”, verb agrees with the nearer subject — <b>have taken</b>."},
+{s:"e",t:"err",q:"Find the error: “He insisted (a)/ on me to accompany (b)/ him there (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Insist on” takes a gerund — insisted on <b>my accompanying</b> him."},
+{s:"e",t:"err",q:"Find the error: “The population of India (a)/ is greater (b)/ than China (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:2,x:"Faulty comparison — than <b>that of China</b>."},
+{s:"e",t:"err",q:"Find the error: “Unless you do not work hard (a)/ you will not (b)/ succeed (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:0,x:"“Unless” already carries the negative — <b>Unless you work hard</b>."},
+{s:"e",t:"err",q:"Find the error: “I have visited (a)/ the museum (b)/ yesterday (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:0,x:"With “yesterday” use simple past — <b>I visited</b> the museum yesterday."},
+{s:"e",t:"err",q:"Find the error: “He is capable (a)/ to do (b)/ this work (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Capable” takes <b>of + -ing</b> — capable of doing."},
+{s:"e",t:"err",q:"Find the error: “The news (a)/ are (b)/ shocking (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“News” is singular — <b>The news is</b> shocking."},
+{s:"e",t:"err",q:"Find the error: “She has a good (a)/ command on (b)/ English (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"Fixed phrase — <b>command of</b> English."},
+{s:"e",t:"err",q:"Find the error: “Both the sisters (a)/ love (b)/ one another (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:2,x:"For two people use <b>each other</b>; “one another” is for more than two."},
+{s:"e",t:"err",q:"Find the error: “He asked me (a)/ that what (b)/ I was doing (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"Drop “that” — asked me <b>what</b> I was doing."},
+{s:"e",t:"err",q:"Find the error: “The reason (a)/ of his failure (b)/ is because he was lazy (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:2,x:"“The reason…is <b>that</b> he was lazy” — never “because” after “the reason”."},
+{s:"e",t:"err",q:"Find the error: “Many a student (a)/ have failed (b)/ in the test (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Many a” takes a singular verb — <b>has failed</b>."},
+{s:"e",t:"err",q:"Find the error: “He congratulated (a)/ me for (b)/ my success (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Congratulate” takes <b>on</b> — congratulated me on my success."},
+{s:"e",t:"err",q:"Find the error: “The train will arrive (a)/ on (b)/ 6 o'clock (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"Use <b>at</b> for exact time — at 6 o'clock."},
+{s:"e",t:"err",q:"Find the error: “She is one of those girls (a)/ who is (b)/ very sincere (c)/ No error (d)”",o:["Part (a)","Part (b)","Part (c)","No error"],a:1,x:"“Who” refers to “girls” — <b>who are</b> very sincere."},
+{s:"e",t:"fib",q:"She has been suffering from fever ______ last Monday.",o:["for","from","since","by"],a:2,x:"“Since” + point of time (last Monday)."},
+{s:"e",t:"fib",q:"______ you work hard, you cannot succeed.",o:["Unless","If","Whether","Provided"],a:0,x:"“Unless you work hard” = if you do not work hard."},
+{s:"e",t:"fib",q:"He is addicted ______ smoking.",o:["with","to","of","in"],a:1,x:"Fixed preposition — addicted <b>to</b>."},
+{s:"e",t:"fib",q:"The meeting was presided ______ the chairman.",o:["by","over","with","at"],a:1,x:"“Preside <b>over</b>” a meeting."},
+{s:"e",t:"fib",q:"I am grateful ______ you for your help.",o:["with","for","to","at"],a:2,x:"Grateful <b>to</b> a person, grateful <b>for</b> a thing."},
+{s:"e",t:"fib",q:"______ of the two routes is shorter?",o:["Which","What","Whose","Whom"],a:0,x:"“Which” for a choice between two known items."},
+{s:"e",t:"fib",q:"He is ______ honourable man.",o:["a","an","the","no article"],a:1,x:"“An” before a vowel <b>sound</b> — honourable starts with a vowel sound."},
+{s:"e",t:"fib",q:"The thief ran away, but the police ran ______ him.",o:["after","behind","for","over"],a:0,x:"“Run <b>after</b>” = chase."},
+{s:"e",t:"fib",q:"She abstained ______ voting in the election.",o:["from","of","to","in"],a:0,x:"Abstain <b>from</b> + -ing."},
+{s:"e",t:"fib",q:"Hardly had I reached home ______ it started raining.",o:["than","when","then","that"],a:1,x:"“Hardly…<b>when</b>”."},
+{s:"e",t:"fib",q:"He is blind ______ one eye.",o:["in","of","with","by"],a:1,x:"Blind <b>of</b> an eye; blind <b>to</b> faults."},
+{s:"e",t:"fib",q:"The jury ______ divided in its opinion.",o:["was","were","is","has"],a:1,x:"Jury acting as individuals → plural verb <b>were</b>."},
+{s:"e",t:"fib",q:"______ rich should help the poor.",o:["A","An","The","No article"],a:2,x:"“The rich” = rich people as a class."},
+{s:"e",t:"fib",q:"She deals ______ cosmetics.",o:["with","in","on","at"],a:1,x:"Deal <b>in</b> goods; deal <b>with</b> a person."},
+{s:"e",t:"fib",q:"He succeeded ______ his efforts.",o:["by","through","in spite","despite of"],a:1,x:"Succeeded <b>through</b> his efforts (by means of)."},
+{s:"e",t:"fib",q:"I have no objection ______ your proposal.",o:["to","for","with","against"],a:0,x:"Objection <b>to</b> something."},
+{s:"e",t:"fib",q:"The child was cured ______ the disease.",o:["from","of","off","with"],a:1,x:"Cured <b>of</b> a disease."},
+{s:"e",t:"fib",q:"______ he is old, he works hard.",o:["Although","Despite","In spite","However"],a:0,x:"“Although” + clause; “despite” would need a noun phrase."},
+{s:"e",t:"fib",q:"She is proficient ______ music.",o:["at","in","with","for"],a:1,x:"Proficient <b>in</b> something."},
+{s:"e",t:"fib",q:"The train arrived ______ the platform an hour late.",o:["on","at","in","to"],a:1,x:"Arrive <b>at</b> a place (arrive <b>in</b> a country/city)."},
+{s:"e",t:"fib",q:"He was accused ______ theft.",o:["with","of","for","by"],a:1,x:"Accused <b>of</b> a crime."},
+{s:"e",t:"fib",q:"______ you like it or not, you must obey the rules.",o:["Whether","If","Unless","Though"],a:0,x:"“Whether…or not” for alternatives."},
+{s:"e",t:"fib",q:"The manager is very popular ______ his staff.",o:["among","with","between","to"],a:1,x:"Popular <b>with</b> people."},
+{s:"e",t:"fib",q:"He repented ______ his mistake.",o:["for","of","on","at"],a:1,x:"Repent <b>of</b> something."},
+{s:"e",t:"fib",q:"There is no exception ______ this rule.",o:["for","to","of","in"],a:1,x:"Exception <b>to</b> a rule."},
+{s:"e",t:"fib",q:"She takes pride ______ her work.",o:["of","in","on","at"],a:1,x:"Take pride <b>in</b> something."},
+{s:"e",t:"fib",q:"The soldier fought ______ courage.",o:["with","by","for","of"],a:0,x:"Fought <b>with</b> courage (manner)."},
+{s:"e",t:"fib",q:"He is eligible ______ the post.",o:["to","for","of","with"],a:1,x:"Eligible <b>for</b> a post."},
+{s:"e",t:"fib",q:"The prices are rising ______ day.",o:["by","per","every","each"],a:1,x:"“Day <b>by</b> day” / prices rising <b>by</b> the day."},
+{s:"e",t:"fib",q:"She is bent ______ mischief.",o:["on","upon","to","for"],a:1,x:"Bent <b>on</b> doing something."},
+{s:"e",t:"syn",q:"Choose the synonym of EPHEMERAL.",o:["Eternal","Short-lived","Mysterious","Fragile"],a:1,x:"Ephemeral = lasting a very short time."},
+{s:"e",t:"syn",q:"Choose the synonym of CANDID.",o:["Rude","Frank","Cunning","Timid"],a:1,x:"Candid = frank, outspoken."},
+{s:"e",t:"syn",q:"Choose the synonym of PRAGMATIC.",o:["Idealistic","Practical","Arrogant","Lazy"],a:1,x:"Pragmatic = practical, realistic."},
+{s:"e",t:"syn",q:"Choose the synonym of METICULOUS.",o:["Careless","Hasty","Thorough","Dull"],a:2,x:"Meticulous = showing great attention to detail."},
+{s:"e",t:"syn",q:"Choose the synonym of ALLEVIATE.",o:["Worsen","Relieve","Create","Ignore"],a:1,x:"Alleviate = relieve, lessen (pain/suffering)."},
+{s:"e",t:"syn",q:"Choose the synonym of AUDACIOUS.",o:["Cowardly","Bold","Polite","Weak"],a:1,x:"Audacious = bold, daring."},
+{s:"e",t:"syn",q:"Choose the synonym of ENIGMA.",o:["Solution","Mystery","Answer","Clarity"],a:1,x:"Enigma = a mystery, something hard to understand."},
+{s:"e",t:"syn",q:"Choose the synonym of PLETHORA.",o:["Scarcity","Excess","Lack","Order"],a:1,x:"Plethora = an excess, overabundance."},
+{s:"e",t:"syn",q:"Choose the synonym of PRUDENT.",o:["Reckless","Wise","Hasty","Foolish"],a:1,x:"Prudent = wise, showing careful judgement."},
+{s:"e",t:"syn",q:"Choose the synonym of EXACERBATE.",o:["Improve","Worsen","Calm","Heal"],a:1,x:"Exacerbate = make worse."},
+{s:"e",t:"syn",q:"Choose the synonym of TACITURN.",o:["Talkative","Silent","Cheerful","Rude"],a:1,x:"Taciturn = reserved, saying little."},
+{s:"e",t:"syn",q:"Choose the synonym of VENERATE.",o:["Despise","Respect","Ignore","Criticise"],a:1,x:"Venerate = regard with deep respect."},
+{s:"e",t:"syn",q:"Choose the synonym of LUCID.",o:["Confusing","Clear","Dark","Obscure"],a:1,x:"Lucid = clear, easy to understand."},
+{s:"e",t:"syn",q:"Choose the synonym of FERVENT.",o:["Cold","Passionate","Weak","Calm"],a:1,x:"Fervent = passionate, intense."},
+{s:"e",t:"syn",q:"Choose the synonym of DILIGENT.",o:["Lazy","Hardworking","Careless","Slow"],a:1,x:"Diligent = hardworking, careful."},
+{s:"e",t:"syn",q:"Choose the synonym of OBSCURE.",o:["Famous","Unclear","Bright","Known"],a:1,x:"Obscure = unclear, little-known."},
+{s:"e",t:"syn",q:"Choose the synonym of RESILIENT.",o:["Fragile","Tough","Weak","Rigid"],a:1,x:"Resilient = able to recover quickly; tough."},
+{s:"e",t:"syn",q:"Choose the synonym of SCRUTINIZE.",o:["Ignore","Examine closely","Glance","Skip"],a:1,x:"Scrutinize = examine very carefully."},
+{s:"e",t:"syn",q:"Choose the synonym of AMBIGUOUS.",o:["Clear","Vague","Certain","Obvious"],a:1,x:"Ambiguous = open to more than one interpretation; vague."},
+{s:"e",t:"syn",q:"Choose the synonym of STOIC.",o:["Emotional","Unflappable","Weak","Excited"],a:1,x:"Stoic = enduring hardship without complaint; unflappable."},
+{s:"e",t:"syn",q:"Choose the synonym of ZEALOUS.",o:["Indifferent","Enthusiastic","Lazy","Calm"],a:1,x:"Zealous = enthusiastic, eager."},
+{s:"e",t:"syn",q:"Choose the synonym of CAPRICIOUS.",o:["Steady","Whimsical","Serious","Calm"],a:1,x:"Capricious = given to sudden changes of mood; whimsical."},
+{s:"e",t:"syn",q:"Choose the synonym of DELETERIOUS.",o:["Beneficial","Harmful","Pleasant","Mild"],a:1,x:"Deleterious = harmful."},
+{s:"e",t:"syn",q:"Choose the synonym of PROLIFIC.",o:["Barren","Productive","Lazy","Rare"],a:1,x:"Prolific = producing a great number; productive."},
+{s:"e",t:"syn",q:"Choose the synonym of INDEFATIGABLE.",o:["Tiring","Tireless","Weak","Lazy"],a:1,x:"Indefatigable = tireless, persisting."},
+{s:"e",t:"syn",q:"Choose the synonym of SAGACIOUS.",o:["Foolish","Wise","Hasty","Naive"],a:1,x:"Sagacious = wise, showing good judgement."},
+{s:"e",t:"syn",q:"Choose the synonym of LACONIC.",o:["Wordy","Brief","Loud","Rude"],a:1,x:"Laconic = using few words; brief."},
+{s:"e",t:"syn",q:"Choose the synonym of OSTENTATIOUS.",o:["Modest","Showy","Simple","Quiet"],a:1,x:"Ostentatious = showy, designed to impress."},
+{s:"e",t:"syn",q:"Choose the synonym of PERSPICACIOUS.",o:["Dull","Shrewd","Blind","Slow"],a:1,x:"Perspicacious = shrewd, having keen insight."},
+{s:"e",t:"syn",q:"Choose the synonym of TRANQUIL.",o:["Noisy","Peaceful","Busy","Stormy"],a:1,x:"Tranquil = peaceful, calm."},
+{s:"e",t:"ant",q:"Choose the antonym of TRANSPARENT.",o:["Clear","Opaque","Obvious","Honest"],a:1,x:"Transparent (clear) ↔ Opaque (not see-through)."},
+{s:"e",t:"ant",q:"Choose the antonym of EXPAND.",o:["Enlarge","Contract","Extend","Grow"],a:1,x:"Expand ↔ Contract (shrink)."},
+{s:"e",t:"ant",q:"Choose the antonym of BENEVOLENT.",o:["Kind","Malevolent","Generous","Charitable"],a:1,x:"Benevolent (kind) ↔ Malevolent (wishing harm)."},
+{s:"e",t:"ant",q:"Choose the antonym of AMIABLE.",o:["Friendly","Hostile","Pleasant","Gentle"],a:1,x:"Amiable (friendly) ↔ Hostile."},
+{s:"e",t:"ant",q:"Choose the antonym of FRUGAL.",o:["Thrifty","Extravagant","Careful","Economical"],a:1,x:"Frugal (thrifty) ↔ Extravagant (wasteful)."},
+{s:"e",t:"ant",q:"Choose the antonym of COGENT.",o:["Convincing","Unconvincing","Strong","Clear"],a:1,x:"Cogent (convincing) ↔ Unconvincing."},
+{s:"e",t:"ant",q:"Choose the antonym of DIVERGE.",o:["Separate","Converge","Differ","Split"],a:1,x:"Diverge (separate) ↔ Converge (come together)."},
+{s:"e",t:"ant",q:"Choose the antonym of EXPLICIT.",o:["Clear","Implicit","Direct","Obvious"],a:1,x:"Explicit (stated clearly) ↔ Implicit (implied)."},
+{s:"e",t:"ant",q:"Choose the antonym of VIGILANT.",o:["Alert","Negligent","Watchful","Careful"],a:1,x:"Vigilant (watchful) ↔ Negligent (careless)."},
+{s:"e",t:"ant",q:"Choose the antonym of OBSTINATE.",o:["Stubborn","Compliant","Firm","Rigid"],a:1,x:"Obstinate (stubborn) ↔ Compliant (obedient)."},
+{s:"e",t:"ant",q:"Choose the antonym of PROSAIC.",o:["Dull","Poetic","Ordinary","Plain"],a:1,x:"Prosaic (dull, ordinary) ↔ Poetic/imaginative."},
+{s:"e",t:"ant",q:"Choose the antonym of MITIGATE.",o:["Lessen","Aggravate","Calm","Ease"],a:1,x:"Mitigate (lessen) ↔ Aggravate (worsen)."},
+{s:"e",t:"ant",q:"Choose the antonym of CANDOUR.",o:["Frankness","Deceit","Honesty","Openness"],a:1,x:"Candour (frankness) ↔ Deceit."},
+{s:"e",t:"ant",q:"Choose the antonym of INDIGENOUS.",o:["Native","Alien","Local","Original"],a:1,x:"Indigenous (native) ↔ Alien/foreign."},
+{s:"e",t:"ant",q:"Choose the antonym of ALTRUISTIC.",o:["Selfless","Selfish","Kind","Noble"],a:1,x:"Altruistic (selfless) ↔ Selfish."},
+{s:"e",t:"ant",q:"Choose the antonym of ELOQUENT.",o:["Fluent","Inarticulate","Expressive","Vivid"],a:1,x:"Eloquent (fluent) ↔ Inarticulate."},
+{s:"e",t:"ant",q:"Choose the antonym of MUNDANE.",o:["Ordinary","Extraordinary","Dull","Routine"],a:1,x:"Mundane (ordinary) ↔ Extraordinary."},
+{s:"e",t:"ant",q:"Choose the antonym of SCRUPULOUS.",o:["Careful","Careless","Honest","Thorough"],a:1,x:"Scrupulous (thorough/honest) ↔ Careless."},
+{s:"e",t:"ant",q:"Choose the antonym of TENACIOUS.",o:["Persistent","Irresolute","Firm","Determined"],a:1,x:"Tenacious (persistent) ↔ Irresolute (wavering)."},
+{s:"e",t:"ant",q:"Choose the antonym of VENERATION.",o:["Respect","Contempt","Honour","Awe"],a:1,x:"Veneration (deep respect) ↔ Contempt."},
+{s:"e",t:"ant",q:"Choose the antonym of PLACID.",o:["Calm","Turbulent","Peaceful","Gentle"],a:1,x:"Placid (calm) ↔ Turbulent."},
+{s:"e",t:"ant",q:"Choose the antonym of DEFERENCE.",o:["Respect","Disrespect","Regard","Esteem"],a:1,x:"Deference (respect) ↔ Disrespect."},
+{s:"e",t:"ant",q:"Choose the antonym of ASSIDUOUS.",o:["Diligent","Negligent","Industrious","Careful"],a:1,x:"Assiduous (diligent) ↔ Negligent."},
+{s:"e",t:"ant",q:"Choose the antonym of LETHARGIC.",o:["Lazy","Energetic","Dull","Slow"],a:1,x:"Lethargic (sluggish) ↔ Energetic."},
+{s:"e",t:"ant",q:"Choose the antonym of MELLIFLUOUS.",o:["Sweet-sounding","Harsh","Melodious","Pleasant"],a:1,x:"Mellifluous (sweet-sounding) ↔ Harsh/cacophonous."},
+{s:"e",t:"ant",q:"Choose the antonym of PARSIMONIOUS.",o:["Stingy","Generous","Miserly","Thrifty"],a:1,x:"Parsimonious (stingy) ↔ Generous."},
+{s:"e",t:"ant",q:"Choose the antonym of REDUNDANT.",o:["Superfluous","Essential","Extra","Unneeded"],a:1,x:"Redundant (unneeded) ↔ Essential."},
+{s:"e",t:"ant",q:"Choose the antonym of SPURIOUS.",o:["Fake","Genuine","False","Bogus"],a:1,x:"Spurious (fake) ↔ Genuine."},
+{s:"e",t:"ant",q:"Choose the antonym of TIMOROUS.",o:["Fearful","Bold","Timid","Shy"],a:1,x:"Timorous (fearful) ↔ Bold."},
+{s:"e",t:"ant",q:"Choose the antonym of VERBOSE.",o:["Wordy","Concise","Talkative","Lengthy"],a:1,x:"Verbose (wordy) ↔ Concise."},
+{s:"e",t:"idm",q:"“To bite the dust” means:",o:["To eat quickly","To suffer defeat","To work hard","To hide"],a:1,x:"To bite the dust = to fail / suffer defeat."},
+{s:"e",t:"idm",q:"“At sixes and sevens” means:",o:["In perfect order","In confusion","At sharp six","Very lucky"],a:1,x:"At sixes and sevens = in a state of confusion/disorder."},
+{s:"e",t:"idm",q:"“To bell the cat” means:",o:["To catch a thief","To take the lead in a risky task","To ring a bell","To tame an animal"],a:1,x:"To bell the cat = to undertake a dangerous mission for the group."},
+{s:"e",t:"idm",q:"“A blessing in disguise” means:",o:["A hidden curse","A misfortune that turns out well","A religious ritual","An open secret"],a:1,x:"A blessing in disguise = a hidden benefit in an apparent misfortune."},
+{s:"e",t:"idm",q:"“Once in a blue moon” means:",o:["Every month","Very rarely","At night","On a festival"],a:1,x:"Once in a blue moon = very rarely."},
+{s:"e",t:"idm",q:"“Spick and span” means:",o:["Dirty and old","Neat and clean","Old-fashioned","Expensive"],a:1,x:"Spick and span = neat and clean."},
+{s:"e",t:"idm",q:"“To burn the midnight oil” means:",o:["To waste fuel","To work late into the night","To party","To sleep early"],a:1,x:"Burn the midnight oil = study/work late at night."},
+{s:"e",t:"idm",q:"“In cold blood” means:",o:["In anger","Deliberately and cruelly","In winter","Without reason"],a:1,x:"In cold blood = deliberately, without emotion."},
+{s:"e",t:"idm",q:"“To cry over spilt milk” means:",o:["To clean a mess","To regret what cannot be undone","To ask for milk","To weep loudly"],a:1,x:"Cry over spilt milk = waste regret on the past."},
+{s:"e",t:"idm",q:"“Beat around the bush” means:",o:["To garden","To avoid the main point","To win easily","To punish"],a:1,x:"Beat around the bush = avoid saying what you mean."},
+{s:"e",t:"idm",q:"“A feather in one's cap” means:",o:["A decoration","An achievement to be proud of","A foolish act","A new hat"],a:1,x:"A feather in one's cap = a proud achievement."},
+{s:"e",t:"idm",q:"“To face the music” means:",o:["To enjoy a concert","To accept the consequences","To dance","To sing loudly"],a:1,x:"Face the music = accept punishment/consequences."},
+{s:"e",t:"idm",q:"“In the nick of time” means:",o:["Too late","Just in time","At midnight","After long delay"],a:1,x:"In the nick of time = only just in time."},
+{s:"e",t:"idm",q:"“To let the cat out of the bag” means:",o:["To free an animal","To reveal a secret","To start a fight","To buy a bag"],a:1,x:"Let the cat out of the bag = disclose a secret."},
+{s:"e",t:"idm",q:"“A wild goose chase” means:",o:["A hunting trip","A futile pursuit","A bird race","A long journey"],a:1,x:"A wild goose chase = a hopeless/futile search."},
+{s:"e",t:"idm",q:"“To add fuel to the fire” means:",o:["To help","To worsen a situation","To cook","To light a lamp"],a:1,x:"Add fuel to the fire = make a bad situation worse."},
+{s:"e",t:"idm",q:"“Through thick and thin” means:",o:["In good and bad times","In forests","During rain","With difficulty"],a:1,x:"Through thick and thin = through good and bad times."},
+{s:"e",t:"idm",q:"“To bite off more than one can chew” means:",o:["To eat fast","To take on more than one can handle","To argue","To diet"],a:1,x:"Bite off more than you can chew = attempt too much."},
+{s:"e",t:"idm",q:"“Cut to the chase” means:",o:["To run fast","To come to the point","To edit a film","To injure"],a:1,x:"Cut to the chase = get directly to the point."},
+{s:"e",t:"idm",q:"“Hit the nail on the head” means:",o:["To hammer","To say exactly the right thing","To hurt someone","To win a prize"],a:1,x:"Hit the nail on the head = describe exactly the cause."},
+{s:"e",t:"idm",q:"“Under the weather” means:",o:["In the rain","Slightly ill","Very happy","Under a roof"],a:1,x:"Under the weather = feeling slightly unwell."},
+{s:"e",t:"idm",q:"“The ball is in your court” means:",o:["It's your turn to act","A game is on","You are defeated","The match ended"],a:1,x:"The ball is in your court = it is your responsibility/turn now."},
+{s:"e",t:"idm",q:"“To steal someone's thunder” means:",o:["To rob","To take attention away from someone","To shout","To win a race"],a:1,x:"Steal someone's thunder = take the spotlight/credit due to another."},
+{s:"e",t:"idm",q:"“Barking up the wrong tree” means:",o:["Climbing wrongly","Pursuing a mistaken course","Shouting loudly","Cutting trees"],a:1,x:"Barking up the wrong tree = following a false lead."},
+{s:"e",t:"idm",q:"“A dime a dozen” means:",o:["Very expensive","Very common","Very rare","Very old"],a:1,x:"A dime a dozen = very common, of little value."},
+{s:"e",t:"ows",q:"One who loves mankind:",o:["Misanthrope","Philanthropist","Misogynist","Egoist"],a:1,x:"Philanthropist = lover of mankind; misanthrope = hater of mankind."},
+{s:"e",t:"ows",q:"One who can use both hands equally well:",o:["Versatile","Ambidextrous","Ambiguous","Dexterous"],a:1,x:"Ambidextrous = able to use both hands."},
+{s:"e",t:"ows",q:"One who abstains from alcohol:",o:["Ascetic","Teetotaller","Stoic","Hermit"],a:1,x:"Teetotaller = one who never drinks alcohol."},
+{s:"e",t:"ows",q:"A lover of books:",o:["Bibliophile","Bookworm","Librarian","Novelist"],a:0,x:"Bibliophile = lover of books."},
+{s:"e",t:"ows",q:"One who speaks many languages:",o:["Linguist","Polyglot","Orator","Bilingual"],a:1,x:"Polyglot = knowing/using several languages."},
+{s:"e",t:"ows",q:"Incapable of being corrected:",o:["Incorrigible","Incredible","Invincible","Infallible"],a:0,x:"Incorrigible = not able to be corrected or reformed."},
+{s:"e",t:"ows",q:"One who believes in fate:",o:["Optimist","Fatalist","Pessimist","Theist"],a:1,x:"Fatalist = one who believes events are decided by fate."},
+{s:"e",t:"ows",q:"A person who is indifferent to pleasure and pain:",o:["Epicure","Stoic","Cynic","Sceptic"],a:1,x:"Stoic = enduring pain/pleasure without display."},
+{s:"e",t:"ows",q:"Government by a small group of people:",o:["Democracy","Oligarchy","Monarchy","Autocracy"],a:1,x:"Oligarchy = rule by a small group."},
+{s:"e",t:"ows",q:"A place where birds are kept:",o:["Apiary","Aviary","Aquarium","Stable"],a:1,x:"Aviary = large enclosure for birds (apiary = bees)."},
+{s:"e",t:"ows",q:"One who eats everything:",o:["Herbivore","Carnivore","Omnivore","Frugivore"],a:2,x:"Omnivore = eats both plants and animals."},
+{s:"e",t:"ows",q:"Fear of heights:",o:["Hydrophobia","Acrophobia","Claustrophobia","Agoraphobia"],a:1,x:"Acrophobia = fear of heights."},
+{s:"e",t:"ows",q:"A speech made without preparation:",o:["Eulogy","Extempore","Elegy","Oration"],a:1,x:"Extempore = spoken without preparation."},
+{s:"e",t:"ows",q:"One who hates women:",o:["Misanthrope","Misogynist","Feminist","Chauvinist"],a:1,x:"Misogynist = hater of women."},
+{s:"e",t:"ows",q:"A person who lives a solitary life:",o:["Recluse","Nomad","Vagabond","Migrant"],a:0,x:"Recluse = one who lives alone, avoiding people."},
+{s:"e",t:"ows",q:"Murder of one's brother:",o:["Homicide","Fratricide","Patricide","Regicide"],a:1,x:"Fratricide = killing of one's brother."},
+{s:"e",t:"ows",q:"A remedy for all diseases:",o:["Antidote","Panacea","Elixir","Tonic"],a:1,x:"Panacea = cure for all ills."},
+{s:"e",t:"ows",q:"One who is new to a profession:",o:["Veteran","Novice","Expert","Adept"],a:1,x:"Novice = beginner, new to a field."},
+{s:"e",t:"ows",q:"Study of the origin of words:",o:["Philology","Etymology","Morphology","Semantics"],a:1,x:"Etymology = study of word origins."},
+{s:"e",t:"ows",q:"Words inscribed on a tomb:",o:["Epithet","Epitaph","Epigram","Epilogue"],a:1,x:"Epitaph = words written on a tombstone."},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “She writes a letter.”",o:["A letter is written by her.","A letter was written by her.","A letter has been written by her.","A letter is being written by her."],a:0,x:"Simple present → is/am/are + V3: “A letter is written by her.”"},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “They have completed the project.”",o:["The project was completed by them.","The project is completed by them.","The project has been completed by them.","The project had been completed by them."],a:2,x:"Present perfect → has/have been + V3."},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “He was driving a car.”",o:["A car was driven by him.","A car is being driven by him.","A car was being driven by him.","A car had been driven by him."],a:2,x:"Past continuous → was/were being + V3."},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “Open the door.”",o:["Let the door be opened.","The door is opened.","Let the door opened.","The door be open."],a:0,x:"Imperative → “Let + object + be + V3”."},
+{s:"e",t:"voi",q:"Choose the correct active voice: “The thief was caught by the police.”",o:["The police caught the thief.","The police has caught the thief.","The police had caught the thief.","The police catches the thief."],a:0,x:"Simple past passive → simple past active: “The police caught the thief.”"},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “She will finish the work.”",o:["The work will be finished by her.","The work would be finished by her.","The work is finished by her.","The work shall be finished by her."],a:0,x:"“Will” → “will be + V3”."},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “Who broke the glass?”",o:["By whom was the glass broken?","Who was the glass broken by?","By whom the glass was broken?","Whom was the glass broken by?"],a:0,x:"“Who” → “By whom” + was/were + V3."},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “The teacher is checking the copies.”",o:["The copies are checked by the teacher.","The copies were being checked by the teacher.","The copies are being checked by the teacher.","The copies have been checked by the teacher."],a:2,x:"Present continuous → is/am/are being + V3."},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “He had written a novel.”",o:["A novel had been written by him.","A novel was written by him.","A novel has been written by him.","A novel is written by him."],a:0,x:"Past perfect → had been + V3."},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “People say that he is honest.”",o:["He is said to be honest.","He was said to be honest.","It is said that he was honest.","He is being said to be honest."],a:0,x:"“It is said that…” → “He is said to be honest.”"},
+{s:"e",t:"voi",q:"Choose the correct passive voice: “Do not insult the poor.”",o:["Let not the poor be insulted.","The poor are not insulted.","Let the poor not insulted.","The poor should not be insulted."],a:0,x:"Negative imperative → “Let not + object + be + V3”."},
+{s:"e",t:"voi",q:"Choose the correct active voice: “A song is being sung by her.”",o:["She sings a song.","She sang a song.","She is singing a song.","She has sung a song."],a:2,x:"Present continuous passive → “She is singing a song.”"},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: He said, “I am busy today.”",o:["He said that he was busy that day.","He said that he is busy today.","He said that I was busy that day.","He told that he was busy today."],a:0,x:"Present → past; “today” → “that day”."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: She said, “I will come tomorrow.”",o:["She said that she would come the next day.","She said that she will come tomorrow.","She told that she would come tomorrow.","She said that I would come the next day."],a:0,x:"Will → would; “tomorrow” → “the next day”."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: He said to me, “Are you coming?”",o:["He asked me that I was coming.","He asked me if I was coming.","He said to me are you coming.","He enquired me that was I coming."],a:1,x:"Yes/no question → “asked…if/whether” + assertive order."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: The teacher said, “Sit down, boys.”",o:["The teacher said the boys to sit down.","The teacher ordered the boys to sit down.","The teacher told that the boys sit down.","The teacher requested the boys to sit down."],a:1,x:"Imperative → ordered/told + to-infinitive."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: He said, “Alas! I am ruined.”",o:["He said that he was ruined.","He exclaimed with sorrow that he was ruined.","He cried that he is ruined.","He exclaimed that alas he was ruined."],a:1,x:"Exclamatory → “exclaimed with sorrow/joy” + that-clause."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: She said, “What a beautiful flower!”",o:["She said that what a beautiful flower it was.","She exclaimed with joy that it was a very beautiful flower.","She told that it was a beautiful flower.","She exclaimed that what beautiful flower."],a:1,x:"Exclamation → exclaimed with joy + assertive clause."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: He said to me, “Where do you live?”",o:["He asked me where I lived.","He asked me that where I lived.","He enquired me where did I live.","He said to me where do you live."],a:0,x:"Wh-question → asked + wh-word + assertive order (no “that”)."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: The doctor said, “You should take rest.”",o:["The doctor said that I should take rest.","The doctor advised me to take rest.","The doctor told to take rest.","The doctor ordered me that take rest."],a:1,x:"Advice → “advised + object + to-infinitive”."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: He said, “I have finished my work.”",o:["He said that he finished his work.","He said that he had finished his work.","He said that I had finished my work.","He told that he has finished his work."],a:1,x:"Present perfect → past perfect in indirect speech."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: Mother said, “May you live long!”",o:["Mother said that I may live long.","Mother wished that I might live long.","Mother prayed that I may live long.","Mother told that live long."],a:1,x:"Optative → “wished/prayed that…might”."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: He said, “Let us go for a walk.”",o:["He said that let us go for a walk.","He proposed that they should go for a walk.","He told that we should go.","He suggested to go for a walk."],a:1,x:"“Let us” → proposed/suggested that they should."},
+{s:"e",t:"nar",q:"Choose the correct indirect speech: She said, “I was reading a novel yesterday.”",o:["She said that she was reading a novel the previous day.","She said that she had been reading a novel the previous day.","She told that she is reading a novel yesterday.","She said that I had been reading a novel yesterday."],a:1,x:"Past continuous → past perfect continuous; “yesterday” → “the previous day”."},
+{s:"e",t:"pqrs",q:"P: The monsoon brings relief from the heat. Q: Farmers wait eagerly for its arrival. R: It usually sets in by early June. S: Sometimes it gets delayed by a week. Correct order:",o:["PQRS","QPRS","PRSQ","QRPS"],a:1,x:"Q (farmers wait) → P (it brings relief) → R (sets in June) → S (delay)."},
+{s:"e",t:"pqrs",q:"P: He opened the old trunk carefully. Q: Inside lay letters tied with a ribbon. R: They were written by his grandfather. S: He read them till midnight. Correct order:",o:["PQRS","PRQS","QPRS","RPQS"],a:0,x:"P (opened trunk) → Q (inside lay letters) → R (written by grandfather) → S (read them)."},
+{s:"e",t:"pqrs",q:"P: The train was already crowded. Q: We pushed our way inside. R: Luckily we found two seats. S: The journey began soon after. Correct order:",o:["PQRS","QPRS","PRQS","SPQR"],a:0,x:"P → Q → R → S follows the sequence of boarding."},
+{s:"e",t:"pqrs",q:"P: Education shapes the character of a child. Q: It begins at home. R: Schools carry it forward. S: Society completes the process. Correct order:",o:["PQRS","QPRS","PRQS","SPQR"],a:0,x:"P (general) → Q (home) → R (schools) → S (society): widening circles."},
+{s:"e",t:"pqrs",q:"P: The sun had just risen. Q: Birds were chirping in the trees. R: A cool breeze was blowing. S: It was a perfect morning. Correct order:",o:["PQRS","QPRS","SRQP","RSPQ"],a:0,x:"P → Q → R build the scene; S concludes with the summary line."},
+{s:"e",t:"pqrs",q:"P: Discipline is the key to success. Q: It teaches punctuality and focus. R: Successful people swear by it. S: Without it talent goes waste. Correct order:",o:["PQRS","QSPR","PRSQ","SQPR"],a:0,x:"P (thesis) → Q (what it teaches) → R (examples) → S (warning)."},
+{s:"e",t:"pqrs",q:"P: The library was silent and vast. Q: Rows of books lined the walls. R: I picked a novel at random. S: Hours passed unnoticed. Correct order:",o:["PQRS","QPRS","RPQS","SPQR"],a:0,x:"P (setting) → Q (detail) → R (action) → S (result)."},
+{s:"e",t:"pqrs",q:"P: Honesty is the best policy. Q: A liar is never trusted. R: Truth may be bitter at first. S: But it always wins in the end. Correct order:",o:["PQRS","PRQS","QPRS","SPQR"],a:0,x:"P (maxim) → Q (contrast) → R–S (qualification + conclusion)."},
+{s:"e",t:"pqrs",q:"P: The stadium roared as the match began. Q: India needed ten runs off the last over. R: The batsman hit a six on the first ball. S: The crowd erupted in joy. Correct order:",o:["QPRS","PQRS","PRQS","RQPS"],a:0,x:"Q (situation) → P (atmosphere) → R (action) → S (reaction)."},
+{s:"e",t:"pqrs",q:"P: Water is precious. Q: Many regions face scarcity. R: We must avoid wastage. S: Every drop counts. Correct order:",o:["PQRS","QPRS","PSRQ","SRPQ"],a:0,x:"P (statement) → Q (problem) → R (solution) → S (slogan close)."},
+{s:"e",t:"pqrs",q:"P: She woke up early that day. Q: The exam was at nine. R: She revised her notes quickly. S: She reached the centre on time. Correct order:",o:["PQRS","QPRS","PRQS","SQPR"],a:0,x:"P → Q (reason) → R (preparation) → S (outcome)."},
+{s:"e",t:"pqrs",q:"P: Trees give us oxygen and shade. Q: They prevent soil erosion. R: Yet forests are being cut rapidly. S: We must plant more trees. Correct order:",o:["PQRS","PRQS","QPRS","SPQR"],a:0,x:"P–Q (benefits) → R (problem) → S (call to action)."},
+{s:"g",t:"pol",q:"Which Article of the Indian Constitution deals with the Right to Equality?",o:["Article 14","Article 19","Article 21","Article 32"],a:0,x:"Articles <b>14–18</b> cover the Right to Equality."},
+{s:"g",t:"pol",q:"Which Article provides the Right to Constitutional Remedies?",o:["Article 19","Article 21","Article 32","Article 370"],a:2,x:"<b>Article 32</b> — called the “heart and soul” of the Constitution by Ambedkar."},
+{s:"g",t:"pol",q:"The Right to Freedom of Religion is covered under:",o:["Articles 14–18","Articles 19–22","Articles 25–28","Articles 29–30"],a:2,x:"<b>Articles 25–28</b> deal with freedom of religion."},
+{s:"g",t:"pol",q:"Which Amendment is known as the “Mini Constitution”?",o:["24th","42nd","44th","52nd"],a:1,x:"The <b>42nd Amendment (1976)</b> added Socialist, Secular, Integrity to the Preamble."},
+{s:"g",t:"pol",q:"The 44th Amendment (1978) removed which right from Fundamental Rights?",o:["Right to Equality","Right to Property","Right to Freedom","Right against Exploitation"],a:1,x:"Right to Property became a legal right under <b>Article 300A</b>."},
+{s:"g",t:"pol",q:"Which Article deals with the abolition of untouchability?",o:["Article 15","Article 16","Article 17","Article 18"],a:2,x:"<b>Article 17</b> abolishes untouchability."},
+{s:"g",t:"pol",q:"The Directive Principles of State Policy are borrowed from the Constitution of:",o:["USA","Ireland","Britain","Canada"],a:1,x:"DPSPs (Articles 36–51) are borrowed from <b>Ireland</b>."},
+{s:"g",t:"pol",q:"Fundamental Rights are borrowed from the Constitution of:",o:["Ireland","USA","UK","USSR"],a:1,x:"Fundamental Rights are borrowed from the <b>USA</b>."},
+{s:"g",t:"pol",q:"Which Schedule of the Constitution lists the official languages?",o:["7th Schedule","8th Schedule","9th Schedule","10th Schedule"],a:1,x:"The <b>8th Schedule</b> lists 22 official languages."},
+{s:"g",t:"pol",q:"The Anti-Defection Law is in which Schedule?",o:["8th Schedule","9th Schedule","10th Schedule","11th Schedule"],a:2,x:"The <b>10th Schedule</b> (52nd Amendment, 1985) covers anti-defection."},
+{s:"g",t:"pol",q:"Panchayati Raj institutions were given constitutional status by:",o:["42nd Amendment","52nd Amendment","73rd Amendment","86th Amendment"],a:2,x:"The <b>73rd Amendment (1992)</b> added Part IX and the 11th Schedule."},
+{s:"g",t:"pol",q:"Urban local bodies were given constitutional status by:",o:["73rd Amendment","74th Amendment","86th Amendment","91st Amendment"],a:1,x:"The <b>74th Amendment (1992)</b> added Part IX-A and the 12th Schedule."},
+{s:"g",t:"pol",q:"Right to Education (Article 21A) was inserted by:",o:["73rd Amendment","74th Amendment","86th Amendment","91st Amendment"],a:2,x:"The <b>86th Amendment (2002)</b> made elementary education a fundamental right."},
+{s:"g",t:"pol",q:"Which Article empowers Parliament to amend the Constitution?",o:["Article 356","Article 360","Article 368","Article 370"],a:2,x:"<b>Article 368</b> lays down the amendment procedure."},
+{s:"g",t:"pol",q:"President's Rule in a state is imposed under:",o:["Article 352","Article 356","Article 360","Article 365"],a:1,x:"<b>Article 356</b> — failure of constitutional machinery in a state."},
+{s:"g",t:"pol",q:"Financial Emergency is provided under:",o:["Article 352","Article 356","Article 360","Article 365"],a:2,x:"<b>Article 360</b> — never imposed in India so far."},
+{s:"g",t:"pol",q:"Who is known as the “Father of the Indian Constitution”?",o:["Jawaharlal Nehru","B. R. Ambedkar","Rajendra Prasad","Sardar Patel"],a:1,x:"<b>Dr. B. R. Ambedkar</b>, Chairman of the Drafting Committee."},
+{s:"g",t:"pol",q:"The Constitution of India was adopted on:",o:["15 Aug 1947","26 Jan 1950","26 Nov 1949","24 Jan 1950"],a:2,x:"Adopted <b>26 Nov 1949</b>; came into force 26 Jan 1950."},
+{s:"g",t:"pol",q:"The first meeting of the Constituent Assembly was held on:",o:["9 Dec 1946","26 Nov 1949","15 Aug 1947","26 Jan 1950"],a:0,x:"First meeting: <b>9 December 1946</b>; Sachchidananda Sinha was interim president."},
+{s:"g",t:"pol",q:"Who was the permanent President of the Constituent Assembly?",o:["B. R. Ambedkar","Jawaharlal Nehru","Dr. Rajendra Prasad","C. Rajagopalachari"],a:2,x:"<b>Dr. Rajendra Prasad</b> was elected permanent President on 11 Dec 1946."},
+{s:"g",t:"pol",q:"The Preamble of the Indian Constitution is based on:",o:["Government of India Act 1935","Objective Resolution","Cabinet Mission Plan","Wavell Plan"],a:1,x:"Based on Nehru's <b>Objective Resolution</b> (Dec 1946)."},
+{s:"g",t:"pol",q:"“Sovereign, Socialist, Secular” — which words were added by the 42nd Amendment?",o:["Sovereign, Socialist","Socialist, Secular, Integrity","Secular, Democratic","Justice, Liberty"],a:1,x:"<b>Socialist, Secular, Integrity</b> were added in 1976."},
+{s:"g",t:"pol",q:"The minimum age to become President of India is:",o:["25 years","30 years","35 years","40 years"],a:2,x:"<b>35 years</b> (Article 58)."},
+{s:"g",t:"pol",q:"The Vice-President of India is elected by:",o:["Lok Sabha only","Rajya Sabha only","Both Houses of Parliament","State legislatures"],a:2,x:"Elected by <b>members of both Houses</b> (Article 66)."},
+{s:"g",t:"pol",q:"The term of a Lok Sabha member is:",o:["4 years","5 years","6 years","3 years"],a:1,x:"<b>5 years</b> unless dissolved earlier."},
+{s:"g",t:"pol",q:"The Rajya Sabha is a:",o:["Temporary body","Permanent body","Advisory body","Judicial body"],a:1,x:"Rajya Sabha is <b>permanent</b>; one-third retires every 2 years."},
+{s:"g",t:"pol",q:"Money Bills can be introduced only in:",o:["Rajya Sabha","Lok Sabha","Either House","Joint sitting"],a:1,x:"Money Bills (Article 109–110) only in the <b>Lok Sabha</b>."},
+{s:"g",t:"pol",q:"Who appoints the Chief Election Commissioner?",o:["Chief Justice","Prime Minister","President","Parliament"],a:2,x:"Appointed by the <b>President</b> (Article 324)."},
+{s:"g",t:"pol",q:"The first woman Governor of an Indian state was:",o:["Vijaya Lakshmi Pandit","Sarojini Naidu","Indira Gandhi","Sucheta Kripalani"],a:1,x:"<b>Sarojini Naidu</b> — Governor of United Provinces (1947)."},
+{s:"g",t:"pol",q:"Which Article provides for a Uniform Civil Code?",o:["Article 40","Article 44","Article 48","Article 51"],a:1,x:"<b>Article 44</b> (DPSP) — state shall endeavour to secure a UCC."},
+{s:"g",t:"pol",q:"The “Basic Structure” doctrine was laid down in which case?",o:["Golaknath case","Kesavananda Bharati case","Minerva Mills case","Maneka Gandhi case"],a:1,x:"<b>Kesavananda Bharati v. State of Kerala (1973)</b>."},
+{s:"g",t:"pol",q:"Panchayats at the village level are headed by:",o:["Sarpanch","Pradhan","Mukhiya","Chairman"],a:0,x:"The Gram Panchayat is headed by the <b>Sarpanch</b>."},
+{s:"g",t:"pol",q:"The Comptroller and Auditor General of India is appointed by:",o:["Prime Minister","President","Lok Sabha Speaker","Finance Minister"],a:1,x:"CAG is appointed by the <b>President</b> (Article 148)."},
+{s:"g",t:"pol",q:"Which writ is issued to produce a detained person before the court?",o:["Mandamus","Habeas Corpus","Certiorari","Quo Warranto"],a:1,x:"<b>Habeas Corpus</b> = “to have the body”."},
+{s:"g",t:"pol",q:"The Election Commission of India was established in:",o:["1947","1950","1952","1955"],a:1,x:"Established <b>25 January 1950</b> (National Voters' Day)."},
+{s:"g",t:"pol",q:"The Finance Commission is constituted under:",o:["Article 263","Article 280","Article 312","Article 320"],a:1,x:"<b>Article 280</b> — every 5 years."},
+{s:"g",t:"pol",q:"Who was the first Chief Justice of India?",o:["M. Patanjali Sastri","H. J. Kania","S. R. Das","B. P. Sinha"],a:1,x:"<b>H. J. Kania</b> (1950–51)."},
+{s:"g",t:"pol",q:"The idea of the Concurrent List in the Indian Constitution is borrowed from:",o:["USA","Canada","Australia","Ireland"],a:2,x:"Concurrent List is borrowed from <b>Australia</b>."},
+{s:"g",t:"pol",q:"How many Fundamental Duties are listed in Article 51A?",o:["10","11","12","9"],a:1,x:"<b>11</b> duties (the 11th added by the 86th Amendment)."},
+{s:"g",t:"his",q:"The Harappan site of Lothal is famous for:",o:["Great Bath","Dockyard","Granary","Stadium"],a:1,x:"<b>Lothal</b> (Gujarat) had a dockyard — evidence of sea trade."},
+{s:"g",t:"his",q:"The Great Bath was discovered at:",o:["Harappa","Mohenjo-daro","Kalibangan","Ropar"],a:1,x:"The Great Bath is at <b>Mohenjo-daro</b>."},
+{s:"g",t:"his",q:"Who was the founder of the Maurya Empire?",o:["Ashoka","Chandragupta Maurya","Bindusara","Bimbisara"],a:1,x:"<b>Chandragupta Maurya</b> (321 BCE), guided by Chanakya."},
+{s:"g",t:"his",q:"The Kalinga War was fought in:",o:["273 BCE","261 BCE","232 BCE","321 BCE"],a:1,x:"Kalinga War — <b>261 BCE</b>; turned Ashoka towards Buddhism."},
+{s:"g",t:"his",q:"Ashoka's inscriptions were deciphered by:",o:["William Jones","James Prinsep","Alexander Cunningham","John Marshall"],a:1,x:"<b>James Prinsep</b> deciphered the Brahmi script (1837)."},
+{s:"g",t:"his",q:"Who is known as the “Napoleon of India”?",o:["Chandragupta II","Samudragupta","Ashoka","Harshavardhana"],a:1,x:"<b>Samudragupta</b> — called so by historian V. A. Smith."},
+{s:"g",t:"his",q:"The Gupta ruler who issued the first gold coins in large numbers:",o:["Chandragupta I","Samudragupta","Chandragupta II","Skandagupta"],a:1,x:"<b>Chandragupta I</b> started the Gupta gold coinage."},
+{s:"g",t:"his",q:"Nalanda University was founded during the reign of:",o:["Ashoka","Kumaragupta I","Harshavardhana","Kanishka"],a:1,x:"Founded by <b>Kumaragupta I</b> (Gupta period)."},
+{s:"g",t:"his",q:"The Chinese traveller who visited India during Harsha's reign:",o:["Fa-Hien","Hiuen Tsang","I-tsing","Marco Polo"],a:1,x:"<b>Hiuen Tsang</b> (630–645 CE); Fa-Hien came in Gupta times."},
+{s:"g",t:"his",q:"Qutub Minar was completed by:",o:["Qutbuddin Aibak","Iltutmish","Alauddin Khalji","Balban"],a:1,x:"Started by Aibak, completed by <b>Iltutmish</b>."},
+{s:"g",t:"his",q:"The founder of the Delhi Sultanate was:",o:["Iltutmish","Qutbuddin Aibak","Razia Sultana","Balban"],a:1,x:"<b>Qutbuddin Aibak</b> founded the Slave dynasty (1206)."},
+{s:"g",t:"his",q:"The market reforms (price control) were introduced by:",o:["Alauddin Khalji","Muhammad Tughlaq","Firoz Tughlaq","Sher Shah"],a:0,x:"<b>Alauddin Khalji</b> fixed prices of essential goods."},
+{s:"g",t:"his",q:"The Vijayanagara Empire was founded in 1336 by:",o:["Krishnadevaraya","Harihara and Bukka","Devaraya I","Saluva Narasimha"],a:1,x:"Founded by brothers <b>Harihara and Bukka</b>."},
+{s:"g",t:"his",q:"The Battle of Panipat (1526) was fought between:",o:["Akbar and Hemu","Babur and Ibrahim Lodi","Sher Shah and Humayun","Aurangzeb and Dara"],a:1,x:"<b>Babur defeated Ibrahim Lodi</b> — Mughal rule began."},
+{s:"g",t:"his",q:"Din-i-Ilahi was founded by:",o:["Babur","Humayun","Akbar","Jahangir"],a:2,x:"<b>Akbar</b> founded Din-i-Ilahi in 1582."},
+{s:"g",t:"his",q:"The Taj Mahal was built by Shah Jahan in memory of:",o:["Jodha Bai","Mumtaz Mahal","Nur Jahan","Roshanara"],a:1,x:"Built for <b>Mumtaz Mahal</b> (1632–1653)."},
+{s:"g",t:"his",q:"The Battle of Plassey (1757) was fought between:",o:["British and Siraj-ud-Daulah","British and Mir Jafar","French and British","British and Tipu Sultan"],a:0,x:"<b>Clive defeated Siraj-ud-Daulah</b>, Nawab of Bengal."},
+{s:"g",t:"his",q:"The Battle of Buxar (1764) led to:",o:["End of Mughal rule","Diwani rights of Bengal to the British","Foundation of Calcutta","Treaty of Allahabad only"],a:1,x:"The British got the <b>Diwani of Bengal, Bihar, Odisha</b>."},
+{s:"g",t:"his",q:"The Revolt of 1857 began at:",o:["Delhi","Meerut","Kanpur","Lucknow"],a:1,x:"Began at <b>Meerut</b> on 10 May 1857."},
+{s:"g",t:"his",q:"Mangal Pandey belonged to the:",o:["34th Bengal Native Infantry","21st Native Infantry","12th Cavalry","Madras Regiment"],a:0,x:"<b>34th Bengal Native Infantry</b>, Barrackpore."},
+{s:"g",t:"his",q:"The leader of the 1857 revolt at Kanpur was:",o:["Rani Lakshmibai","Nana Sahib","Tantia Tope","Bahadur Shah II"],a:1,x:"<b>Nana Sahib</b> led at Kanpur; Tantia Tope was his general."},
+{s:"g",t:"his",q:"The Indian National Congress was founded in 1885 by:",o:["Gopal Krishna Gokhale","A. O. Hume","Dadabhai Naoroji","W. C. Banerjee"],a:1,x:"Founded by <b>A. O. Hume</b>; first president W. C. Banerjee."},
+{s:"g",t:"his",q:"The first session of the INC (1885) was held at:",o:["Calcutta","Bombay","Madras","Allahabad"],a:1,x:"First session at <b>Bombay</b> (Gokuldas Tejpal Sanskrit College)."},
+{s:"g",t:"his",q:"The partition of Bengal (1905) was ordered by:",o:["Lord Curzon","Lord Minto","Lord Hardinge","Lord Chelmsford"],a:0,x:"<b>Lord Curzon</b> partitioned Bengal in 1905; annulled 1911."},
+{s:"g",t:"his",q:"The Jallianwala Bagh massacre took place on:",o:["13 April 1919","15 August 1919","26 January 1920","13 April 1920"],a:0,x:"<b>13 April 1919</b>, Amritsar; General Dyer ordered firing."},
+{s:"g",t:"his",q:"The Non-Cooperation Movement was withdrawn after:",o:["Jallianwala Bagh","Chauri Chaura incident","Dandi March","Quit India"],a:1,x:"Withdrawn after <b>Chauri Chaura</b> (Feb 1922)."},
+{s:"g",t:"his",q:"The Dandi March began on:",o:["12 March 1930","26 January 1930","15 August 1930","12 March 1931"],a:0,x:"<b>12 March 1930</b> — Civil Disobedience Movement."},
+{s:"g",t:"his",q:"“Swaraj is my birthright” was said by:",o:["Gandhi","Bal Gangadhar Tilak","Bhagat Singh","Subhas Bose"],a:1,x:"<b>Bal Gangadhar Tilak</b>."},
+{s:"g",t:"his",q:"“Give me blood and I will give you freedom” was said by:",o:["Bhagat Singh","Subhas Chandra Bose","Chandrashekhar Azad","Lala Lajpat Rai"],a:1,x:"<b>Subhas Chandra Bose</b>."},
+{s:"g",t:"his",q:"The Quit India Movement was launched in:",o:["1940","1942","1945","1947"],a:1,x:"Launched <b>August 1942</b> — “Do or Die”."},
+{s:"g",t:"his",q:"The Cabinet Mission came to India in:",o:["1942","1945","1946","1947"],a:2,x:"<b>1946</b> — proposed the Constituent Assembly."},
+{s:"g",t:"his",q:"Who was the first Governor-General of independent India?",o:["Lord Mountbatten","C. Rajagopalachari","Warren Hastings","Lord Wavell"],a:0,x:"<b>Lord Mountbatten</b>; first Indian GG was C. Rajagopalachari."},
+{s:"g",t:"his",q:"The Pitt's India Act was passed in:",o:["1773","1784","1793","1813"],a:1,x:"<b>1784</b> — dual control of the Company."},
+{s:"g",t:"his",q:"The Vernacular Press Act (1878) was passed by:",o:["Lord Lytton","Lord Ripon","Lord Curzon","Lord Mayo"],a:0,x:"<b>Lord Lytton</b>; repealed by Lord Ripon in 1882."},
+{s:"g",t:"his",q:"The Khilafat Movement was led by:",o:["Gandhi alone","Ali brothers","Jinnah","Tilak"],a:1,x:"Led by the <b>Ali brothers</b> (Shaukat and Muhammad Ali)."},
+{s:"g",t:"geo",q:"The longest river of India is:",o:["Yamuna","Ganga","Godavari","Brahmaputra"],a:1,x:"<b>Ganga</b> (~2,525 km) is India's longest river."},
+{s:"g",t:"geo",q:"The Brahmaputra is known as ______ in Tibet.",o:["Tsangpo","Dihang","Jamuna","Padma"],a:0,x:"Called <b>Tsangpo</b> in Tibet, Dihang in Arunachal, Jamuna in Bangladesh."},
+{s:"g",t:"geo",q:"Which river is known as the “Sorrow of Bihar”?",o:["Ganga","Kosi","Gandak","Son"],a:1,x:"The <b>Kosi</b> shifts course frequently, causing floods."},
+{s:"g",t:"geo",q:"The Narmada river flows into the:",o:["Bay of Bengal","Arabian Sea","Indian Ocean","Gulf of Kutch"],a:1,x:"Narmada flows west into the <b>Arabian Sea</b>."},
+{s:"g",t:"geo",q:"Which is the largest peninsular river?",o:["Mahanadi","Godavari","Krishna","Kaveri"],a:1,x:"<b>Godavari</b> (~1,465 km) — “Dakshin Ganga”."},
+{s:"g",t:"geo",q:"The highest peak of the Western Ghats is:",o:["Doddabetta","Anamudi","Mahendragiri","Kalsubai"],a:1,x:"<b>Anamudi</b> (2,695 m) in Kerala."},
+{s:"g",t:"geo",q:"The highest peak of India is:",o:["Kanchenjunga","Nanda Devi","K2","Kamet"],a:2,x:"<b>K2 (Godwin-Austen)</b>, 8,611 m, in PoK."},
+{s:"g",t:"geo",q:"The Tropic of Cancer passes through how many Indian states?",o:["6","7","8","9"],a:2,x:"<b>8 states</b>: Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, WB, Tripura, Mizoram."},
+{s:"g",t:"geo",q:"The Standard Meridian of India (82°30′E) passes through:",o:["Allahabad (Prayagraj)","Bhopal","Nagpur","Patna"],a:0,x:"Passes near <b>Prayagraj (Allahabad)</b>, UP."},
+{s:"g",t:"geo",q:"Which state has the longest coastline?",o:["Tamil Nadu","Andhra Pradesh","Gujarat","Maharashtra"],a:2,x:"<b>Gujarat</b> (~1,600 km) has the longest coastline."},
+{s:"g",t:"geo",q:"The largest freshwater lake of India is:",o:["Dal Lake","Wular Lake","Chilika Lake","Sambhar Lake"],a:1,x:"<b>Wular Lake</b> (J&K) — largest freshwater lake."},
+{s:"g",t:"geo",q:"Chilika Lake is located in:",o:["West Bengal","Odisha","Andhra Pradesh","Tamil Nadu"],a:1,x:"<b>Chilika</b> (Odisha) — largest brackish-water lagoon."},
+{s:"g",t:"geo",q:"Black soil is best suited for the cultivation of:",o:["Wheat","Cotton","Rice","Tea"],a:1,x:"<b>Black (regur) soil</b> — ideal for cotton; found in Deccan."},
+{s:"g",t:"geo",q:"Laterite soil is mainly found in:",o:["Punjab plains","High-rainfall regions","Desert areas","River valleys"],a:1,x:"<b>Laterite soil</b> forms in high-rainfall, high-temperature areas."},
+{s:"g",t:"geo",q:"The “Roof of the World” refers to:",o:["Himalayas","Pamir Plateau","Tibetan Plateau","Andes"],a:1,x:"The <b>Pamir Plateau</b> is called the Roof of the World."},
+{s:"g",t:"geo",q:"Which pass connects Srinagar to Leh?",o:["Rohtang Pass","Zoji La","Nathu La","Shipki La"],a:1,x:"<b>Zoji La</b> connects Srinagar and Leh."},
+{s:"g",t:"geo",q:"Nathu La pass is located in:",o:["Jammu & Kashmir","Himachal Pradesh","Sikkim","Arunachal Pradesh"],a:2,x:"<b>Nathu La</b> is in Sikkim, on the India-China border."},
+{s:"g",t:"geo",q:"The Sundarbans are famous for:",o:["Lions","Royal Bengal Tigers","Elephants","Rhinos"],a:1,x:"Sundarbans — largest mangrove forest, home of the <b>Royal Bengal Tiger</b>."},
+{s:"g",t:"geo",q:"Kaziranga National Park (Assam) is famous for:",o:["Tigers","One-horned rhinoceros","Lions","Elephants"],a:1,x:"Kaziranga — <b>one-horned rhinoceros</b>."},
+{s:"g",t:"geo",q:"Gir National Park (Gujarat) is famous for:",o:["Tigers","Asiatic lions","Leopards","Bears"],a:1,x:"Gir — the only home of <b>Asiatic lions</b>."},
+{s:"g",t:"geo",q:"The Bhakra Nangal dam is built on which river?",o:["Yamuna","Sutlej","Beas","Ravi"],a:1,x:"Bhakra Nangal is on the <b>Sutlej</b>."},
+{s:"g",t:"geo",q:"Hirakud dam is built on which river?",o:["Godavari","Mahanadi","Krishna","Narmada"],a:1,x:"Hirakud (Odisha) is on the <b>Mahanadi</b> — longest earthen dam."},
+{s:"g",t:"geo",q:"Which city is known as the “Manchester of India”?",o:["Kanpur","Ahmedabad","Coimbatore","Mumbai"],a:1,x:"<b>Ahmedabad</b> — Manchester of India (textiles)."},
+{s:"g",t:"geo",q:"Which city is known as the “Silicon Valley of India”?",o:["Hyderabad","Chennai","Bengaluru","Pune"],a:2,x:"<b>Bengaluru</b> — Silicon Valley of India."},
+{s:"g",t:"geo",q:"The Palk Strait separates India from:",o:["Maldives","Sri Lanka","Myanmar","Indonesia"],a:1,x:"<b>Palk Strait</b> separates Tamil Nadu and Sri Lanka."},
+{s:"g",t:"geo",q:"The Radcliffe Line is the border between:",o:["India and China","India and Pakistan","India and Nepal","India and Myanmar"],a:1,x:"<b>Radcliffe Line</b> — India-Pakistan border (1947)."},
+{s:"g",t:"geo",q:"The McMahon Line is the border between:",o:["India and Pakistan","India and China","India and Bhutan","India and Nepal"],a:1,x:"<b>McMahon Line</b> — India-China border in the east."},
+{s:"g",t:"geo",q:"Which is the largest state of India by area?",o:["Madhya Pradesh","Maharashtra","Rajasthan","Uttar Pradesh"],a:2,x:"<b>Rajasthan</b> (342,239 sq km) is the largest state."},
+{s:"g",t:"geo",q:"The “Detroit of India” (automobile hub) is:",o:["Gurugram","Chennai","Pune","Faridabad"],a:1,x:"<b>Chennai</b> — Detroit of India."},
+{s:"g",t:"geo",q:"Mawsynram, the wettest place on Earth, is in:",o:["Assam","Meghalaya","Arunachal Pradesh","Sikkim"],a:1,x:"<b>Mawsynram, Meghalaya</b> — highest average rainfall."},
+{s:"g",t:"eco",q:"The First Five-Year Plan (1951–56) focused on:",o:["Heavy industry","Agriculture","Services","Education"],a:1,x:"First Plan — <b>agriculture</b>; based on the Harrod-Domar model."},
+{s:"g",t:"eco",q:"The Second Five-Year Plan was based on the model of:",o:["Harrod-Domar","Mahalanobis","Gadgil","Rao-Manmohan"],a:1,x:"Second Plan (1956–61) — <b>P. C. Mahalanobis</b> model; heavy industry."},
+{s:"g",t:"eco",q:"Which Five-Year Plan is called the “Gadgil Yojana”?",o:["Second","Third","Fourth","Fifth"],a:1,x:"The <b>Third Plan (1961–66)</b> is called Gadgil Yojana; it failed due to wars/drought."},
+{s:"g",t:"eco",q:"The “Green Revolution” in India is associated with:",o:["First Plan","Second Plan","Annual Plans 1966–69","Fifth Plan"],a:2,x:"Green Revolution began during the <b>plan holiday (1966–69)</b>; M. S. Swaminathan."},
+{s:"g",t:"eco",q:"“Garibi Hatao” slogan was given during:",o:["Third Plan","Fourth Plan","Fifth Plan","Sixth Plan"],a:2,x:"<b>Fifth Plan (1974–79)</b> — “Garibi Hatao” by Indira Gandhi."},
+{s:"g",t:"eco",q:"The Rolling Plan was introduced during:",o:["1977–80","1980–85","1990–92","1966–69"],a:0,x:"<b>Rolling Plan (1978–80)</b> by the Janata government."},
+{s:"g",t:"eco",q:"LPG reforms (Liberalisation, Privatisation, Globalisation) were launched in:",o:["1985","1991","1995","2000"],a:1,x:"<b>1991</b> — under PM Narasimha Rao and FM Manmohan Singh."},
+{s:"g",t:"eco",q:"The New Economic Policy of 1991 is also called:",o:["Look East Policy","LPG Policy","New Industrial Policy only","Swadeshi Policy"],a:1,x:"Known as the <b>LPG</b> reforms."},
+{s:"g",t:"eco",q:"NITI Aayog replaced the Planning Commission in:",o:["2013","2014","2015","2016"],a:2,x:"<b>1 January 2015</b> — NITI Aayog replaced the Planning Commission."},
+{s:"g",t:"eco",q:"The Reserve Bank of India was established in:",o:["1935","1947","1949","1951"],a:0,x:"RBI established <b>1 April 1935</b> under the RBI Act, 1934."},
+{s:"g",t:"eco",q:"RBI was nationalised in:",o:["1935","1947","1949","1969"],a:2,x:"Nationalised on <b>1 January 1949</b>."},
+{s:"g",t:"eco",q:"The headquarters of RBI is in:",o:["New Delhi","Kolkata","Mumbai","Chennai"],a:2,x:"RBI HQ — <b>Mumbai</b>."},
+{s:"g",t:"eco",q:"Bank Rate, CRR and SLR are instruments of:",o:["Fiscal policy","Monetary policy","Trade policy","Industrial policy"],a:1,x:"They are <b>monetary policy</b> tools of the RBI."},
+{s:"g",t:"eco",q:"CRR stands for:",o:["Cash Reserve Ratio","Credit Reserve Ratio","Current Reserve Ratio","Capital Reserve Ratio"],a:0,x:"<b>Cash Reserve Ratio</b> — deposits banks keep with RBI."},
+{s:"g",t:"eco",q:"The first bank nationalisation (14 banks) took place in:",o:["1949","1955","1969","1980"],a:2,x:"<b>19 July 1969</b> — 14 major banks nationalised."},
+{s:"g",t:"eco",q:"GST was implemented in India on:",o:["1 July 2017","1 April 2016","15 August 2017","1 January 2018"],a:0,x:"GST launched <b>1 July 2017</b> — “One Nation, One Tax”."},
+{s:"g",t:"eco",q:"GST is based on the model of which country?",o:["USA","UK","Canada","France"],a:2,x:"Dual GST model borrowed from <b>Canada</b>."},
+{s:"g",t:"eco",q:"The chairman of the GST Council is:",o:["Prime Minister","Finance Minister","RBI Governor","President"],a:1,x:"Chaired by the <b>Union Finance Minister</b>."},
+{s:"g",t:"eco",q:"MGNREGA guarantees how many days of wage employment per year?",o:["50 days","100 days","150 days","200 days"],a:1,x:"<b>100 days</b> of guaranteed wage employment per rural household."},
+{s:"g",t:"eco",q:"PM-JAY (Ayushman Bharat) provides health cover of:",o:["Rs 1 lakh","Rs 3 lakh","Rs 5 lakh","Rs 10 lakh"],a:2,x:"<b>Rs 5 lakh</b> per family per year."},
+{s:"g",t:"eco",q:"The Pradhan Mantri Jan Dhan Yojana was launched in:",o:["2013","2014","2015","2016"],a:1,x:"Launched <b>28 August 2014</b> — financial inclusion."},
+{s:"g",t:"eco",q:"“Make in India” was launched in:",o:["2013","2014","2015","2016"],a:1,x:"Launched <b>September 2014</b>."},
+{s:"g",t:"eco",q:"The Digital India programme was launched in:",o:["2014","2015","2016","2017"],a:1,x:"Launched <b>1 July 2015</b>."},
+{s:"g",t:"eco",q:"Beti Bachao Beti Padhao was launched from:",o:["Delhi","Panipat, Haryana","Jaipur","Lucknow"],a:1,x:"Launched from <b>Panipat, Haryana</b> (Jan 2015)."},
+{s:"g",t:"eco",q:"The headquarters of the World Bank is in:",o:["New York","Washington D.C.","Geneva","Paris"],a:1,x:"World Bank HQ — <b>Washington D.C.</b>"},
+{s:"g",t:"eco",q:"The headquarters of the IMF is in:",o:["Washington D.C.","New York","London","Geneva"],a:0,x:"IMF HQ — <b>Washington D.C.</b>"},
+{s:"g",t:"eco",q:"India's largest public sector bank is:",o:["PNB","Bank of Baroda","State Bank of India","Canara Bank"],a:2,x:"<b>State Bank of India</b> — largest PSB."},
+{s:"g",t:"eco",q:"The first Indian bank with an Indian chairman was:",o:["SBI","PNB","Bank of India","Central Bank of India"],a:1,x:"<b>Punjab National Bank</b> (1894) — first fully Indian bank."},
+{s:"g",t:"eco",q:"Demonetisation of Rs 500 and Rs 1000 notes was announced on:",o:["8 Nov 2016","8 Nov 2015","1 Jan 2017","15 Aug 2016"],a:0,x:"Announced <b>8 November 2016</b>."},
+{s:"g",t:"eco",q:"The Union Budget is presented under Article:",o:["110","112","265","280"],a:1,x:"<b>Article 112</b> — Annual Financial Statement."},
+{s:"g",t:"eco",q:"Who presents the Union Budget?",o:["Prime Minister","Finance Minister","RBI Governor","President"],a:1,x:"Presented by the <b>Finance Minister</b>."},
+{s:"g",t:"eco",q:"The “Father of the Indian Green Revolution” is:",o:["Verghese Kurien","M. S. Swaminathan","Norman Borlaug","P. C. Mahalanobis"],a:1,x:"<b>M. S. Swaminathan</b> — father of India's Green Revolution."},
+{s:"g",t:"eco",q:"Operation Flood (White Revolution) is associated with:",o:["M. S. Swaminathan","Verghese Kurien","Norman Borlaug","Sardar Patel"],a:1,x:"<b>Verghese Kurien</b> — White Revolution (milk)."},
+{s:"g",t:"eco",q:"The 12th Five-Year Plan period was:",o:["2007–12","2012–17","2010–15","2015–20"],a:1,x:"<b>2012–2017</b> — the last Five-Year Plan."},
+{s:"g",t:"eco",q:"SEZ policy in India was introduced in:",o:["1991","2000","2005","2010"],a:1,x:"SEZ policy announced in <b>2000</b>; SEZ Act 2005."},
+{s:"g",t:"sci",q:"The SI unit of force is:",o:["Joule","Watt","Newton","Pascal"],a:2,x:"<b>Newton</b> — Joule is energy, Watt is power."},
+{s:"g",t:"sci",q:"The SI unit of electric current is:",o:["Volt","Ampere","Ohm","Watt"],a:1,x:"<b>Ampere</b> — Volt is potential difference."},
+{s:"g",t:"sci",q:"Light year is a unit of:",o:["Time","Distance","Speed","Intensity"],a:1,x:"Light year = <b>distance</b> light travels in one year."},
+{s:"g",t:"sci",q:"The chemical symbol of gold is:",o:["Go","Gd","Au","Ag"],a:2,x:"<b>Au</b> (from Latin Aurum); Ag is silver."},
+{s:"g",t:"sci",q:"The pH of pure water at 25°C is:",o:["0","1","7","14"],a:2,x:"Pure water is neutral — <b>pH 7</b>."},
+{s:"g",t:"sci",q:"Which gas is used in balloons and is the lightest element?",o:["Oxygen","Helium","Hydrogen","Nitrogen"],a:2,x:"<b>Hydrogen</b> is the lightest element."},
+{s:"g",t:"sci",q:"The hardest natural substance is:",o:["Steel","Diamond","Quartz","Graphite"],a:1,x:"<b>Diamond</b> — hardest natural substance."},
+{s:"g",t:"sci",q:"Photosynthesis takes place in the:",o:["Mitochondria","Chloroplast","Nucleus","Ribosome"],a:1,x:"<b>Chloroplast</b> contains chlorophyll."},
+{s:"g",t:"sci",q:"The powerhouse of the cell is:",o:["Nucleus","Ribosome","Mitochondria","Golgi body"],a:2,x:"<b>Mitochondria</b> — site of ATP production."},
+{s:"g",t:"sci",q:"Red blood cells are formed in the:",o:["Liver","Bone marrow","Spleen","Heart"],a:1,x:"RBCs form in the <b>bone marrow</b>."},
+{s:"g",t:"sci",q:"The universal blood donor group is:",o:["AB+","AB−","O−","O+"],a:2,x:"<b>O−</b> is the universal donor; AB+ the universal recipient."},
+{s:"g",t:"sci",q:"The normal human body temperature is:",o:["36.5°C","37°C","38°C","39°C"],a:1,x:"<b>37°C (98.6°F)</b>."},
+{s:"g",t:"sci",q:"Vitamin D deficiency causes:",o:["Scurvy","Rickets","Night blindness","Anaemia"],a:1,x:"<b>Rickets</b>; Vitamin C deficiency → scurvy."},
+{s:"g",t:"sci",q:"Vitamin B12 contains which metal?",o:["Iron","Zinc","Cobalt","Magnesium"],a:2,x:"Vitamin B12 (cobalamin) contains <b>cobalt</b>."},
+{s:"g",t:"sci",q:"The functional unit of the kidney is:",o:["Neuron","Nephron","Alveolus","Glomerulus"],a:1,x:"<b>Nephron</b> — functional unit of the kidney."},
+{s:"g",t:"sci",q:"Sound travels fastest in:",o:["Vacuum","Air","Water","Steel"],a:3,x:"Sound travels fastest in <b>solids</b> (steel); cannot travel in vacuum."},
+{s:"g",t:"sci",q:"The splitting of light into seven colours is called:",o:["Reflection","Refraction","Dispersion","Diffraction"],a:2,x:"<b>Dispersion</b> — by a prism."},
+{s:"g",t:"sci",q:"Which planet is known as the Red Planet?",o:["Venus","Mars","Jupiter","Mercury"],a:1,x:"<b>Mars</b> — the Red Planet."},
+{s:"g",t:"sci",q:"The largest planet of the solar system is:",o:["Saturn","Jupiter","Neptune","Uranus"],a:1,x:"<b>Jupiter</b> — largest planet."},
+{s:"g",t:"sci",q:"The gas mainly responsible for global warming is:",o:["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],a:1,x:"<b>Carbon dioxide</b> is the main greenhouse gas."},
+{s:"g",t:"sci",q:"Baking soda is chemically:",o:["Sodium carbonate","Sodium bicarbonate","Calcium carbonate","Potassium nitrate"],a:1,x:"Baking soda = <b>sodium bicarbonate</b> (NaHCO₃)."},
+{s:"g",t:"sci",q:"Washing soda is:",o:["Sodium bicarbonate","Sodium carbonate","Calcium oxide","Sodium hydroxide"],a:1,x:"Washing soda = <b>sodium carbonate</b> (Na₂CO₃)."},
+{s:"g",t:"sci",q:"The instrument used to measure atmospheric pressure is:",o:["Thermometer","Barometer","Hygrometer","Anemometer"],a:1,x:"<b>Barometer</b> — atmospheric pressure."},
+{s:"g",t:"sci",q:"The deficiency of iodine causes:",o:["Rickets","Goitre","Scurvy","Beri-beri"],a:1,x:"Iodine deficiency → <b>goitre</b>."},
+{s:"g",t:"sci",q:"DNA stands for:",o:["Deoxyribonucleic Acid","Diribonucleic Acid","Deoxyribonitric Acid","Ribonucleic Acid"],a:0,x:"<b>Deoxyribonucleic Acid</b> — double helix (Watson & Crick)."},
+{s:"g",t:"gk",q:"“The Discovery of India” was written by:",o:["M. K. Gandhi","Jawaharlal Nehru","Rabindranath Tagore","S. Radhakrishnan"],a:1,x:"<b>Jawaharlal Nehru</b> — written in Ahmednagar Fort jail."},
+{s:"g",t:"gk",q:"“My Experiments with Truth” is the autobiography of:",o:["Nehru","M. K. Gandhi","Ambedkar","Bhagat Singh"],a:1,x:"<b>M. K. Gandhi</b> — My Experiments with Truth."},
+{s:"g",t:"gk",q:"“Gitanjali” was written by:",o:["Bankim Chandra","Rabindranath Tagore","Sarojini Naidu","Premchand"],a:1,x:"<b>Rabindranath Tagore</b> — won him the Nobel Prize (1913)."},
+{s:"g",t:"gk",q:"“Anandamath” (source of Vande Mataram) was written by:",o:["Rabindranath Tagore","Bankim Chandra Chatterjee","Premchand","Aurobindo"],a:1,x:"<b>Bankim Chandra Chatterjee</b>."},
+{s:"g",t:"gk",q:"“Godan” was written by:",o:["Premchand","Jaishankar Prasad","Harivansh Rai","Maithilisharan"],a:0,x:"<b>Munshi Premchand</b> — Godan."},
+{s:"g",t:"gk",q:"“The Guide” was written by:",o:["R. K. Narayan","Mulk Raj Anand","Khushwant Singh","Ruskin Bond"],a:0,x:"<b>R. K. Narayan</b> — The Guide."},
+{s:"g",t:"gk",q:"“Train to Pakistan” was written by:",o:["Khushwant Singh","Mulk Raj Anand","Salman Rushdie","Vikram Seth"],a:0,x:"<b>Khushwant Singh</b>."},
+{s:"g",t:"gk",q:"“Midnight's Children” was written by:",o:["Vikram Seth","Salman Rushdie","Arundhati Roy","Amitav Ghosh"],a:1,x:"<b>Salman Rushdie</b> — Booker Prize 1981."},
+{s:"g",t:"gk",q:"“The God of Small Things” was written by:",o:["Jhumpa Lahiri","Arundhati Roy","Kiran Desai","Shashi Tharoor"],a:1,x:"<b>Arundhati Roy</b> — Booker Prize 1997."},
+{s:"g",t:"gk",q:"“A Suitable Boy” was written by:",o:["Vikram Seth","Upamanyu Chatterjee","Amitav Ghosh","Rohinton Mistry"],a:0,x:"<b>Vikram Seth</b>."},
+{s:"g",t:"gk",q:"“Wings of Fire” is the autobiography of:",o:["A. P. J. Abdul Kalam","M. S. Swaminathan","Verghese Kurien","E. Sreedharan"],a:0,x:"<b>Dr. A. P. J. Abdul Kalam</b> — Wings of Fire."},
+{s:"g",t:"gk",q:"“Playing It My Way” is the autobiography of:",o:["Kapil Dev","Sachin Tendulkar","Rahul Dravid","Sunil Gavaskar"],a:1,x:"<b>Sachin Tendulkar</b>."},
+{s:"g",t:"gk",q:"The Thomas Cup is associated with:",o:["Tennis","Badminton","Football","Hockey"],a:1,x:"<b>Thomas Cup</b> — men's badminton world team championship."},
+{s:"g",t:"gk",q:"The Uber Cup is associated with:",o:["Men's badminton","Women's badminton","Table tennis","Squash"],a:1,x:"<b>Uber Cup</b> — women's badminton world team championship."},
+{s:"g",t:"gk",q:"The Davis Cup is associated with:",o:["Badminton","Tennis","Golf","Polo"],a:1,x:"<b>Davis Cup</b> — men's tennis team event."},
+{s:"g",t:"gk",q:"The term “LBW” is used in:",o:["Football","Hockey","Cricket","Tennis"],a:2,x:"<b>LBW (Leg Before Wicket)</b> — cricket."},
+{s:"g",t:"gk",q:"The Ranji Trophy is associated with:",o:["Football","Hockey","Cricket","Kabaddi"],a:2,x:"<b>Ranji Trophy</b> — domestic first-class cricket."},
+{s:"g",t:"gk",q:"The Dronacharya Award is given for:",o:["Sports performance","Coaching excellence","Lifetime sports","Adventure sports"],a:1,x:"<b>Dronacharya Award</b> — outstanding sports coaching."},
+{s:"g",t:"gk",q:"The highest sporting honour of India is:",o:["Arjuna Award","Dronacharya Award","Major Dhyan Chand Khel Ratna","Padma Shri"],a:2,x:"<b>Major Dhyan Chand Khel Ratna</b> — highest sports honour."},
+{s:"g",t:"gk",q:"The Olympic Games 2028 will be held in:",o:["Paris","Los Angeles","Brisbane","Tokyo"],a:1,x:"<b>Los Angeles 2028</b>; Brisbane 2032."},
+{s:"g",t:"gk",q:"The first Indian woman to win an Olympic medal was:",o:["P. T. Usha","Karnam Malleswari","Mary Kom","Saina Nehwal"],a:1,x:"<b>Karnam Malleswari</b> — weightlifting bronze, Sydney 2000."},
+{s:"g",t:"gk",q:"The first Indian to win an individual Olympic gold was:",o:["Milkha Singh","Abhinav Bindra","Rajyavardhan Rathore","Leander Paes"],a:1,x:"<b>Abhinav Bindra</b> — shooting, Beijing 2008."},
+{s:"g",t:"gk",q:"The Bharat Ratna, India's highest civilian award, was instituted in:",o:["1947","1950","1954","1960"],a:2,x:"Instituted in <b>1954</b>."},
+{s:"g",t:"gk",q:"The first Bharat Ratna awardees (1954) were:",o:["Nehru and Patel","Radhakrishnan, Rajagopalachari, C. V. Raman","Ambedkar and Kalam","Tagore and Bose"],a:1,x:"<b>S. Radhakrishnan, C. Rajagopalachari, C. V. Raman</b>."},
+{s:"g",t:"gk",q:"The first woman to win the Bharat Ratna was:",o:["Indira Gandhi","Mother Teresa","Lata Mangeshkar","Sarojini Naidu"],a:0,x:"<b>Indira Gandhi</b> (1971) — first woman recipient."},
+{s:"g",t:"gk",q:"The first Indian woman IPS officer was:",o:["Kiran Bedi","Anna Rajam Malhotra","Kanchan Chaudhary","Sanjukta Parashar"],a:0,x:"<b>Kiran Bedi</b> (1972 batch)."},
+{s:"g",t:"gk",q:"The first woman Chief Minister of an Indian state was:",o:["Indira Gandhi","Sucheta Kripalani","Jayalalithaa","Mayawati"],a:1,x:"<b>Sucheta Kripalani</b> — UP (1963)."},
+{s:"g",t:"gk",q:"SAARC was founded in:",o:["1983","1985","1987","1990"],a:1,x:"SAARC founded <b>1985</b> (Dhaka); HQ Kathmandu."},
+{s:"g",t:"gk",q:"The headquarters of UNESCO is in:",o:["New York","Geneva","Paris","Rome"],a:2,x:"UNESCO HQ — <b>Paris</b>."},
+{s:"g",t:"gk",q:"The headquarters of WHO is in:",o:["New York","Geneva","Paris","Rome"],a:1,x:"WHO HQ — <b>Geneva</b>."},
+{s:"g",t:"gk",q:"The United Nations was founded in:",o:["1944","1945","1946","1948"],a:1,x:"UN founded <b>24 October 1945</b>."},
+{s:"g",t:"gk",q:"How many countries are members of the UN?",o:["189","193","195","197"],a:1,x:"<b>193</b> member states."},
+{s:"g",t:"gk",q:"The currency of Japan is:",o:["Won","Yuan","Yen","Ringgit"],a:2,x:"Japan — <b>Yen</b>."},
+{s:"g",t:"gk",q:"The largest desert of the world is:",o:["Sahara","Gobi","Kalahari","Thar"],a:0,x:"<b>Sahara</b> — largest hot desert."},
+{s:"g",t:"gk",q:"The deepest ocean trench is:",o:["Tonga Trench","Mariana Trench","Java Trench","Puerto Rico Trench"],a:1,x:"<b>Mariana Trench</b> (~11,000 m)."},
+{s:"g",t:"gk",q:"The longest river of the world is:",o:["Amazon","Nile","Yangtze","Mississippi"],a:1,x:"The <b>Nile</b> (~6,650 km) — longest; Amazon largest by volume."},
+];
+
+/* ================= QUIZ ENGINE ================= */
+const TOPIC = {err:"Error Spotting",fib:"Fill in the Blank",syn:"Synonym",ant:"Antonym",idm:"Idiom & Phrase",
+  ows:"One-Word Substitution",voi:"Voice",nar:"Narration",pqrs:"Para Jumble",
+  pol:"Polity",his:"History",geo:"Geography",eco:"Economy",sci:"Science",gk:"Static GK"};
+const $ = id => document.getElementById(id);
+const qText=$("qText"), optsEl=$("opts"), whyEl=$("why"), btnNext=$("btnNext"), btnSkip=$("btnSkip");
+const tSub=$("tSub"), tTop=$("tTop"), tQno=$("tQno"), toast=$("toast");
+
+let filter="all", pool=[], pos=0, answered=false, correctIdx=0, qCount=0;
+let stats={att:0, ok:0, streak:0, best:+(localStorage.getItem("cglBest")||0)};
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function toastMsg(m){toast.textContent=m;toast.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove("show"),2200);}
+function buildPool(){pool=shuffle(QUESTIONS.filter(q=>filter==="all"||q.s===filter));pos=0;}
+
+function paintStats(){
+  $("sAtt").textContent=stats.att;
+  $("sOk").textContent=stats.ok;
+  $("sAcc").textContent=stats.att?Math.round(stats.ok/stats.att*100)+"%":"–";
+  $("sBank").textContent=QUESTIONS.length;
+  $("bankNote").textContent=QUESTIONS.length+" questions in bank";
+  $("streak").textContent="🔥 "+stats.streak;
+}
+
+function render(){
+  if(pos>=pool.length){buildPool();toastMsg("🔁 Bank reshuffled — fresh questions, keep going!");}
+  answered=false;
+  const q=pool[pos]; qCount++;
+  const isEng=q.s==="e";
+  tSub.textContent=isEng?"ENGLISH":"GENERAL AWARENESS";
+  tSub.className="tag "+(isEng?"eng":"ga");
+  tTop.textContent=TOPIC[q.t]||q.t;
+  tQno.textContent="Q "+qCount;
+  qText.textContent=q.q;
+  const order=shuffle(q.o.map((t,i)=>({t,ok:i===q.a})));
+  correctIdx=order.findIndex(o=>o.ok);
+  optsEl.innerHTML="";
+  order.forEach((o,i)=>{
+    const b=document.createElement("button");
+    b.className="opt"; b.innerHTML='<span class="k">'+String.fromCharCode(65+i)+'</span><span></span>';
+    b.lastChild.textContent=o.t;
+    b.onclick=()=>answer(i,b);
+    optsEl.appendChild(b);
+  });
+  whyEl.className="why"; whyEl.innerHTML="";
+  btnNext.classList.remove("show");
+}
+
+function reveal(pick){
+  const btns=[...optsEl.children];
+  btns.forEach((b,i)=>{
+    b.classList.add("lock");
+    if(i===correctIdx)b.classList.add("right");
+    else if(i===pick)b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  whyEl.innerHTML="<b>💡 Why:</b> "+pool[pos].x;
+  whyEl.classList.add("show");
+  btnNext.classList.add("show");
+}
+
+function answer(i){
+  if(answered)return; answered=true;
+  stats.att++;
+  const good=(i===correctIdx);
+  if(good){stats.ok++;stats.streak++;if(stats.streak>stats.best){stats.best=stats.streak;localStorage.setItem("cglBest",stats.best);}}
+  else stats.streak=0;
+  reveal(i); paintStats();
+  if(stats.att%25===0)toastMsg("⚡ "+stats.att+" attempted • "+Math.round(stats.ok/stats.att*100)+"% accuracy");
+}
+
+btnNext.onclick=()=>{pos++;render();};
+btnSkip.onclick=()=>{if(answered)return;answered=true;stats.att++;stats.streak=0;reveal(-1);paintStats();};
+
+document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{
+  document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
+  c.classList.add("on"); filter=c.dataset.f; buildPool(); render();
+});
+
+document.addEventListener("keydown",e=>{
+  if(e.key>="1"&&e.key<="4"){const b=optsEl.children[+e.key-1];if(b&&!answered)b.click();}
+  else if(e.key==="Enter"&&answered){pos++;render();}
+  else if((e.key==="s"||e.key==="S")&&!answered)btnSkip.click();
+});
+
+buildPool(); render(); paintStats();
+</script>
+</body>
+</html>
