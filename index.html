@@ -18,7 +18,9 @@
   .app{width:100%;max-width:640px}
   header.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
   .brand{display:flex;align-items:center;gap:10px}
-  .logo{width:42px;height:42px;display:grid;place-items:center;background:none;box-shadow:none}
+  .logo{width:42px;height:42px;border-radius:12px;overflow:hidden;flex:none;background:#fff;
+    border:1.5px solid rgba(245,166,35,.55);box-shadow:0 4px 14px rgba(0,0,0,.45)}
+  .logo img{width:100%;height:100%;object-fit:cover;display:block}
   .brand h1{font-size:17px;letter-spacing:.3px}
   .brand h1 span{color:var(--acc2)}
   .brand small{display:block;color:var(--mut);font-size:11.5px;font-weight:400;letter-spacing:.4px}
@@ -117,7 +119,7 @@
 <div class="app">
   <header class="top">
     <div class="brand">
-      <div class="logo"><svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2z" fill="url(#lg)" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/><defs><linearGradient id="lg" x1="4" y1="2" x2="19" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#f5a623"/><stop offset="1" stop-color="#e2641d"/></linearGradient></defs></svg></div>
+      <div class="logo"><img src="data:image/jpeg;base64,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" alt="Dinesh logo"></div>
       <h1>CGL 2026 <span>Rapid Revision</span><small>ALL SUBJECTS • EXAM-LEVEL</small></h1>
     </div>
     <div class="hstats"><div class="tchip" id="tchip">⏱ 60:00</div><div class="streak" id="streak">🔥 0</div></div>
@@ -156,6 +158,24 @@
 
 <div class="toast" id="toast"></div>
 
+<div class="pop hidden" id="ownerPop">
+  <div class="popcard">
+    <div style="font-size:34px;margin-bottom:10px">📸</div>
+    <h3>Follow the owner</h3>
+    <p>Follow <b>@dinesh.jangir_</b> on Instagram for quiz updates &amp; new question drops.</p>
+    <a class="popig" href="https://instagram.com/dinesh.jangir_" target="_blank" rel="noopener" id="popFollow">Follow on Instagram</a><br>
+    <button class="popskip" id="popSkip">Skip</button>
+  </div>
+</div>
+<div class="pop hidden" id="hourPop">
+  <div class="popcard">
+    <div style="font-size:34px;margin-bottom:10px">⏱</div>
+    <h3>1 hour complete!</h3>
+    <p id="hourMsg">You attempted <b>0</b> questions in an hour.</p>
+    <button class="popbtn" id="hourGo">Start new hour</button>
+    <button class="popskip" id="hourClose">Close</button>
+  </div>
+</div>
 <script>
 /* ============ QUESTION BANK (authored for SSC CGL 2026 Tier-1 level) ============
    s: e=English, g=General Awareness | t: topic | q: question | o: options | a: answer idx | x: explanation */
@@ -1153,7 +1173,7 @@ function bumpTimer(){
 }
 function fmtT(ms){const s=Math.ceil(Math.max(0,ms)/1000);return String((s/60)|0).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
 function showHour(){
-  $("hourMsg").innerHTML="You attempted <b>"+tCount+"</b> questions in an hour.";
+  $("hourMsg").innerHTML="You attempted <b>"+tCount+"</b> question"+(tCount===1?"":"s")+" in an hour.";
   $("hourPop").classList.remove("hidden");
 }
 function hourReset(){
@@ -1185,23 +1205,5 @@ buildPool(); render(); paintStats();
     </a>
   </div>
 </footer>
-<div class="pop hidden" id="ownerPop">
-  <div class="popcard">
-    <div style="font-size:34px;margin-bottom:10px">📸</div>
-    <h3>Follow the owner</h3>
-    <p>Follow <b>@dinesh.jangir_</b> on Instagram for quiz updates &amp; new question drops.</p>
-    <a class="popig" href="https://instagram.com/dinesh.jangir_" target="_blank" rel="noopener" id="popFollow">Follow on Instagram</a><br>
-    <button class="popskip" id="popSkip">Skip</button>
-  </div>
-</div>
-<div class="pop hidden" id="hourPop">
-  <div class="popcard">
-    <div style="font-size:34px;margin-bottom:10px">⏱</div>
-    <h3>1 hour complete!</h3>
-    <p id="hourMsg">You attempted <b>0</b> questions in an hour.</p>
-    <button class="popbtn" id="hourGo">Start new hour</button>
-    <button class="popskip" id="hourClose">Close</button>
-  </div>
-</div>
 </body>
 </html>
