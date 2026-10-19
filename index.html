@@ -18,13 +18,19 @@
   .app{width:100%;max-width:640px}
   header.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
   .brand{display:flex;align-items:center;gap:10px}
-  .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:22px;
-    background:linear-gradient(135deg,var(--acc),#e2641d);box-shadow:0 6px 18px rgba(245,166,35,.35)}
+  .logo{width:42px;height:42px;display:grid;place-items:center;background:none;box-shadow:none}
   .brand h1{font-size:17px;letter-spacing:.3px}
   .brand h1 span{color:var(--acc2)}
   .brand small{display:block;color:var(--mut);font-size:11.5px;font-weight:400;letter-spacing:.4px}
   .streak{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:7px 14px;
     font-size:13.5px;font-weight:700;white-space:nowrap}
+  .hstats{display:flex;gap:8px;align-items:center}
+  .tchip{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:7px 14px;
+    font-size:13.5px;font-weight:700;white-space:nowrap;color:var(--mut);font-variant-numeric:tabular-nums}
+  .tchip.live{color:var(--acc2);border-color:rgba(245,166,35,.5)}
+  .tchip.done{color:#f87171;border-color:rgba(248,113,113,.5)}
+  .popbtn{display:block;width:100%;padding:12px;border-radius:12px;font-weight:700;color:#241100;font-size:15px;
+    background:linear-gradient(135deg,var(--acc),#e2641d);margin-bottom:10px;cursor:pointer;border:none}
   .chips{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
   .chip{flex:1 1 0;text-align:center;padding:10px 6px;border-radius:12px;background:var(--chip);
     border:1px solid var(--line);color:var(--mut);font-size:13.5px;font-weight:600;cursor:pointer;transition:.18s;white-space:nowrap}
@@ -111,10 +117,10 @@
 <div class="app">
   <header class="top">
     <div class="brand">
-      <div class="logo">⚡</div>
-      <h1>CGL 2026 <span>Rapid Revision</span><small>ENGLISH + GENERAL AWARENESS • EXAM-LEVEL</small></h1>
+      <div class="logo"><svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M13 2 4.5 13.5H11L9.5 22 19 10h-6.5L13 2z" fill="url(#lg)" stroke="#fff" stroke-width="1.1" stroke-linejoin="round"/><defs><linearGradient id="lg" x1="4" y1="2" x2="19" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#f5a623"/><stop offset="1" stop-color="#e2641d"/></linearGradient></defs></svg></div>
+      <h1>CGL 2026 <span>Rapid Revision</span><small>ALL SUBJECTS • EXAM-LEVEL</small></h1>
     </div>
-    <div class="streak" id="streak">🔥 0</div>
+    <div class="hstats"><div class="tchip" id="tchip">⏱ 60:00</div><div class="streak" id="streak">🔥 0</div></div>
   </header>
 
   <div class="chips">
@@ -625,116 +631,116 @@ const QUESTIONS = [
 {s:"g",t:"ca",q:"Maharashtra's MahaCyber initiative, in news in Oct 2026, aims at:",o:["Fighting cybercrime and online fraud","Cyber parks","Free Wi-Fi cities","Digital literacy"],a:0,x:"Strengthening response to cybercrime."},
 {s:"g",t:"ca",q:"The Second Regional Review Conference on the Forest Rights Act (9 Oct 2026) was held in:",o:["Kolkata","Ranchi","Bhopal","Bhubaneswar"],a:0,x:"Organised by the Ministry of Tribal Affairs."},
 {s:"g",t:"ca",q:"Fatima Ezzahra El Mansouri was appointed Prime Minister of:",o:["Morocco","Tunisia","Algeria","Egypt"],a:0,x:"Oct 2026 appointment."},
-{s:"m",t:"sim",q:"45 + 12 × 8 − 20 = ?",o:["121","436","101","141"],a:0,x:"BODMAS: 12×8=96; 45+96−20 = <b>121</b>."},
-{s:"m",t:"sim",q:"(72 ÷ 8) × (15 − 6) = ?",o:["81","54","18","90"],a:0,x:"9 × 9 = <b>81</b>."},
-{s:"m",t:"sim",q:"3/4 of 320 = ?",o:["240","220","260","180"],a:0,x:"320 × 3/4 = <b>240</b>."},
-{s:"m",t:"sim",q:"15² − 12² = ?",o:["81","9","27","441"],a:0,x:"225 − 144 = <b>81</b>."},
-{s:"m",t:"sim",q:"(25 + 35) ÷ 12 × 3 = ?",o:["15","5","180","45"],a:0,x:"60 ÷ 12 × 3 = 5 × 3 = <b>15</b>."},
-{s:"m",t:"sim",q:"0.5 × 0.4 × 20 = ?",o:["4","0.4","40","0.04"],a:0,x:"0.5 × 0.4 = 0.2; 0.2 × 20 = <b>4</b>."},
-{s:"m",t:"sim",q:"√144 + √81 = ?",o:["21","23","25","19"],a:0,x:"12 + 9 = <b>21</b>."},
-{s:"m",t:"sim",q:"2³ + 3² − 5 = ?",o:["12","22","10","18"],a:0,x:"8 + 9 − 5 = <b>12</b>."},
-{s:"m",t:"per",q:"25% of 640 = ?",o:["160","150","170","128"],a:0,x:"640 ÷ 4 = <b>160</b>."},
-{s:"m",t:"per",q:"If 40% of a number is 120, the number is:",o:["300","280","320","240"],a:0,x:"120 ÷ 0.4 = <b>300</b>."},
-{s:"m",t:"per",q:"A number increased by 20% becomes 360. The number is:",o:["300","288","320","280"],a:0,x:"360 ÷ 1.2 = <b>300</b>."},
-{s:"m",t:"per",q:"12.5% of 800 = ?",o:["100","96","125","80"],a:0,x:"12.5% = 1/8; 800 ÷ 8 = <b>100</b>."},
-{s:"m",t:"per",q:"A shirt priced ₹500 is sold at 10% discount. The selling price is:",o:["₹450","₹400","₹475","₹440"],a:0,x:"500 × 0.9 = <b>₹450</b>."},
-{s:"m",t:"per",q:"75% of 1200 = ?",o:["900","800","950","750"],a:0,x:"3/4 × 1200 = <b>900</b>."},
-{s:"m",t:"pro",q:"An article bought for ₹800 is sold for ₹920. The profit % is:",o:["15%","12%","20%","10%"],a:0,x:"120/800 × 100 = <b>15%</b>."},
-{s:"m",t:"pro",q:"A TV bought for ₹12,000 is sold at a loss of 10%. The selling price is:",o:["₹10,800","₹10,000","₹11,000","₹9,600"],a:0,x:"12000 × 0.9 = <b>₹10,800</b>."},
-{s:"m",t:"pro",q:"A shopkeeper buys a book for ₹500 and sells it at 20% profit. The selling price is:",o:["₹600","₹550","₹620","₹580"],a:0,x:"500 × 1.2 = <b>₹600</b>."},
-{s:"m",t:"pro",q:"By selling for ₹990 at 10% profit, the cost price was:",o:["₹900","₹891","₹950","₹909"],a:0,x:"990 ÷ 1.1 = <b>₹900</b>."},
-{s:"m",t:"int",q:"Simple interest on ₹4,000 at 5% p.a. for 3 years is:",o:["₹600","₹500","₹650","₹450"],a:0,x:"4000×5×3/100 = <b>₹600</b>."},
-{s:"m",t:"int",q:"Compound interest on ₹10,000 at 10% p.a. for 2 years is:",o:["₹2,100","₹2,000","₹2,200","₹1,900"],a:0,x:"10000 × 1.21 − 10000 = <b>₹2,100</b>."},
-{s:"m",t:"int",q:"₹5,000 at 8% simple interest for 4 years amounts to:",o:["₹6,600","₹6,400","₹7,000","₹5,800"],a:0,x:"SI = 1600; 5000 + 1600 = <b>₹6,600</b>."},
-{s:"m",t:"avg",q:"Average of 12, 18, 24, 30, 36 is:",o:["24","22","26","20"],a:0,x:"Sum = 120; 120 ÷ 5 = <b>24</b>."},
-{s:"m",t:"avg",q:"Average of the first 10 natural numbers is:",o:["5.5","5","6","5.25"],a:0,x:"(1 + 10)/2 = <b>5.5</b>."},
-{s:"m",t:"avg",q:"Average of five consecutive odd numbers starting from 11 is:",o:["15","13","17","14"],a:0,x:"Middle number = <b>15</b>."},
-{s:"m",t:"rat",q:"₹900 divided in the ratio 2:3:4. The smallest share is:",o:["₹200","₹300","₹400","₹225"],a:0,x:"2/9 × 900 = <b>₹200</b>."},
-{s:"m",t:"rat",q:"If A:B = 2:3 and A = 40, then B = ?",o:["60","50","70","80"],a:0,x:"40 × 3/2 = <b>60</b>."},
-{s:"m",t:"rat",q:"HCF of 24 and 36 is:",o:["12","6","18","8"],a:0,x:"<b>12</b> is the largest divisor of both."},
-{s:"m",t:"rat",q:"LCM of 12 and 18 is:",o:["36","72","24","54"],a:0,x:"<b>36</b> is the smallest common multiple."},
-{s:"m",t:"rat",q:"LCM of 8, 12 and 20 is:",o:["120","60","240","80"],a:0,x:"<b>120</b>."},
-{s:"m",t:"twk",q:"A does a work in 10 days, B in 15 days. Together they finish in:",o:["6 days","7 days","5 days","8 days"],a:0,x:"1/10 + 1/15 = 1/6 → <b>6 days</b>."},
-{s:"m",t:"twk",q:"A pipe fills a tank in 6 hours, another empties it in 8 hours. With both open, the tank fills in:",o:["24 hours","12 hours","14 hours","48 hours"],a:0,x:"1/6 − 1/8 = 1/24 → <b>24 hours</b>."},
-{s:"m",t:"twk",q:"12 men do a work in 8 days. 16 men do it in:",o:["6 days","5 days","7 days","4 days"],a:0,x:"12 × 8 ÷ 16 = <b>6 days</b>."},
-{s:"m",t:"tnd",q:"A car at 60 km/h travels for 2.5 hours. Distance covered:",o:["150 km","120 km","180 km","140 km"],a:0,x:"60 × 2.5 = <b>150 km</b>."},
-{s:"m",t:"tnd",q:"240 km covered in 4 hours. The speed was:",o:["60 km/h","55 km/h","65 km/h","50 km/h"],a:0,x:"240 ÷ 4 = <b>60 km/h</b>."},
-{s:"m",t:"tnd",q:"A 180 m train at 20 m/s crosses a pole in:",o:["9 seconds","8 seconds","10 seconds","12 seconds"],a:0,x:"180 ÷ 20 = <b>9 seconds</b>."},
-{s:"m",t:"alg",q:"If x + 1/x = 4, then x² + 1/x² = ?",o:["14","16","12","18"],a:0,x:"4² − 2 = <b>14</b>."},
-{s:"m",t:"alg",q:"(a + b)² − (a − b)² = ?",o:["4ab","2ab","0","2(a²+b²)"],a:0,x:"Standard identity = <b>4ab</b>."},
-{s:"m",t:"alg",q:"If 3x − 7 = 11, then x = ?",o:["6","5","7","4"],a:0,x:"3x = 18 → x = <b>6</b>."},
-{s:"m",t:"alg",q:"For x² − 5x + 6 = 0, the sum of roots is:",o:["5","6","−5","2"],a:0,x:"Sum = −b/a = <b>5</b>."},
-{s:"m",t:"geo2",q:"Area of a circle of radius 7 cm is: (π = 22/7)",o:["154 cm²","144 cm²","164 cm²","88 cm²"],a:0,x:"22/7 × 49 = <b>154 cm²</b>."},
-{s:"m",t:"geo2",q:"Perimeter of a rectangle 12 cm × 8 cm is:",o:["40 cm","48 cm","96 cm","32 cm"],a:0,x:"2 × (12 + 8) = <b>40 cm</b>."},
-{s:"m",t:"geo2",q:"Volume of a cube of side 5 cm is:",o:["125 cm³","100 cm³","150 cm³","75 cm³"],a:0,x:"5³ = <b>125 cm³</b>."},
-{s:"m",t:"geo2",q:"Area of a triangle with base 10 cm and height 6 cm is:",o:["30 cm²","60 cm²","16 cm²","36 cm²"],a:0,x:"½ × 10 × 6 = <b>30 cm²</b>."},
-{s:"m",t:"geo2",q:"Circumference of a circle of radius 14 cm is: (π = 22/7)",o:["88 cm","44 cm","176 cm","66 cm"],a:0,x:"2 × 22/7 × 14 = <b>88 cm</b>."},
-{s:"m",t:"tri",q:"sin 30° = ?",o:["1/2","√3/2","1","0"],a:0,x:"Standard value = <b>1/2</b>."},
-{s:"m",t:"tri",q:"tan 45° = ?",o:["1","0","√3","1/√3"],a:0,x:"Standard value = <b>1</b>."},
-{s:"m",t:"tri",q:"sin²θ + cos²θ = ?",o:["1","0","2","tan²θ"],a:0,x:"Fundamental identity = <b>1</b>."},
-{s:"m",t:"tri",q:"If sin θ = 3/5 (θ acute), cos θ = ?",o:["4/5","5/4","3/4","5/3"],a:0,x:"3-4-5 triangle → <b>4/5</b>."},
-{s:"m",t:"num",q:"The smallest prime number is:",o:["2","1","3","0"],a:0,x:"<b>2</b> is the only even prime."},
-{s:"m",t:"num",q:"Sum of the first 20 natural numbers is:",o:["210","200","190","220"],a:0,x:"20 × 21 ÷ 2 = <b>210</b>."},
-{s:"m",t:"num",q:"2¹⁰ = ?",o:["1024","1000","2048","512"],a:0,x:"<b>1024</b>."},
-{s:"m",t:"num",q:"The unit digit of 27⁴ is:",o:["1","7","9","3"],a:0,x:"Powers of 7 cycle 7,9,3,<b>1</b>."},
-{s:"m",t:"num",q:"1 + 2 + 3 + … + 50 = ?",o:["1275","1250","1300","1225"],a:0,x:"50 × 51 ÷ 2 = <b>1275</b>."},
-{s:"m",t:"num",q:"Which of these is divisible by 11?",o:["2728","2729","2730","2731"],a:0,x:"2728 = 11 × 248 → <b>2728</b>."},
-{s:"m",t:"num",q:"The sum of the first 5 prime numbers is:",o:["28","26","30","18"],a:0,x:"2+3+5+7+11 = <b>28</b>."},
-{s:"r",t:"ana",q:"Book : Pages :: Wall : ?",o:["Bricks","Cement","Paint","Roof"],a:0,x:"A wall is made of <b>bricks</b>, as a book of pages."},
-{s:"r",t:"ana",q:"Doctor : Hospital :: Teacher : ?",o:["School","Student","Book","Class"],a:0,x:"A teacher works in a <b>school</b>."},
-{s:"r",t:"ana",q:"4 : 16 :: 5 : ?",o:["25","20","30","15"],a:0,x:"n : n² → 5² = <b>25</b>."},
-{s:"r",t:"ana",q:"Bird : Nest :: Bee : ?",o:["Hive","Honey","Flower","Tree"],a:0,x:"Bees live in a <b>hive</b>."},
-{s:"r",t:"ana",q:"Pen : Write :: Knife : ?",o:["Cut","Sharp","Steel","Vegetable"],a:0,x:"A knife is used to <b>cut</b>."},
-{s:"r",t:"ana",q:"7 : 49 :: 9 : ?",o:["81","63","72","90"],a:0,x:"9² = <b>81</b>."},
-{s:"r",t:"ana",q:"Clock : Time :: Thermometer : ?",o:["Temperature","Fever","Doctor","Heat"],a:0,x:"A thermometer measures <b>temperature</b>."},
-{s:"r",t:"ana",q:"Cat : Kitten :: Dog : ?",o:["Puppy","Cub","Calf","Foal"],a:0,x:"A baby dog is a <b>puppy</b>."},
-{s:"r",t:"ana",q:"6 : 36 :: 8 : ?",o:["64","48","56","72"],a:0,x:"8² = <b>64</b>."},
-{s:"r",t:"ana",q:"A : C :: D : ?",o:["F","E","G","H"],a:0,x:"+2 letters → D + 2 = <b>F</b>."},
-{s:"r",t:"ser",q:"2, 4, 8, 16, ?",o:["32","24","20","30"],a:0,x:"×2 each time → <b>32</b>."},
-{s:"r",t:"ser",q:"3, 6, 11, 18, ?",o:["27","25","26","29"],a:0,x:"+3, +5, +7, +9 → <b>27</b>."},
-{s:"r",t:"ser",q:"1, 4, 9, 16, ?",o:["25","20","24","36"],a:0,x:"Squares: 5² = <b>25</b>."},
-{s:"r",t:"ser",q:"5, 10, 20, 40, ?",o:["80","60","70","100"],a:0,x:"×2 → <b>80</b>."},
-{s:"r",t:"ser",q:"81, 27, 9, 3, ?",o:["1","0","2","6"],a:0,x:"÷3 → <b>1</b>."},
-{s:"r",t:"ser",q:"A, C, E, G, ?",o:["I","H","J","K"],a:0,x:"+2 letters → <b>I</b>."},
-{s:"r",t:"ser",q:"Z, X, V, T, ?",o:["R","S","Q","P"],a:0,x:"−2 letters → <b>R</b>."},
-{s:"r",t:"ser",q:"2, 6, 12, 20, 30, ?",o:["42","36","40","44"],a:0,x:"+4, +6, +8, +10, +12 → <b>42</b>."},
-{s:"r",t:"ser",q:"11, 13, 17, 19, 23, ?",o:["29","27","25","31"],a:0,x:"Prime numbers → <b>29</b>."},
-{s:"r",t:"ser",q:"4, 9, 16, 25, 36, ?",o:["49","48","50","64"],a:0,x:"Squares: 7² = <b>49</b>."},
-{s:"r",t:"cod",q:"If CAT = 3120 (C=3, A=1, T=20), then DOG = ?",o:["4157","4156","4147","5167"],a:0,x:"D=4, O=15, G=7 → <b>4157</b>."},
-{s:"r",t:"cod",q:"If A=1, B=2, C=3…, then BAD = ?",o:["7","6","8","9"],a:0,x:"2 + 1 + 4 = <b>7</b>."},
-{s:"r",t:"cod",q:"If WATER = 67 (letter positions added), then FIRE = ?",o:["38","40","36","42"],a:0,x:"6 + 9 + 18 + 5 = <b>38</b>."},
-{s:"r",t:"cod",q:"If MANGO is written as NBOHP, APPLE is written as:",o:["BQQMF","BQQLE","ZOOKD","BPPMF"],a:0,x:"Each letter +1 → <b>BQQMF</b>."},
-{s:"r",t:"cod",q:"If PEN = 35 (letter positions added), then COPY = ?",o:["59","58","60","57"],a:0,x:"3 + 15 + 16 + 25 = <b>59</b>."},
-{s:"r",t:"cod",q:"If A=26, B=25, … Z=1, then CAT = ?",o:["57","55","58","56"],a:0,x:"24 + 26 + 7 = <b>57</b>."},
-{s:"r",t:"cod",q:"If BAT = 23 (letter positions added), then BALL = ?",o:["27","28","29","30"],a:0,x:"2 + 1 + 12 + 12 = <b>27</b>."},
-{s:"r",t:"blo",q:"A is B's brother. B is C's mother. A is C's:",o:["Uncle","Father","Brother","Grandfather"],a:0,x:"Mother's brother = <b>uncle</b>."},
-{s:"r",t:"blo",q:"X is Y's father. Y is Z's sister. X is Z's:",o:["Father","Uncle","Brother","Grandfather"],a:0,x:"<b>Father</b> of both."},
-{s:"r",t:"blo",q:"P is Q's wife. Q is R's son. P is R's:",o:["Daughter-in-law","Daughter","Sister","Niece"],a:0,x:"Son's wife = <b>daughter-in-law</b>."},
-{s:"r",t:"blo",q:"M is N's mother. N is O's brother. M is O's:",o:["Mother","Aunt","Sister","Grandmother"],a:0,x:"<b>Mother</b> of both."},
-{s:"r",t:"blo",q:"R is S's brother. S is T's daughter. R is T's:",o:["Son","Nephew","Brother","Father"],a:0,x:"Daughter's brother = <b>son</b>."},
-{s:"r",t:"dir",q:"Facing north, you turn right. You now face:",o:["East","West","South","North-East"],a:0,x:"Right of north = <b>east</b>."},
-{s:"r",t:"dir",q:"You walk 5 km north, then 3 km east. You are to the ___ of the start:",o:["North-East","South-East","North-West","South-West"],a:0,x:"<b>North-East</b>."},
-{s:"r",t:"dir",q:"Facing south, you turn left twice. You now face:",o:["North","East","West","South"],a:0,x:"South → east → <b>north</b>."},
-{s:"r",t:"dir",q:"You go 4 km east, then 3 km north. Distance from start:",o:["5 km","7 km","6 km","12 km"],a:0,x:"3-4-5 triangle → <b>5 km</b>."},
-{s:"r",t:"dir",q:"Facing west, you turn 180°. You now face:",o:["East","West","North","South"],a:0,x:"Opposite of west = <b>east</b>."},
-{s:"r",t:"syl",q:"All cats are animals. All animals are living beings. Conclusion:",o:["All cats are living beings","Some cats are not animals","No cats are living beings","All living beings are cats"],a:0,x:"Chain rule → <b>all cats are living beings</b>."},
-{s:"r",t:"syl",q:"Some pens are books. All books are chairs. Conclusion:",o:["Some pens are chairs","All pens are chairs","No pens are chairs","All chairs are pens"],a:0,x:"<b>Some pens are chairs</b>."},
-{s:"r",t:"syl",q:"All A are B. Some B are C. Which follows?",o:["No definite conclusion","All A are C","Some A are C","All C are A"],a:0,x:"Middle term undistributed → <b>no definite conclusion</b>."},
-{s:"r",t:"syl",q:"Some flowers are red. All red things are beautiful. Conclusion:",o:["Some flowers are beautiful","All flowers are beautiful","No flowers are beautiful","All beautiful things are flowers"],a:0,x:"<b>Some flowers are beautiful</b>."},
-{s:"r",t:"cla",q:"Odd one out:",o:["9","2","3","5"],a:0,x:"<b>9</b> is not prime; the rest are."},
-{s:"r",t:"cla",q:"Odd one out:",o:["Potato","Apple","Mango","Banana"],a:0,x:"<b>Potato</b> is a vegetable; the rest are fruits."},
-{s:"r",t:"cla",q:"Odd one out:",o:["Aeroplane","Car","Bus","Truck"],a:0,x:"<b>Aeroplane</b> flies; the rest run on roads."},
-{s:"r",t:"cla",q:"Odd one out:",o:["100","8","27","64"],a:0,x:"<b>100</b> is not a perfect cube."},
-{s:"r",t:"cla",q:"Odd one out:",o:["55","16","25","36"],a:0,x:"<b>55</b> is not a perfect square."},
-{s:"r",t:"mis",q:"3, 3, 6, 18, 72, ?",o:["360","144","216","288"],a:0,x:"×1, ×2, ×3, ×4, ×5 → <b>360</b>."},
-{s:"r",t:"mis",q:"1, 2, 6, 24, ?",o:["120","48","72","96"],a:0,x:"Factorials → 5! = <b>120</b>."},
-{s:"r",t:"mis",q:"7, 14, 28, 56, ?",o:["112","84","98","70"],a:0,x:"×2 → <b>112</b>."},
-{s:"r",t:"ven",q:"Dog, Cat, Animal — the Venn diagram is:",o:["Two separate circles inside a larger circle","Two overlapping circles","Three separate circles","One circle inside another inside a third"],a:0,x:"Dog and Cat are separate, both inside <b>Animal</b>."},
-{s:"r",t:"ord",q:"A is taller than B, B is taller than C. Who is tallest?",o:["A","B","C","Cannot say"],a:0,x:"A > B > C → <b>A</b>."},
-{s:"r",t:"ord",q:"Ravi scored more than Sita but less than Mohan. Who scored highest?",o:["Mohan","Ravi","Sita","Ravi and Mohan tie"],a:0,x:"Mohan > Ravi > Sita → <b>Mohan</b>."},
-{s:"r",t:"ord",q:"In a row of 5 people, M is exactly in the middle. M's position from the left is:",o:["3rd","2nd","4th","5th"],a:0,x:"Middle of 5 = <b>3rd</b>."},
-{s:"r",t:"dic",q:"Which word comes first in the dictionary?",o:["Ant","Apple","Apply","Apricot"],a:0,x:"<b>Ant</b> < Apple < Apply < Apricot."},
-{s:"r",t:"wfm",q:"From 'EXAMINATION', which word CANNOT be formed?",o:["MINOR","EXAM","NATION","ANIMATION"],a:0,x:"No letter R in EXAMINATION → <b>MINOR</b> is impossible."},
+{s:"m",t:"sim",q:"2.5 × 4.8 + 1.2 × 5 = ?",o:["18","16.8","19.2","15.6"],a:0,x:"2.5×4.8=12; 1.2×5=6; total <b>18</b>."},
+{s:"m",t:"sim",q:"(5/6 − 1/3) ÷ (1/4) = ?",o:["2","1/2","3/2","4/3"],a:0,x:"5/6−1/3=1/2; (1/2)÷(1/4) = <b>2</b>."},
+{s:"m",t:"sim",q:"36% of 450 + 12% of 250 = ?",o:["192","186","198","200"],a:0,x:"162+30 = <b>192</b>."},
+{s:"m",t:"sim",q:"1 ÷ [1 + 1 ÷ (1 + 1/2)] = ?",o:["3/5","5/3","2/3","3/4"],a:0,x:"Innermost first → <b>3/5</b>."},
+{s:"m",t:"sim",q:"√0.49 + √0.36 = ?",o:["1.3","0.85","1.1","13"],a:0,x:"0.7+0.6 = <b>1.3</b>."},
+{s:"m",t:"per",q:"A number is increased by 25%, then decreased by 20%. Net change?",o:["No change","5% increase","5% decrease","10% decrease"],a:0,x:"1.25 × 0.80 = 1 → <b>no change</b>."},
+{s:"m",t:"per",q:"A's salary is 25% more than B's. B's salary is how much % less than A's?",o:["20%","25%","22.5%","16.67%"],a:0,x:"B = A/1.25 = 0.8A → <b>20%</b> less."},
+{s:"m",t:"per",q:"40% failed in Maths, 30% in English, 15% in both. % passed in both?",o:["45%","55%","40%","70%"],a:0,x:"Failed ≥1 subject = 40+30−15=55 → passed both <b>45%</b>."},
+{s:"m",t:"per",q:"Sugar price rises 20%. Consumption must fall by what % to keep expenditure same?",o:["16.67%","20%","25%","18%"],a:0,x:"1/1.2 = 0.833 → fall <b>16.67%</b>."},
+{s:"m",t:"per",q:"A's income is 40% less than B's. B's income is what % more than A's?",o:["66.67%","40%","60%","75%"],a:0,x:"1/0.6 = 1.667 → <b>66.67%</b> more."},
+{s:"m",t:"pro",q:"Marked ₹1200, successive discounts 10% and 20%. Selling price?",o:["₹864","₹840","₹900","₹960"],a:0,x:"1200×0.9×0.8 = <b>₹864</b>."},
+{s:"m",t:"pro",q:"Two articles sold at ₹990 each; 10% gain on one, 10% loss on the other. Net result?",o:["Loss ₹20","No profit no loss","Profit ₹20","Loss ₹40"],a:0,x:"CPs 900+1100=2000; SP 1980 → <b>loss ₹20</b>."},
+{s:"m",t:"pro",q:"Selling at ₹480 gives 20% loss. To gain 20%, the selling price must be:",o:["₹720","₹700","₹750","₹690"],a:0,x:"CP=600; 600×1.2 = <b>₹720</b>."},
+{s:"m",t:"pro",q:"CP of 12 articles = SP of 10 articles. Profit %?",o:["20%","16.67%","25%","12%"],a:0,x:"2/10 × 100 = <b>20%</b>."},
+{s:"m",t:"int",q:"CI on ₹8000 at 10% p.a. compounded half-yearly for 1 year?",o:["₹820","₹800","₹840","₹880"],a:0,x:"5% per half-year: 8000×1.05²−8000 = <b>₹820</b>."},
+{s:"m",t:"int",q:"Difference between CI and SI on ₹5000 at 10% p.a. for 2 years?",o:["₹50","₹100","₹75","₹25"],a:0,x:"P×r²/10000 = <b>₹50</b>."},
+{s:"m",t:"int",q:"A sum doubles in 6 years at simple interest. The rate % is:",o:["16.67%","12.5%","20%","15%"],a:0,x:"100/6 = <b>16.67%</b>."},
+{s:"m",t:"int",q:"At what rate will ₹1200 become ₹1800 in 5 years at SI?",o:["10%","12%","8%","15%"],a:0,x:"600/(1200×5)×100 = <b>10%</b>."},
+{s:"m",t:"avg",q:"Average of 5 numbers is 27. Excluding one, the average becomes 25. The excluded number?",o:["35","30","32","40"],a:0,x:"135−100 = <b>35</b>."},
+{s:"m",t:"avg",q:"Average weight of 10 students is 45 kg. A new student joins; average becomes 46 kg. His weight?",o:["56 kg","55 kg","57 kg","54 kg"],a:0,x:"11×46 − 10×45 = <b>56 kg</b>."},
+{s:"m",t:"avg",q:"Average of the first 50 even numbers?",o:["51","50","52","49"],a:0,x:"(2+100)/2 = <b>51</b>."},
+{s:"m",t:"avg",q:"Average of 20 observations is 35. Later, 54 is found misread as 45. Correct average?",o:["34.55","34","35.45","33.5"],a:0,x:"(700−9)/20 = <b>34.55</b>."},
+{s:"m",t:"rat",q:"₹1260 divided in ratio 2:3:4. B's share?",o:["₹420","₹280","₹560","₹400"],a:0,x:"3/9 × 1260 = <b>₹420</b>."},
+{s:"m",t:"rat",q:"Two numbers are in ratio 5:7. Each increased by 10, ratio becomes 3:4. The numbers?",o:["50, 70","40, 56","60, 84","45, 63"],a:0,x:"(5x+10)/(7x+10)=3/4 → x=10 → <b>50, 70</b>."},
+{s:"m",t:"rat",q:"HCF of 2² × 3³ and 2³ × 3²?",o:["36","72","108","18"],a:0,x:"2² × 3² = <b>36</b>."},
+{s:"m",t:"rat",q:"LCM of 2/3 and 4/9?",o:["4/3","8/9","2/9","8/3"],a:0,x:"LCM(2,4)/HCF(3,9) = <b>4/3</b>."},
+{s:"m",t:"rat",q:"A:B = 3:4 and B:C = 5:6. A:C = ?",o:["5:8","3:6","15:6","9:10"],a:0,x:"A:B:C = 15:20:24 → <b>5:8</b>."},
+{s:"m",t:"twk",q:"A is twice as efficient as B. Together they finish in 12 days. A alone in?",o:["18 days","24 days","12 days","36 days"],a:0,x:"Total 36 units; A at 2 units/day → <b>18 days</b>."},
+{s:"m",t:"twk",q:"12 men or 15 women finish work in 10 days. 6 men + 5 women in?",o:["12 days","10 days","15 days","8 days"],a:0,x:"150 woman-days ÷ 12.5 = <b>12 days</b>."},
+{s:"m",t:"twk",q:"A+B finish in 8 days; A alone in 12 days. B alone in?",o:["24 days","20 days","16 days","32 days"],a:0,x:"1/8 − 1/12 = 1/24 → <b>24 days</b>."},
+{s:"m",t:"twk",q:"A+B take 10 days, B+C 12 days, A+C 15 days. All three together in?",o:["8 days","10 days","12 days","6 days"],a:0,x:"2(A+B+C) does 1/4 work/day → <b>8 days</b>."},
+{s:"m",t:"tnd",q:"Trains of 120 m and 180 m approach each other at 40 and 50 km/h. Time to cross?",o:["12 seconds","10 seconds","15 seconds","8 seconds"],a:0,x:"90 km/h = 25 m/s; 300/25 = <b>12 s</b>."},
+{s:"m",t:"tnd",q:"Half the distance at 30 km/h, half at 60 km/h. Average speed?",o:["40 km/h","45 km/h","42 km/h","36 km/h"],a:0,x:"2×30×60/90 = <b>40 km/h</b>."},
+{s:"m",t:"tnd",q:"Boat goes 24 km downstream in 4 h, upstream in 6 h. Speed of stream?",o:["1 km/h","2 km/h","1.5 km/h","2.5 km/h"],a:0,x:"(6−4)/2 = <b>1 km/h</b>."},
+{s:"m",t:"tnd",q:"A train at 54 km/h crosses a 180 m platform in 20 s. Train length?",o:["120 m","150 m","100 m","90 m"],a:0,x:"15 m/s × 20 − 180 = <b>120 m</b>."},
+{s:"m",t:"alg",q:"If x + 1/x = 5, then x³ + 1/x³ = ?",o:["110","125","105","120"],a:0,x:"125 − 3×5 = <b>110</b>."},
+{s:"m",t:"alg",q:"If a − b = 4 and ab = 21, then a² + b² = ?",o:["58","62","54","50"],a:0,x:"16 + 42 = <b>58</b>."},
+{s:"m",t:"alg",q:"If x + y = 10 and xy = 21 (x > y), then x − y = ?",o:["4","8","2","6"],a:0,x:"√(100−84) = <b>4</b>."},
+{s:"m",t:"alg",q:"If x² + 1/x² = 14 (x > 0), then x + 1/x = ?",o:["4","√14","6","16"],a:0,x:"√(14+2) = <b>4</b>."},
+{s:"m",t:"geo2",q:"Perimeter of a square of side 22 cm equals the circumference of a circle. The radius?",o:["14 cm","11 cm","7 cm","28 cm"],a:0,x:"88 = 2πr → r = <b>14 cm</b>."},
+{s:"m",t:"geo2",q:"Longest rod that fits in a room 12 m × 9 m × 8 m?",o:["17 m","15 m","19 m","21 m"],a:0,x:"√(144+81+64) = <b>17 m</b>."},
+{s:"m",t:"geo2",q:"A wire forming a square of side 22 cm is rebent into a circle. The radius?",o:["14 cm","7 cm","28 cm","11 cm"],a:0,x:"88 = 2πr → <b>14 cm</b>."},
+{s:"m",t:"geo2",q:"Volume of a cylinder of radius 7 cm and height 10 cm? (π=22/7)",o:["1540 cm³","1440 cm³","1640 cm³","770 cm³"],a:0,x:"154 × 10 = <b>1540 cm³</b>."},
+{s:"m",t:"geo2",q:"Diagonal of a rectangle is 10 cm, one side 6 cm. The area?",o:["48 cm²","60 cm²","30 cm²","80 cm²"],a:0,x:"Other side 8; 6×8 = <b>48 cm²</b>."},
+{s:"m",t:"tri",q:"sin²60° + cos²30° = ?",o:["3/2","1","2","1/2"],a:0,x:"3/4 + 3/4 = <b>3/2</b>."},
+{s:"m",t:"tri",q:"If tan θ = 1/√3 (θ acute), θ = ?",o:["30°","45°","60°","15°"],a:0,x:"tan 30° = 1/√3 → θ = <b>30°</b>."},
+{s:"m",t:"tri",q:"sec²θ − tan²θ = ?",o:["1","0","2","−1"],a:0,x:"Identity = <b>1</b>."},
+{s:"m",t:"tri",q:"sin60°·cos30° + cos60°·sin30° = ?",o:["1","0","1/2","√3/2"],a:0,x:"= sin(90°) = <b>1</b>."},
+{s:"m",t:"num",q:"Unit digit of 3¹⁰⁰?",o:["1","3","7","9"],a:0,x:"Powers of 3 cycle every 4; 100÷4 remainder 0 → <b>1</b>."},
+{s:"m",t:"num",q:"Remainder when 2⁵⁰ is divided by 7?",o:["4","2","1","6"],a:0,x:"2³≡1 (mod 7); 2⁵⁰≡4 → <b>4</b>."},
+{s:"m",t:"num",q:"How many numbers from 1 to 100 are divisible by both 3 and 5?",o:["6","5","7","10"],a:0,x:"Multiples of 15: <b>6</b>."},
+{s:"m",t:"num",q:"Smallest number which divided by 5, 6, 7 leaves remainder 3?",o:["213","210","207","216"],a:0,x:"LCM(5,6,7)=210; +3 = <b>213</b>."},
+{s:"m",t:"num",q:"Sum of digits of the smallest 4-digit number divisible by 12?",o:["9","10","8","12"],a:0,x:"1008 → 1+0+0+8 = <b>9</b>."},
+{s:"m",t:"num",q:"Which is the largest: 3⁴, 4³, 5², 2⁷?",o:["2⁷","3⁴","4³","5²"],a:0,x:"128 > 81 > 64 > 25 → <b>2⁷</b>."},
+{s:"m",t:"num",q:"If n is odd, (n² − 1) is always divisible by?",o:["8","3","5","7"],a:0,x:"n=2k+1 → 4k(k+1), always a multiple of <b>8</b>."},
+{s:"r",t:"ana",q:"8 : 63 :: 10 : ?",o:["99","100","80","90"],a:0,x:"n²−1: 8²−1=63; 10²−1 = <b>99</b>."},
+{s:"r",t:"ana",q:"5 : 124 :: 7 : ?",o:["342","344","340","343"],a:0,x:"n³−1: 5³−1=124; 7³−1 = <b>342</b>."},
+{s:"r",t:"ana",q:"ACE : 9 :: BDF : ?",o:["12","15","10","18"],a:0,x:"1+3+5=9; 2+4+6 = <b>12</b>."},
+{s:"r",t:"ana",q:"BOOK : 43 :: PEN : ?",o:["35","33","37","32"],a:0,x:"2+15+15+11=43; 16+5+14 = <b>35</b>."},
+{s:"r",t:"ana",q:"9 : 80 :: 12 : ?",o:["143","144","140","120"],a:0,x:"n²−1: 9²−1=80; 12²−1 = <b>143</b>."},
+{s:"r",t:"ana",q:"11 : 1330 :: 9 : ?",o:["728","730","729","726"],a:0,x:"n³−1: 11³−1=1330; 9³−1 = <b>728</b>."},
+{s:"r",t:"ana",q:"2 : 10 :: 3 : ?",o:["30","28","27","32"],a:0,x:"n³+n: 8+2=10; 27+3 = <b>30</b>."},
+{s:"r",t:"ser",q:"2, 5, 10, 17, 26, ?",o:["37","35","38","40"],a:0,x:"n²+1: 6²+1 = <b>37</b>."},
+{s:"r",t:"ser",q:"1, 3, 7, 15, 31, ?",o:["63","62","64","61"],a:0,x:"×2+1 → <b>63</b>."},
+{s:"r",t:"ser",q:"5, 11, 23, 47, ?",o:["95","94","96","93"],a:0,x:"×2+1 → <b>95</b>."},
+{s:"r",t:"ser",q:"0, 6, 24, 60, 120, ?",o:["210","200","216","180"],a:0,x:"n³−n: 6³−6 = <b>210</b>."},
+{s:"r",t:"ser",q:"W, T, Q, N, ?",o:["K","J","L","M"],a:0,x:"−3 letters → <b>K</b>."},
+{s:"r",t:"ser",q:"2, 12, 36, 80, 150, ?",o:["252","240","248","260"],a:0,x:"n³+n²: 6³+6² = <b>252</b>."},
+{s:"r",t:"ser",q:"7, 14, 42, 168, ?",o:["840","672","504","1008"],a:0,x:"×2, ×3, ×4, ×5 → <b>840</b>."},
+{s:"r",t:"ser",q:"1, 5, 14, 30, 55, ?",o:["91","90","92","89"],a:0,x:"Diffs 4,9,16,25,36 → <b>91</b>."},
+{s:"r",t:"ser",q:"13, 24, 46, 90, 178, ?",o:["354","352","356","350"],a:0,x:"×2−2 → <b>354</b>."},
+{s:"r",t:"ser",q:"B, E, J, Q, ?",o:["Z","Y","X","W"],a:0,x:"+3,+5,+7,+9 → <b>Z</b> (26)."},
+{s:"r",t:"cod",q:"If APPLE = 50 (letter positions added), then ORANGE = ?",o:["60","58","62","55"],a:0,x:"15+18+1+14+7+5 = <b>60</b>."},
+{s:"r",t:"cod",q:"If DELHI = 38, then MUMBAI = ?",o:["59","57","61","60"],a:0,x:"13+21+13+2+1+9 = <b>59</b>."},
+{s:"r",t:"cod",q:"If A=2, B=4, C=6…, then CAT = ?",o:["48","46","50","44"],a:0,x:"6+2+40 = <b>48</b>."},
+{s:"r",t:"cod",q:"If RAM = 32, then SHYAM = ?",o:["66","64","68","62"],a:0,x:"19+8+25+1+13 = <b>66</b>."},
+{s:"r",t:"cod",q:"If WORK = 4-12-9-16 (reverse positions, A=26…Z=1), then PLAY = ?",o:["11-15-26-2","16-12-1-25","11-15-1-2","16-15-26-2"],a:0,x:"P=11, L=15, A=26, Y=2 → <b>11-15-26-2</b>."},
+{s:"r",t:"cod",q:"If MOBILE = 56, then TABLET = ?",o:["60","58","62","56"],a:0,x:"20+1+2+12+5+20 = <b>60</b>."},
+{s:"r",t:"cod",q:"If FAN = 21, then SON = ?",o:["48","46","50","44"],a:0,x:"19+15+14 = <b>48</b>."},
+{s:"r",t:"blo",q:"A's father is B. B's brother is C. C's mother is D. D is A's?",o:["Grandmother","Aunt","Mother","Sister"],a:0,x:"D is B's (and C's) mother → A's <b>grandmother</b>."},
+{s:"r",t:"blo",q:"A woman introduces a man as 'the son of my mother's brother'. The man is her?",o:["Cousin","Nephew","Uncle","Brother"],a:0,x:"Mother's brother's son = <b>cousin</b>."},
+{s:"r",t:"blo",q:"X says to Y: 'Your mother's husband's sister is my aunt.' X is Y's?",o:["Cousin","Sibling","Nephew","Uncle"],a:0,x:"Y's paternal aunt is X's aunt → <b>cousins</b>."},
+{s:"r",t:"blo",q:"A girl points to a boy: 'He is the son of my grandfather's only son.' The boy is her?",o:["Brother","Cousin","Uncle","Nephew"],a:0,x:"Grandfather's only son = father → <b>brother</b>."},
+{s:"r",t:"dir",q:"Facing east, turn 90° clockwise, then 180° anticlockwise. Now facing?",o:["North","South","East","West"],a:0,x:"East → south → <b>north</b>."},
+{s:"r",t:"dir",q:"Ravi walks 6 km north, turns right 4 km, turns right 6 km, turns left 3 km. Distance from start?",o:["7 km","13 km","10 km","4 km"],a:0,x:"North legs cancel; east 4+3 = <b>7 km</b>."},
+{s:"r",t:"dir",q:"A is 5 km east of B. C is 3 km north of B. A is which direction from C?",o:["South-East","North-East","South-West","North-West"],a:0,x:"East and south of C → <b>south-east</b>."},
+{s:"r",t:"dir",q:"A man walks 8 km south, turns left 6 km, turns left 8 km. How far is he from the start?",o:["6 km","8 km","14 km","22 km"],a:0,x:"South legs cancel; 6 km east → <b>6 km</b>."},
+{s:"r",t:"syl",q:"All pens are books. No book is a chair. I: No pen is a chair. II: Some chairs are pens.",o:["Only I follows","Only II follows","Both follow","Neither follows"],a:0,x:"Pens⊂books, books∩chairs=∅ → <b>only I</b>."},
+{s:"r",t:"syl",q:"Some cats are dogs. All dogs are animals. I: Some cats are animals. II: All cats are animals.",o:["Only I follows","Only II follows","Both follow","Neither follows"],a:0,x:"Some cats (dogs) are animals → <b>only I</b>."},
+{s:"r",t:"syl",q:"No A is B. All B are C. I: No A is C. II: Some C are B.",o:["Only II follows","Only I follows","Both follow","Neither follows"],a:0,x:"All B are C → some C are B; A may overlap C → <b>only II</b>."},
+{s:"r",t:"syl",q:"All roses are flowers. Some flowers are red. I: Some roses are red. II: All red are roses.",o:["Neither follows","Only I follows","Only II follows","Both follow"],a:0,x:"No link between roses and red → <b>neither</b>."},
+{s:"r",t:"cla",q:"Odd one out: 210, 125, 64, 27",o:["210","125","64","27"],a:0,x:"<b>210</b> is not a perfect cube."},
+{s:"r",t:"cla",q:"Odd one out: Moon, Mercury, Venus, Mars",o:["Moon","Mercury","Venus","Mars"],a:0,x:"<b>Moon</b> is a satellite; the rest are planets."},
+{s:"r",t:"cla",q:"Odd one out: 270, 144, 196, 256",o:["270","144","196","256"],a:0,x:"<b>270</b> is not a perfect square."},
+{s:"r",t:"cla",q:"Odd one out: 171, 131, 151, 191",o:["171","131","151","191"],a:0,x:"171 = 9×19; the rest are <b>prime</b>."},
+{s:"r",t:"mis",q:"7, 5 → 39; 4, 9 → 40; 6, 3 → ?",o:["22","21","24","18"],a:0,x:"a×b+4: 6×3+4 = <b>22</b>."},
+{s:"r",t:"mis",q:"4, 7 → 33; 5, 8 → 45; 6, 9 → ?",o:["59","54","63","49"],a:0,x:"a×b+5: 6×9+5 = <b>59</b>."},
+{s:"r",t:"mis",q:"2, 3 → 13; 4, 5 → 41; 6, 7 → ?",o:["85","91","78","84"],a:0,x:"a²+b²: 36+49 = <b>85</b>."},
+{s:"r",t:"mis",q:"5, 3 → 28; 7, 4 → 53; 9, 2 → ?",o:["83","81","85","79"],a:0,x:"a²+b: 81+2 = <b>83</b>."},
+{s:"r",t:"ven",q:"30 like tea, 25 like coffee, 10 like both. How many like at least one?",o:["45","55","35","65"],a:0,x:"30+25−10 = <b>45</b>."},
+{s:"r",t:"ord",q:"In a row of 40, Ravi is 15th from the left. His position from the right?",o:["26th","25th","27th","24th"],a:0,x:"40−15+1 = <b>26th</b>."},
+{s:"r",t:"ord",q:"A is 7th from the top and 28th from the bottom in a class. Total students?",o:["34","35","33","36"],a:0,x:"7+28−1 = <b>34</b>."},
+{s:"r",t:"ord",q:"Rahul is 11th from the left and 8th from the right in a row. How many people?",o:["18","19","17","20"],a:0,x:"11+8−1 = <b>18</b>."},
+{s:"r",t:"ord",q:"Among five friends, A is taller than B but shorter than C. D is taller than E but shorter than B. Who is the shortest?",o:["E","D","B","A"],a:0,x:"C>A>B>D>E → <b>E</b>."},
+{s:"r",t:"stm",q:"Statement: All students in the class passed. I: No student failed. II: Some got distinction.",o:["Only I follows","Only II follows","Both follow","Neither follows"],a:0,x:"Passed ⟺ none failed → <b>only I</b>."},
+{s:"r",t:"stm",q:"Statement: Smoking is injurious to health. I: Non-smokers are healthy. II: Smokers may face health issues.",o:["Only II follows","Only I follows","Both follow","Neither follows"],a:0,x:"<b>Only II</b> follows; I is unwarranted."},
+{s:"r",t:"stm",q:"Statement: All employees were asked to work from home. I: The office is closed. II: Employees have internet at home.",o:["Neither follows","Only I follows","Only II follows","Both follow"],a:0,x:"Neither is a necessary conclusion → <b>neither</b>."},
+{s:"r",t:"seat",q:"Six people in a row facing north. A is 3rd from the left, B is 2nd from the right. How many sit between A and B?",o:["1","2","0","3"],a:0,x:"Positions 3 and 5 → <b>1</b> person between."},
+{s:"r",t:"seat",q:"A, B, C, D, E stand in a row. B is between A and C; D is between C and E; C is in the middle. Who is at the right end?",o:["E","A","D","B"],a:0,x:"Order A,B,C,D,E → <b>E</b>."},
+{s:"r",t:"wfm",q:"From 'CONSIDERATE', which word CANNOT be formed?",o:["NATION","COINS","RATES","TRAIN"],a:0,x:"Only one N present → <b>NATION</b> impossible."},
 ];
 
 /* ============ AUTO QUESTION GENERATOR (infinite, CGL-patterned) ============
@@ -930,69 +936,78 @@ function nopts(ans){const s=new Set([ans]);const r=[ans];
 function lopts(ans){const c=ans.charCodeAt(0);const s=new Set([ans]);const r=[ans];
   for(const d of[1,-1,2,-2,3,-3]){if(r.length>=4)break;const L=String.fromCharCode(c+d);
     if(L>="A"&&L<="Z"&&!s.has(L)){s.add(L);r.push(L);}}return r;}
+function sopts(ans,alts){const s=new Set([ans]);const r=[ans];for(const v of alts){if(r.length>=4)break;if(!s.has(v)){s.add(v);r.push(v);}}return r;}
 const GEN_M=[
-()=>{const b=ri(3,9),c=ri(3,9),a=ri(10,40),d=ri(5,20),ans=a+b*c-d;
-  return{s:"m",t:"sim",q:`${a} + ${b} × ${c} − ${d} = ?`,o:nopts(ans),a:0,
-  x:`BODMAS: ${b}×${c}=${b*c}; ${a}+${b*c}−${d} = <b>${ans}</b>.`};},
-()=>{const p=gpick([10,20,25,50,75]),n=gpick([4,6,8,12,16,20])*100,ans=p*n/100;
-  return{s:"m",t:"per",q:`${p}% of ${n} = ?`,o:nopts(ans),a:0,
-  x:`${p}×${n}/100 = <b>${ans}</b>.`};},
-()=>{const cp=gpick([5,8,10,12,15,20])*100,p=gpick([10,20,25]),ans=cp*(100+p)/100;
-  return{s:"m",t:"pro",q:`Bought for ₹${cp}, sold at ${p}% profit. Selling price?`,o:nopts(ans),a:0,
-  x:`${cp} × ${100+p}/100 = <b>₹${ans}</b>.`};},
-()=>{const P=gpick([4,5,6,8,10])*1000,R=gpick([4,5,8,10]),T=ri(2,4),ans=P*R*T/100;
-  return{s:"m",t:"int",q:`Simple interest on ₹${P} at ${R}% for ${T} years?`,o:nopts(ans),a:0,
-  x:`${P}×${R}×${T}/100 = <b>₹${ans}</b>.`};},
-()=>{const s0=ri(5,40),ans=s0+2;
-  return{s:"m",t:"avg",q:`Average of ${s0}, ${s0+1}, ${s0+2}, ${s0+3}, ${s0+4}?`,o:nopts(ans),a:0,
-  x:`Middle number = <b>${ans}</b>.`};},
-()=>{const a=ri(2,12),b=ri(2,12),g=gcd(a,b);
-  return{s:"m",t:"rat",q:`HCF of ${a} and ${b}?`,o:nopts(g),a:0,
-  x:`Largest common divisor = <b>${g}</b>.`};},
-()=>{const a=ri(2,9),b=ri(2,9),l=a*b/gcd(a,b);
-  return{s:"m",t:"rat",q:`LCM of ${a} and ${b}?`,o:nopts(l),a:0,
-  x:`Smallest common multiple = <b>${l}</b>.`};},
-()=>{const n=ri(11,29),ans=n*n;
-  return{s:"m",t:"sim",q:`${n}² = ?`,o:nopts(ans),a:0,
-  x:`${n} × ${n} = <b>${ans}</b>.`};},
-()=>{const pr=gpick([[10,15,6],[20,30,12],[6,12,4],[9,18,6],[8,24,6],[12,24,8]]);
-  return{s:"m",t:"twk",q:`A finishes work in ${pr[0]} days, B in ${pr[1]} days. Together in?`,o:nopts(pr[2]),a:0,
-  x:`1/${pr[0]}+1/${pr[1]} = 1/${pr[2]} → <b>${pr[2]} days</b>.`};},
-()=>{const a=ri(1,4),b=ri(1,4),k=ri(50,150),tot=(a+b)*k,ans=a*k;
-  return{s:"m",t:"rat",q:`₹${tot} divided in ratio ${a}:${b}. First share?`,o:nopts(ans),a:0,
-  x:`${a}/${a+b} × ${tot} = <b>₹${ans}</b>.`};},
-()=>{const v=ri(40,90),t=ri(2,5)*10,ans=v*t/60;
-  return{s:"m",t:"tnd",q:`At ${v} km/h, distance covered in ${t} minutes?`,o:nopts(ans),a:0,
-  x:`${v} × ${t}/60 = <b>${ans} km</b>.`};}
+()=>{const mp=gpick([800,1000,1200,2000]),d1=gpick([10,20]),d2=gpick([10,20]);
+  const sp=mp*(100-d1)*(100-d2)/10000;
+  return{s:"m",t:"pro",q:`Marked ₹${mp}, successive discounts ${d1}% and ${d2}%. Selling price?`,o:nopts(sp),a:0,
+  x:`${mp}×${(100-d1)/100}×${(100-d2)/100} = <b>₹${sp}</b>.`};},
+()=>{const P=gpick([4000,5000,8000,10000]),r=gpick([5,10]);
+  const ci=Math.round(P*Math.pow(1+r/100,2)-P);
+  return{s:"m",t:"int",q:`Compound interest on ₹${P} at ${r}% p.a. for 2 years?`,o:nopts(ci),a:0,
+  x:`${P}×${1+r/100}² − ${P} = <b>₹${ci}</b>.`};},
+()=>{const P=gpick([2000,4000,5000,8000]),r=gpick([5,10]),d=P*r*r/10000;
+  return{s:"m",t:"int",q:`Difference (CI − SI) on ₹${P} at ${r}% p.a. for 2 years?`,o:nopts(d),a:0,
+  x:`P×r²/10000 = <b>₹${d}</b>.`};},
+()=>{const pr=gpick([[180,54,12],[120,72,6],[150,54,10],[240,72,12],[120,36,12]]);
+  return{s:"m",t:"tnd",q:`A ${pr[0]} m train running at ${pr[1]} km/h crosses a pole in?`,o:nopts(pr[2]),a:0,
+  x:`${pr[1]} km/h = ${pr[1]*5/18} m/s; ${pr[0]}/${pr[1]*5/18} = <b>${pr[2]} s</b>.`};},
+()=>{const n=ri(3,9),ans=n*n-2;
+  return{s:"m",t:"alg",q:`If x + 1/x = ${n}, then x² + 1/x² = ?`,o:nopts(ans),a:0,
+  x:`${n}² − 2 = <b>${ans}</b>.`};},
+()=>{const a=ri(2,5),b=ri(2,6),c=ri(2,5),k=ri(20,60),ans=b*k;
+  return{s:"m",t:"rat",q:`₹${(a+b+c)*k} divided among A, B, C in ratio ${a}:${b}:${c}. B's share?`,o:nopts(ans),a:0,
+  x:`${b}/${a+b+c} × ${(a+b+c)*k} = <b>₹${ans}</b>.`};},
+()=>{const n=6,A=ri(28,40),B=ri(24,A-2),ans=n*A-(n-1)*B;
+  return{s:"m",t:"avg",q:`Average of ${n} numbers is ${A}. Excluding one, the average becomes ${B}. The excluded number?`,o:nopts(ans),a:0,
+  x:`${n}×${A} − ${n-1}×${B} = <b>${ans}</b>.`};},
+()=>{const fr=gpick([[2,3,4,9,"4/3"],[3,8,9,4,"9/4"],[5,6,10,3,"10/3"],[4,5,6,15,"12/5"],[7,4,3,8,"21/4"],[2,5,3,10,"6/5"]]);
+  return{s:"m",t:"rat",q:`LCM of ${fr[0]}/${fr[1]} and ${fr[2]}/${fr[3]}?`,o:sopts(fr[4],["4/3","9/4","10/3","12/5","21/4","6/5","3","2"]),a:0,
+  x:`LCM(num)/HCF(den) = <b>${fr[4]}</b>.`};},
+()=>{const pr=gpick([[24,4,6],[36,6,9],[24,3,6],[48,6,12]]);
+  const ds=pr[0]/pr[1],us=pr[0]/pr[2],st=(ds-us)/2;
+  return{s:"m",t:"tnd",q:`A boat covers ${pr[0]} km downstream in ${pr[1]} h and upstream in ${pr[2]} h. Speed of the stream?`,o:nopts(st),a:0,
+  x:`Down ${ds} km/h, up ${us} km/h → (${ds}−${us})/2 = <b>${st} km/h</b>.`};},
+()=>{const ex=gpick([["sin²60° + cos²30°","3/2"],["tan²45° + sin²30°","5/4"],["sec 60°","2"],["sin 90°","1"],["cosec 30°","2"]]);
+  return{s:"m",t:"tri",q:`${ex[0]} = ?`,o:sopts(ex[1],["1","2","3/2","5/4","1/2","0"]),a:0,
+  x:`Standard values → <b>${ex[1]}</b>.`};}
 ];
 const GEN_R=[
-()=>{const s=ri(3,20),d=ri(2,9),ans=s+4*d;
-  return{s:"r",t:"ser",q:`${s}, ${s+d}, ${s+2*d}, ${s+3*d}, ?`,o:nopts(ans),a:0,
-  x:`+${d} each time → <b>${ans}</b>.`};},
-()=>{const s=ri(2,6),r=ri(2,3),ans=s*r*r*r*r;
-  return{s:"r",t:"ser",q:`${s}, ${s*r}, ${s*r*r}, ${s*r*r*r}, ?`,o:nopts(ans),a:0,
-  x:`×${r} each time → <b>${ans}</b>.`};},
-()=>{const k=ri(2,5),st=ri(0,20),L=i=>String.fromCharCode(65+((st+i*k)%26)),ans=L(4);
-  return{s:"r",t:"ser",q:`${L(0)}, ${L(1)}, ${L(2)}, ${L(3)}, ?`,o:lopts(ans),a:0,
-  x:`+${k} letters → <b>${ans}</b>.`};},
-()=>{const w=gpick(["CAT","DOG","PEN","SUN","BAT","RAT","CUP","BOX","HEN","ANT"]);
-  const sum=[...w].reduce((t,c)=>t+c.charCodeAt(0)-64,0);
-  return{s:"r",t:"cod",q:`If A=1, B=2, C=3…, then ${w} = ?`,o:nopts(sum),a:0,
-  x:`Letter positions added = <b>${sum}</b>.`};},
-()=>{const n=ri(3,9),m=ri(3,9),ans=m*m;
-  return{s:"r",t:"ana",q:`${n} : ${n*n} :: ${m} : ?`,o:nopts(ans),a:0,
-  x:`n : n² → ${m}² = <b>${ans}</b>.`};},
-()=>{const ps=[2,3,5,7,11,13,17,19,23,29,31],comp=gpick([4,6,8,9,10,12,14,15,16]);
+()=>{const s=ri(2,9),n=gpick([2,3]),k=ri(2,6);let t=s;const seq=[s];
+  for(let i=0;i<3;i++){t=t*n+k;seq.push(t);}const ans=t*n+k;
+  return{s:"r",t:"ser",q:seq.join(", ")+", ?",o:nopts(ans),a:0,
+  x:`×${n}+${k} each step → <b>${ans}</b>.`};},
+()=>{const n=ri(3,6),f=x=>x*x*x-x,seq=[f(n),f(n+1),f(n+2),f(n+3)],ans=f(n+4);
+  return{s:"r",t:"ser",q:seq.join(", ")+", ?",o:nopts(ans),a:0,
+  x:`n³−n pattern → <b>${ans}</b>.`};},
+()=>{const w=gpick(["CAT","DOG","PEN","SUN","BAT","RAT","BOX","HEN"]);
+  const sum=[...w].reduce((t,c)=>t+27-(c.charCodeAt(0)-64),0);
+  return{s:"r",t:"cod",q:`If A=26, B=25, … Z=1, then ${w} = ?`,o:nopts(sum),a:0,
+  x:`Reversed positions added = <b>${sum}</b>.`};},
+()=>{const a=ri(3,8),b=ri(3,8),k=ri(2,6),a2=ri(3,8),b2=ri(3,8);
+  const ans=(a+1)*(b+2)+k;
+  return{s:"r",t:"mis",q:`${a}, ${b} → ${a*b+k}; ${a2}, ${b2} → ${a2*b2+k}; ${a+1}, ${b+2} → ?`,o:nopts(ans),a:0,
+  x:`First×second + ${k} → <b>${ans}</b>.`};},
+()=>{const dirs=["north","east","south","west"],d=gpick(dirs);
+  const t1=gpick(["left","right"]),t2=gpick(["left","right"]);
+  let i=dirs.indexOf(d);i=(i+(t1==="right"?1:3))%4;i=(i+(t2==="right"?1:3))%4;
+  const ans=dirs[i],A=ans[0].toUpperCase()+ans.slice(1);
+  return{s:"r",t:"dir",q:`Facing ${d}, turn ${t1}, then turn ${t2}. Now facing?`,
+  o:[A,...dirs.filter(x=>x!==ans).map(x=>x[0].toUpperCase()+x.slice(1))],a:0,
+  x:`${d} → ${t1} → ${t2} → <b>${A}</b>.`};},
+()=>{const N=ri(30,50),L=ri(10,20),ans=N-L+1;
+  return{s:"r",t:"ord",q:`In a row of ${N}, Ravi is ${L}th from the left. Position from the right?`,o:nopts(ans),a:0,
+  x:`${N}−${L}+1 = <b>${ans}th</b>.`};},
+()=>{const t=gpick([
+  ["A's father is B. B's sister is C.","C is A's?","Aunt"],
+  ["P's mother is Q. Q's brother is R.","R is P's?","Uncle"],
+  ["X's brother is Y. Y's mother is Z.","Z is X's?","Mother"]]);
+  return{s:"r",t:"blo",q:t[0]+" "+t[1],o:sopts(t[2],["Aunt","Uncle","Mother","Father","Sister","Brother","Cousin"]),a:0,
+  x:`<b>${t[2]}</b>.`};},
+()=>{const ps=[2,3,5,7,11,13,17,19,23,29,31],comp=gpick([4,6,8,9,10,12,14,15,16,21,22]);
   const three=gsample(ps,3,new Set()),arr=shuffle([comp,...three]);
   return{s:"r",t:"cla",q:`Odd one out: ${arr.join(", ")}`,o:[String(comp),...three.map(String)],a:0,
-  x:`<b>${comp}</b> is composite; the rest are prime.`};},
-()=>{const dirs=["north","east","south","west"],d=gpick(dirs),t=gpick(["left","right"]);
-  const ans=dirs[(dirs.indexOf(d)+(t==="right"?1:3))%4],A=ans[0].toUpperCase()+ans.slice(1);
-  return{s:"r",t:"dir",q:`Facing ${d}, you turn ${t}. You now face:`,o:[A,...dirs.filter(x=>x!==ans).map(x=>x[0].toUpperCase()+x.slice(1))],a:0,
-  x:`${d} → ${t} → <b>${A}</b>.`};},
-()=>{const n=ri(1,20),L=String.fromCharCode(64+n),suf=n===1?"st":n===2?"nd":n===3?"rd":"th";
-  return{s:"r",t:"ser",q:`${n}${suf} letter of the English alphabet?`,o:lopts(L),a:0,
-  x:`A=1 … ${n} = <b>${L}</b>.`};}
+  x:`<b>${comp}</b> is composite; the rest are prime.`};}
 ];
 function genOne(kind){
   const fn=kind==="e"?gpick(GEN_E):kind==="m"?gpick(GEN_M):kind==="r"?gpick(GEN_R):(kind==="g"||kind==="ca")?gpick(GEN_G):(Math.random()<0.5?gpick(GEN_E):gpick(GEN_G));
@@ -1006,7 +1021,8 @@ const TOPIC = {err:"Error Spotting",fib:"Fill in the Blank",syn:"Synonym",ant:"A
   sim:"Simplification",per:"Percentage",pro:"Profit & Loss",int:"Interest",avg:"Average",rat:"Ratio & HCF/LCM",
   twk:"Time & Work",tnd:"Time & Distance",alg:"Algebra",geo2:"Mensuration",tri:"Trigonometry",num:"Number System",
   ana:"Analogy",ser:"Series",cod:"Coding-Decoding",blo:"Blood Relations",dir:"Direction Sense",syl:"Syllogism",
-  cla:"Classification",mis:"Missing Numbers",ven:"Venn Diagram",ord:"Order & Ranking",dic:"Dictionary Order",wfm:"Word Formation"};
+  cla:"Classification",mis:"Missing Numbers",ven:"Venn Diagram",ord:"Order & Ranking",dic:"Dictionary Order",wfm:"Word Formation",
+  seat:"Seating Arrangement",stm:"Statement-Conclusion"};
 const $ = id => document.getElementById(id);
 const qText=$("qText"), optsEl=$("opts"), whyEl=$("why"), btnNext=$("btnNext"), btnSkip=$("btnSkip");
 const tSub=$("tSub"), tTop=$("tTop"), tQno=$("tQno"), toast=$("toast");
@@ -1017,8 +1033,10 @@ let stats={att:0, ok:0, streak:0, best:+(localStorage.getItem("cglBest")||0)};
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function toastMsg(m){toast.textContent=m;toast.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>toast.classList.remove("show"),2200);}
 let seenStatic=new Set();try{seenStatic=new Set(JSON.parse(localStorage.getItem("cglSeen")||"[]"));}catch(e){}
+let genSeen=new Set();try{genSeen=new Set(JSON.parse(localStorage.getItem("cglGenSeen")||"[]"));}catch(e){}
 let toppedUp=false;
-function saveSeen(){try{localStorage.setItem("cglSeen",JSON.stringify([...seenStatic].slice(-3000)));}catch(e){}}
+function saveSeen(){try{localStorage.setItem("cglSeen",JSON.stringify([...seenStatic].slice(-5000)));}catch(e){}}
+function saveGen(){try{localStorage.setItem("cglGenSeen",JSON.stringify([...genSeen].slice(-4000)));}catch(e){}}
 function fmatch(q){return filter==="all"||(filter==="ca"?q.t==="ca":q.s===filter);}
 function remainingStatic(){let n=0;for(let i=0;i<QUESTIONS.length;i++){if(fmatch(QUESTIONS[i])&&!seenStatic.has(i))n++;}return n;}
 function buildPool(){
@@ -1037,9 +1055,10 @@ function autoTopUp(){
   while(added<80&&guard<600){
     guard++;
     const g=genOne(kind);
-    if(!g||seenH.has(g.h))continue;
-    seenH.add(g.h);pool.push({q:g,id:"g"+g.h});added++;
+    if(!g||seenH.has(g.h)||genSeen.has(g.h))continue;
+    seenH.add(g.h);genSeen.add(g.h);pool.push({q:g,id:"g"+g.h});added++;
   }
+  saveGen();
   shuffle(pool);
   if(added)toastMsg("⚡ Bank below 50 — auto-added "+added+" fresh questions");
 }
@@ -1053,11 +1072,7 @@ function paintStats(){
 }
 
 function render(){
-  if(pos>=pool.length){
-    seenStatic.clear();saveSeen();
-    buildPool();
-    toastMsg("🔁 New cycle — bank refreshed, keep going!");
-  }
+  if(pos>=pool.length){buildPool();}
   answered=false;
   const q=pool[pos].q; qCount++;
   const SUBJ={e:["ENGLISH","eng"],m:["MATHS","mth"],r:["REASONING","rsn"],g:["GENERAL AWARENESS","ga"]};
@@ -1098,7 +1113,7 @@ function answer(i){
   if(answered)return; answered=true;
   const pid=pool[pos].id;
   if(pid[0]==="s"){seenStatic.add(+pid.slice(1));saveSeen();}
-  stats.att++;
+  stats.att++;bumpTimer();
   const good=(i===correctIdx);
   if(good){stats.ok++;stats.streak++;if(stats.streak>stats.best){stats.best=stats.streak;localStorage.setItem("cglBest",stats.best);}}
   else stats.streak=0;
@@ -1107,7 +1122,7 @@ function answer(i){
 }
 
 btnNext.onclick=()=>{pos++;render();};
-btnSkip.onclick=()=>{if(answered)return;answered=true;const pid=pool[pos].id;if(pid[0]==="s"){seenStatic.add(+pid.slice(1));saveSeen();}stats.att++;stats.streak=0;reveal(-1);paintStats();};
+btnSkip.onclick=()=>{if(answered)return;answered=true;const pid=pool[pos].id;if(pid[0]==="s"){seenStatic.add(+pid.slice(1));saveSeen();}stats.att++;bumpTimer();stats.streak=0;reveal(-1);paintStats();};
 
 document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{
   document.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
@@ -1128,6 +1143,38 @@ document.addEventListener("keydown",e=>{
   document.getElementById("popFollow").onclick=done;
 }catch(e){}})();
 
+/* ---- 1-hour practice timer (starts on first attempt, per device) ---- */
+let t0=0,tCount=0,tDone=false;
+try{t0=+(localStorage.getItem("cglT0")||0);tCount=+(localStorage.getItem("cglTC")||0);tDone=localStorage.getItem("cglTD")==="1";}catch(e){}
+const tchip=$("tchip");
+function bumpTimer(){
+  if(!t0){t0=Date.now();try{localStorage.setItem("cglT0",t0);}catch(e){}}
+  tCount++;try{localStorage.setItem("cglTC",tCount);}catch(e){}
+}
+function fmtT(ms){const s=Math.ceil(Math.max(0,ms)/1000);return String((s/60)|0).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+function showHour(){
+  $("hourMsg").innerHTML="You attempted <b>"+tCount+"</b> questions in an hour.";
+  $("hourPop").classList.remove("hidden");
+}
+function hourReset(){
+  t0=Date.now();tCount=0;tDone=false;
+  try{localStorage.setItem("cglT0",t0);localStorage.setItem("cglTC",0);localStorage.setItem("cglTD","0");}catch(e){}
+  $("hourPop").classList.add("hidden");tchip.classList.remove("done");
+}
+function tick(){
+  if(!t0){tchip.textContent="⏱ 60:00";return;}
+  const el=Date.now()-t0;
+  if(el>=3600000){
+    tchip.textContent="⏱ 00:00";tchip.classList.add("done");
+    if(!tDone){tDone=true;try{localStorage.setItem("cglTD","1");}catch(e){}showHour();}
+    return;
+  }
+  tchip.textContent="⏱ "+fmtT(3600000-el);tchip.classList.add("live");
+}
+$("hourGo").onclick=hourReset;
+$("hourClose").onclick=()=>{$("hourPop").classList.add("hidden");};
+setInterval(tick,1000);tick();
+
 buildPool(); render(); paintStats();
 </script>
 <footer class="foot">
@@ -1145,6 +1192,15 @@ buildPool(); render(); paintStats();
     <p>Follow <b>@dinesh.jangir_</b> on Instagram for quiz updates &amp; new question drops.</p>
     <a class="popig" href="https://instagram.com/dinesh.jangir_" target="_blank" rel="noopener" id="popFollow">Follow on Instagram</a><br>
     <button class="popskip" id="popSkip">Skip</button>
+  </div>
+</div>
+<div class="pop hidden" id="hourPop">
+  <div class="popcard">
+    <div style="font-size:34px;margin-bottom:10px">⏱</div>
+    <h3>1 hour complete!</h3>
+    <p id="hourMsg">You attempted <b>0</b> questions in an hour.</p>
+    <button class="popbtn" id="hourGo">Start new hour</button>
+    <button class="popskip" id="hourClose">Close</button>
   </div>
 </div>
 </body>
